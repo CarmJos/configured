@@ -53,6 +53,10 @@ public class SourceMapBuilder<MAP extends Map<K, V>, SOURCE, K, V>
         });
     }
 
+    public @NotNull SourceMapBuilder<MAP, SOURCE, K, V> defaults(@NotNull K key, @NotNull V value) {
+        return defaults(map -> map.put(key, value));
+    }
+
     public @NotNull SourceMapBuilder<MAP, SOURCE, K, V> parseKey(@NotNull DataFunction<String, K> keyParser) {
         return parseKey((holder, data) -> keyParser.handle(data));
     }

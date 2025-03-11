@@ -75,6 +75,10 @@ public class SectionMapBuilder<MAP extends Map<K, V>, K, V>
         });
     }
 
+    public @NotNull SectionMapBuilder<MAP, K, V> defaults(@NotNull K key, @NotNull V value) {
+        return defaults(map -> map.put(key, value));
+    }
+
     public @NotNull ValueAdapter<K> buildKeyAdapter() {
         return new ValueAdapter<>(this.keyType)
                 .parser((holder, type, data) -> {
