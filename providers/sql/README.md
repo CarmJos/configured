@@ -1,4 +1,4 @@
-# EasyConfiguration-SQL
+# configured-SQL
 
 SQL database implementation, support for MySQL or MariaDB.
 
@@ -39,9 +39,9 @@ CREATE TABLE IF NOT EXISTS conf
 
         <repository>
             <!-- Using GitHub dependencies for real-time updates, configuration required (recommended). -->
-            <id>EasyConfiguration</id>
+            <id>configured</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/CarmJos/EasyConfiguration</url>
+            <url>https://maven.pkg.github.com/CarmJos/configured</url>
         </repository>
 
     </repositories>
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS conf
     <dependencies>
         <dependency>
             <groupId>cc.carm.lib</groupId>
-            <artifactId>easyconfiguration-sql</artifactId>
+            <artifactId>configured-sql</artifactId>
             <version>[LATEST RELEASE]</version>
             <scope>compile</scope>
         </dependency>
@@ -71,13 +71,13 @@ repositories {
     mavenCentral()
 
     // Using GitHub dependencies for real-time updates, configuration required (recommended).
-    maven { url 'https://maven.pkg.github.com/CarmJos/EasyConfiguration' }
+    maven { url 'https://maven.pkg.github.com/CarmJos/configured' }
 
 }
 ```
 
 ```groovy
 dependencies {
-    api "cc.carm.lib:easyconfiguration-sql:[LATEST RELEASE]"
+    api "cc.carm.lib:configured-sql:[LATEST RELEASE]"
 }
 ```

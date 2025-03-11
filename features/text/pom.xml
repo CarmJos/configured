@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cc.carm.lib</groupId>
-        <artifactId>easyconfiguration-parent</artifactId>
+        <artifactId>configured-parent</artifactId>
         <version>4.0.11</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
@@ -16,20 +16,20 @@
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
     </properties>
 
-    <artifactId>easyconfiguration-feature-text</artifactId>
+    <artifactId>configured-feature-text</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
 
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>easyconfiguration-core</artifactId>
+            <artifactId>configured-core</artifactId>
             <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>easyconfiguration-gson</artifactId>
+            <artifactId>configured-gson</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>

@@ -20,7 +20,7 @@ import java.util.UUID;
         "------------------------------------------------",
         "此处内容将显示在配置文件的最下方",
         "可用于显示版权信息等",
-        "感谢您使用 https://github.com/CarmJos/EasyConfiguration !"
+        "感谢您使用 https://github.com/CarmJos/configured !"
 })
 public interface DemoConfiguration extends Configuration {
 

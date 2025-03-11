@@ -13,7 +13,7 @@
     </properties>
 
     <groupId>cc.carm.lib</groupId>
-    <artifactId>easyconfiguration-parent</artifactId>
+    <artifactId>configured-parent</artifactId>
     <packaging>pom</packaging>
     <version>4.0.11</version>
     <modules>
@@ -33,9 +33,9 @@
         <module>demo</module>
     </modules>
 
-    <name>EasyConfiguration</name>
+    <name>configured</name>
     <description>A simple, easy-to-use and universal solution for managing configuration files.</description>
-    <url>https://github.com/CarmJos/EasyConfiguration</url>
+    <url>https://github.com/CarmJos/configured</url>
 
     <developers>
         <developer>
@@ -48,9 +48,9 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git@github.com:CarmJos/Easy.EasyConfiguration</connection>
-        <developerConnection>scm:git:git@github.com:CarmJos/EasyConfiguration.git</developerConnection>
-        <url>https://github.com/CarmJos/EasyConfiguration</url>
+        <connection>scm:git:git@github.com:CarmJos/Easy.configured</connection>
+        <developerConnection>scm:git:git@github.com:CarmJos/configured.git</developerConnection>
+        <url>https://github.com/CarmJos/configured</url>
         <tag>HEAD</tag>
     </scm>
 
@@ -63,12 +63,12 @@
 
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/CarmJos/EasyConfiguration/issues</url>
+        <url>https://github.com/CarmJos/configured/issues</url>
     </issueManagement>
 
     <ciManagement>
         <system>GitHub Actions</system>
-        <url>https://github.com/CarmJos/EasyConfiguration/actions/workflows/maven.yml</url>
+        <url>https://github.com/CarmJos/configured/actions/workflows/maven.yml</url>
     </ciManagement>
 
     <repositories>
@@ -92,11 +92,11 @@
     </repositories>
 
     <distributionManagement>
-        <downloadUrl>https://github.com/CarmJos/EasyConfiguration/releases</downloadUrl>
+        <downloadUrl>https://github.com/CarmJos/configured/releases</downloadUrl>
         <site>
             <id>javadoc</id>
-            <name>EasyConfiguration JavaDoc (on GitHub Pages)</name>
-            <url>https://CarmJos.github.io/EasyConfiguration</url>
+            <name>configured JavaDoc (on GitHub Pages)</name>
+            <url>https://CarmJos.github.io/configured</url>
         </site>
     </distributionManagement>
 
@@ -292,7 +292,7 @@
                 <repository>
                     <id>github</id>
                     <name>GitHub Packages</name>
-                    <url>https://maven.pkg.github.com/CarmJos/EasyConfiguration</url>
+                    <url>https://maven.pkg.github.com/CarmJos/configured</url>
                 </repository>
             </distributionManagement>
         </profile>

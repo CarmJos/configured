@@ -1,21 +1,21 @@
 ```text
-   ____                _____          ____                    __  _
-  / __/__ ____ __ __  / ___/__  ___  / _(_)__ ___ _________ _/ /_(_)__  ___
- / _// _ `(_-</ // / / /__/ _ \/ _ \/ _/ / _ `/ // / __/ _ `/ __/ / _ \/ _ \
-/___/\_,_/___/\_, /  \___/\___/_//_/_//_/\_, /\_,_/_/  \_,_/\__/_/\___/_//_/
-             /___/                      /___/
+  _____          ____                    __  _
+ / ___/__  ___  / _(_)__ ___ _________ _/ /_(_)__  ___
+/ /__/ _ \/ _ \/ _/ / _ `/ // / __/ _ `/ __/ / _ \/ _ \
+\___/\___/_//_/_//_/\_, /\_,_/_/  \_,_/\__/_/\___/_//_/
+                   /___/
 ```
 
 README LANGUAGES [ [English](README.md) | [**中文**](README_CN.md)  ]
 
-# EasyConfiguration
+# configured
 
-[![version](https://img.shields.io/github/v/release/CarmJos/EasyConfiguration)](https://github.com/CarmJos/EasyConfiguration/releases)
-[![License](https://img.shields.io/github/license/CarmJos/EasyConfiguration)](https://www.gnu.org/licenses/lgpl-3.0.html)
-[![workflow](https://github.com/CarmJos/EasyConfiguration/actions/workflows/maven.yml/badge.svg?branch=master)](https://github.com/CarmJos/EasyConfiguration/actions/workflows/maven.yml)
-[![CodeFactor](https://www.codefactor.io/repository/github/carmjos/easyconfiguration/badge)](https://www.codefactor.io/repository/github/carmjos/easyconfiguration)
-![CodeSize](https://img.shields.io/github/languages/code-size/CarmJos/EasyConfiguration)
-![](https://visitor-badge.glitch.me/badge?page_id=EasyConfiguration.readme)
+[![version](https://img.shields.io/github/v/release/CarmJos/configured)](https://github.com/CarmJos/configured/releases)
+[![License](https://img.shields.io/github/license/CarmJos/configured)](https://www.gnu.org/licenses/lgpl-3.0.html)
+[![workflow](https://github.com/CarmJos/configured/actions/workflows/maven.yml/badge.svg?branch=master)](https://github.com/CarmJos/configured/actions/workflows/maven.yml)
+[![CodeFactor](https://www.codefactor.io/repository/github/carmjos/configured/badge)](https://www.codefactor.io/repository/github/carmjos/configured)
+![CodeSize](https://img.shields.io/github/languages/code-size/CarmJos/configured)
+![](https://visitor-badge.glitch.me/badge?page_id=configured.readme)
 
 **轻松(做)配置！**
 
@@ -23,7 +23,7 @@ README LANGUAGES [ [English](README.md) | [**中文**](README_CN.md)  ]
 
 ## 特性 & 优势
 
-支持 [YAML](impl/yaml), [JSON](impl/json), [HOCON](impl/hocon) 和 [SQL](impl/sql) 等多种配置文件格式。
+支持 [YAML](providers/yaml), [JSON](providers/gson), [HOCON](providers/hocon) 和 [SQL](providers/sql) 等多种配置文件格式。
 
 - 基于类的配置文件初始化、加载、获取与更新机制，方便快捷。
 - 支持复杂配置的手动序列化、反序列化。
@@ -33,7 +33,7 @@ README LANGUAGES [ [English](README.md) | [**中文**](README_CN.md)  ]
 ## 开发
 
 详细开发介绍请 [点击这里](.doc/README.md) , JavaDoc(最新Release)
-请 [点击这里](https://CarmJos.github.io/EasyConfiguration) 。
+请 [点击这里](https://CarmJos.github.io/configured) 。
 
 ### 示例代码
 
@@ -142,9 +142,9 @@ info:
 
         <repository>
             <!--采用github依赖库，实时更新，但需要配置 (推荐) -->
-            <id>EasyConfiguration</id>
+            <id>configured</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/CarmJos/EasyConfiguration</url>
+            <url>https://maven.pkg.github.com/CarmJos/configured</url>
         </repository>
 
         <repository>
@@ -170,7 +170,7 @@ info:
         <!--基础实现部分，需要自行实现“Provider”与“Wrapper”。-->
         <dependency>
             <groupId>cc.carm.lib</groupId>
-            <artifactId>easyconfiguration-core</artifactId>
+            <artifactId>configured-core</artifactId>
             <version>[LATEST RELEASE]</version>
             <scope>compile</scope>
         </dependency>
@@ -178,7 +178,7 @@ info:
         <!--基于YAML文件的实现版本，可用于全部Java环境。-->
         <dependency>
             <groupId>cc.carm.lib</groupId>
-            <artifactId>easyconfiguration-yaml</artifactId>
+            <artifactId>configured-yaml</artifactId>
             <version>[LATEST RELEASE]</version>
             <scope>compile</scope>
         </dependency>
@@ -187,21 +187,21 @@ info:
         <!--需要注意的是，JSON不支持文件注释。-->
         <dependency>
             <groupId>cc.carm.lib</groupId>
-            <artifactId>easyconfiguration-gson</artifactId>
+            <artifactId>configured-gson</artifactId>
             <version>[LATEST RELEASE]</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>cc.carm.lib</groupId>
-            <artifactId>easyconfiguration-hocon</artifactId>
+            <artifactId>configured-hocon</artifactId>
             <version>[LATEST RELEASE]</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>cc.carm.lib</groupId>
-            <artifactId>easyconfiguration-sql</artifactId>
+            <artifactId>configured-sql</artifactId>
             <version>[LATEST RELEASE]</version>
             <scope>compile</scope>
         </dependency>
@@ -224,7 +224,7 @@ repositories {
     mavenCentral()
 
     // 采用github依赖库，实时更新，但需要配置 (推荐)
-    maven { url 'https://maven.pkg.github.com/CarmJos/EasyConfiguration' }
+    maven { url 'https://maven.pkg.github.com/CarmJos/configured' }
 
     // 采用我的私人依赖库，简单方便，但可能因为变故而无法使用
     maven { url 'https://repo.carm.cc/repository/maven-public/' }
@@ -241,18 +241,18 @@ repositories {
 dependencies {
 
     //基础实现部分，需要自行实现“Provider”与“Wrapper”。
-    api "cc.carm.lib:easyconfiguration-core:[LATEST RELEASE]"
+    api "cc.carm.lib:configured-core:[LATEST RELEASE]"
 
     //基于YAML文件的实现版本，可用于全部Java环境。
-    api "cc.carm.lib:easyconfiguration-yaml:[LATEST RELEASE]"
+    api "cc.carm.lib:configured-yaml:[LATEST RELEASE]"
 
     //基于JSON文件的实现版本，可用于全部Java环境。
     //需要注意的是，JSON不支持文件注释。
-    api "cc.carm.lib:easyconfiguration-gson:[LATEST RELEASE]"
+    api "cc.carm.lib:configured-gson:[LATEST RELEASE]"
 
-    api "cc.carm.lib:easyconfiguration-hocon:[LATEST RELEASE]"
+    api "cc.carm.lib:configured-hocon:[LATEST RELEASE]"
 
-    api "cc.carm.lib:easyconfiguration-sql:[LATEST RELEASE]"
+    api "cc.carm.lib:configured-sql:[LATEST RELEASE]"
 
 }
 ```
@@ -263,7 +263,7 @@ dependencies {
 
 ### [**MineConfiguration**](https://github.com/CarmJos/MineConfiguration) (by @CarmJos )
 
-EasyConfiguration for MineCraft!
+configured for MineCraft!
 开始在 MineCraft 相关服务器平台上轻松(做)配置吧！
 
 目前支持 BungeeCord, Bukkit(Spigot) 服务端，后续将支持更多平台。
@@ -276,7 +276,7 @@ EasyConfiguration for MineCraft!
 
 万分感谢 Jetbrains 为我们提供了从事此项目和其他开源项目的许可！
 
-[![](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)](https://www.jetbrains.com/?from=https://github.com/CarmJos/EasyConfiguration)
+[![](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)](https://www.jetbrains.com/?from=https://github.com/CarmJos/configured)
 
 万分感谢来自 [ArtformGames](https://github.com/ArtformGames) 对本项目的大力支持与积极贡献！
 

@@ -8,14 +8,14 @@
 
 README LANGUAGES [ [**English**](README.md) | [中文](README_CN.md)  ]
 
-# EasyConfiguration
+# configured
 
-[![version](https://img.shields.io/github/v/release/CarmJos/EasyConfiguration)](https://github.com/CarmJos/EasyConfiguration/releases)
-[![License](https://img.shields.io/github/license/CarmJos/EasyConfiguration)](https://www.gnu.org/licenses/lgpl-3.0.html)
-[![workflow](https://github.com/CarmJos/EasyConfiguration/actions/workflows/maven.yml/badge.svg?branch=master)](https://github.com/CarmJos/EasyConfiguration/actions/workflows/maven.yml)
-[![CodeFactor](https://www.codefactor.io/repository/github/carmjos/easyconfiguration/badge)](https://www.codefactor.io/repository/github/carmjos/easyconfiguration)
-![CodeSize](https://img.shields.io/github/languages/code-size/CarmJos/EasyConfiguration)
-![](https://visitor-badge.glitch.me/badge?page_id=EasyConfiguration.readme)
+[![version](https://img.shields.io/github/v/release/CarmJos/configured)](https://github.com/CarmJos/configured/releases)
+[![License](https://img.shields.io/github/license/CarmJos/configured)](https://www.gnu.org/licenses/lgpl-3.0.html)
+[![workflow](https://github.com/CarmJos/configured/actions/workflows/maven.yml/badge.svg?branch=master)](https://github.com/CarmJos/configured/actions/workflows/maven.yml)
+[![CodeFactor](https://www.codefactor.io/repository/github/carmjos/configured/badge)](https://www.codefactor.io/repository/github/carmjos/configured)
+![CodeSize](https://img.shields.io/github/languages/code-size/CarmJos/configured)
+![](https://visitor-badge.glitch.me/badge?page_id=configured.readme)
 
 **Easy _(to make)_ Configurations!**
 
@@ -35,7 +35,7 @@ format.
 
 ## Development
 
-For the latest JavaDoc release, [CLICK HERE](https://CarmJos.github.io/EasyConfiguration).
+For the latest JavaDoc release, [CLICK HERE](https://CarmJos.github.io/configured).
 
 For a detailed development guide, [CLICK HERE](.doc/README.md).
 
@@ -95,9 +95,9 @@ public class Sample {
     // 2. Initialize the configuration classes or instances.
     holder.initialize(SampleConfig.class);
     // 3. Enjoy using the configuration!
-    System.out.println("Enabled? -> " + SampleConfig.ENABLED.resolve());
+    System.out.println("Enabled? -> " + SampleConfig.ENABLED.resolve()); // true
     SampleConfig.ENABLED.set(false);
-    System.out.println("And now? -> " + SampleConfig.ENABLED.resolve());
+    System.out.println("And now? -> " + SampleConfig.ENABLED.resolve()); // false
     // p.s. Changes not save so enable value will still be true in the next run.
 
     System.out.println("Your name is " + SampleConfig.INFO.NAME.resolve() + " (age=" + SampleConfig.INFO.AGE.resolve() + ")!");
@@ -148,9 +148,9 @@ info:
 
         <repository>
             <!-- Using GitHub dependencies for real-time updates, configuration required (recommended). -->
-            <id>EasyConfiguration</id>
+            <id>configured</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/CarmJos/EasyConfiguration</url>
+            <url>https://maven.pkg.github.com/CarmJos/configured</url>
         </repository>
 
     </repositories>
@@ -169,7 +169,7 @@ info:
         <!-- Basic implementation part, requiring custom implementation of “Provider” and “Wrapper”. -->
         <dependency>
             <groupId>cc.carm.lib</groupId>
-            <artifactId>easyconfiguration-core</artifactId>
+            <artifactId>configured-core</artifactId>
             <version>[LATEST RELEASE]</version>
             <scope>compile</scope>
         </dependency>
@@ -177,7 +177,7 @@ info:
         <!-- YAML file-based implementation, compatible with all Java environments. -->
         <dependency>
             <groupId>cc.carm.lib</groupId>
-            <artifactId>easyconfiguration-yaml</artifactId>
+            <artifactId>configured-yaml</artifactId>
             <version>[LATEST RELEASE]</version>
             <scope>compile</scope>
         </dependency>
@@ -185,7 +185,7 @@ info:
         <!-- JSON file-based implementation, compatible with all Java environments. -->
         <dependency>
             <groupId>cc.carm.lib</groupId>
-            <artifactId>easyconfiguration-gson</artifactId>
+            <artifactId>configured-gson</artifactId>
             <version>[LATEST RELEASE]</version>
             <scope>compile</scope>
         </dependency>
@@ -208,7 +208,7 @@ repositories {
     mavenCentral()
 
     // Using GitHub dependencies for real-time updates, configuration required (recommended).
-    maven { url 'https://maven.pkg.github.com/CarmJos/EasyConfiguration' }
+    maven { url 'https://maven.pkg.github.com/CarmJos/configured' }
 
 }
 ```
@@ -223,13 +223,13 @@ repositories {
 dependencies {
 
     // Basic implementation part, requiring custom implementation of “Provider” and “Wrapper”.
-    api "cc.carm.lib:easyconfiguration-core:[LATEST RELEASE]"
+    api "cc.carm.lib:configured-core:[LATEST RELEASE]"
 
     // YAML file-based implementation, compatible with all Java environments.
-    api "cc.carm.lib:easyconfiguration-yaml:[LATEST RELEASE]"
+    api "cc.carm.lib:configured-yaml:[LATEST RELEASE]"
 
     // JSON file-based implementation, compatible with all Java environments.
-    api "cc.carm.lib:easyconfiguration-gson:[LATEST RELEASE]"
+    api "cc.carm.lib:configured-gson:[LATEST RELEASE]"
 
 }
 ```
@@ -240,7 +240,7 @@ dependencies {
 
 ### [**MineConfiguration**](https://github.com/CarmJos/MineConfiguration) (by @CarmJos)
 
-EasyConfiguration for MineCraft!
+configured for MineCraft!
 Easily manage configurations on MineCraft-related server platforms.
 
 Currently, it supports BungeeCord, Velocity, Bukkit (Spigot) servers, 
@@ -254,7 +254,7 @@ Thank you for supporting open-source projects!
 
 Many thanks to Jetbrains for kindly providing a license for us to work on this and other open-source projects.
 
-[![](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)](https://www.jetbrains.com/?from=https://github.com/CarmJos/EasyConfiguration)
+[![](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)](https://www.jetbrains.com/?from=https://github.com/CarmJos/configured)
 
 Many thanks to [ArtformGames](https://github.com/ArtformGames) for their 
 strong support and active contribution to this project!

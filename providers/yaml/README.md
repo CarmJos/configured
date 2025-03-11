@@ -1,4 +1,4 @@
-# EasyConfiguration-YAML
+# configured-YAML
 
 YAML file-based implementation, compatible with all Java environments.
 
@@ -20,9 +20,9 @@ YAML file-based implementation, compatible with all Java environments.
 
         <repository>
             <!-- Using GitHub dependencies for real-time updates, configuration required (recommended). -->
-            <id>EasyConfiguration</id>
+            <id>configured</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/CarmJos/EasyConfiguration</url>
+            <url>https://maven.pkg.github.com/CarmJos/configured</url>
         </repository>
 
     </repositories>
@@ -35,7 +35,7 @@ YAML file-based implementation, compatible with all Java environments.
     <dependencies>
         <dependency>
             <groupId>cc.carm.lib</groupId>
-            <artifactId>easyconfiguration-yaml</artifactId>
+            <artifactId>configured-yaml</artifactId>
             <version>[LATEST RELEASE]</version>
             <scope>compile</scope>
         </dependency>
@@ -52,13 +52,13 @@ repositories {
     mavenCentral()
 
     // Using GitHub dependencies for real-time updates, configuration required (recommended).
-    maven { url 'https://maven.pkg.github.com/CarmJos/EasyConfiguration' }
+    maven { url 'https://maven.pkg.github.com/CarmJos/configured' }
 
 }
 ```
 
 ```groovy
 dependencies {
-    api "cc.carm.lib:easyconfiguration-yaml:[LATEST RELEASE]"
+    api "cc.carm.lib:configured-yaml:[LATEST RELEASE]"
 }
 ```

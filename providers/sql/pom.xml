@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>easyconfiguration-parent</artifactId>
+        <artifactId>configured-parent</artifactId>
         <groupId>cc.carm.lib</groupId>
         <version>4.0.11</version>
         <relativePath>../../pom.xml</relativePath>
@@ -18,33 +18,33 @@
         <deps.mysql-driver.version>8.0.33</deps.mysql-driver.version>
         <deps.log4j.version>2.24.3</deps.log4j.version>
     </properties>
-    <artifactId>easyconfiguration-sql</artifactId>
+    <artifactId>configured-sql</artifactId>
 
     <dependencies>
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>easyconfiguration-core</artifactId>
+            <artifactId>configured-core</artifactId>
             <version>${project.parent.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>easyconfiguration-feature-commentable</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>${project.parent.groupId}</groupId>
-            <artifactId>easyconfiguration-feature-section</artifactId>
+            <artifactId>configured-feature-commentable</artifactId>
             <version>${project.parent.version}</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>easyconfiguration-feature-versioned</artifactId>
+            <artifactId>configured-feature-section</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>configured-feature-versioned</artifactId>
             <version>${project.parent.version}</version>
             <scope>compile</scope>
         </dependency>
@@ -70,7 +70,7 @@
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>easyconfiguration-demo</artifactId>
+            <artifactId>configured-demo</artifactId>
             <version>${project.parent.version}</version>
             <scope>test</scope>
         </dependency>
@@ -98,7 +98,7 @@
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>easyconfiguration-gson</artifactId>
+            <artifactId>configured-gson</artifactId>
             <version>${project.parent.version}</version>
             <scope>test</scope>
         </dependency>

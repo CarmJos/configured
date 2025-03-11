@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>easyconfiguration-parent</artifactId>
+        <artifactId>configured-parent</artifactId>
         <groupId>cc.carm.lib</groupId>
         <version>4.0.11</version>
     </parent>
@@ -14,28 +14,28 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
     </properties>
-    <artifactId>easyconfiguration-demo</artifactId>
+    <artifactId>configured-demo</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>easyconfiguration-core</artifactId>
+            <artifactId>configured-core</artifactId>
             <version>${project.parent.version}</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>easyconfiguration-feature-commentable</artifactId>
+            <artifactId>configured-feature-commentable</artifactId>
             <version>${project.parent.version}</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>easyconfiguration-feature-versioned</artifactId>
+            <artifactId>configured-feature-versioned</artifactId>
             <version>${project.parent.version}</version>
             <scope>compile</scope>
         </dependency>

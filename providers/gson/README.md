@@ -1,4 +1,4 @@
-# EasyConfiguration-JSON
+# configured-JSON
 
 JSON file-based implementation, compatible with all Java environments.
 
@@ -22,9 +22,9 @@ JSON file-based implementation, compatible with all Java environments.
 
         <repository>
             <!-- Using GitHub dependencies for real-time updates, configuration required (recommended). -->
-            <id>EasyConfiguration</id>
+            <id>configured</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/CarmJos/EasyConfiguration</url>
+            <url>https://maven.pkg.github.com/CarmJos/configured</url>
         </repository>
 
     </repositories>
@@ -37,7 +37,7 @@ JSON file-based implementation, compatible with all Java environments.
     <dependencies>
         <dependency>
             <groupId>cc.carm.lib</groupId>
-            <artifactId>easyconfiguration-json</artifactId>
+            <artifactId>configured-json</artifactId>
             <version>[LATEST RELEASE]</version>
             <scope>compile</scope>
         </dependency>
@@ -54,14 +54,14 @@ repositories {
     mavenCentral()
 
     // Using GitHub dependencies for real-time updates, configuration required (recommended).
-    maven { url 'https://maven.pkg.github.com/CarmJos/EasyConfiguration' }
+    maven { url 'https://maven.pkg.github.com/CarmJos/configured' }
 
 }
 ```
 
 ```groovy
 dependencies {
-    api "cc.carm.lib:easyconfiguration-json:[LATEST RELEASE]"
+    api "cc.carm.lib:configured-json:[LATEST RELEASE]"
 }
 ```
 

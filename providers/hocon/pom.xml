@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cc.carm.lib</groupId>
-        <artifactId>easyconfiguration-parent</artifactId>
+        <artifactId>configured-parent</artifactId>
         <version>4.0.11</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
@@ -15,38 +15,38 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
     </properties>
-    <artifactId>easyconfiguration-hocon</artifactId>
+    <artifactId>configured-hocon</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>easyconfiguration-core</artifactId>
+            <artifactId>configured-core</artifactId>
             <version>${project.parent.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>easyconfiguration-feature-commentable</artifactId>
+            <artifactId>configured-feature-commentable</artifactId>
             <version>${project.parent.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>easyconfiguration-feature-file</artifactId>
+            <artifactId>configured-feature-file</artifactId>
             <version>${project.parent.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>easyconfiguration-feature-section</artifactId>
+            <artifactId>configured-feature-section</artifactId>
             <version>${project.parent.version}</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>easyconfiguration-demo</artifactId>
+            <artifactId>configured-demo</artifactId>
             <version>${project.parent.version}</version>
             <scope>test</scope>
         </dependency>

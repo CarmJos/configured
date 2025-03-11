@@ -1,6 +1,6 @@
-# EasyConfiguration Javadoc
+# configured Javadoc
 
-基于 [Github Pages](https://pages.github.com/) 搭建，请访问 [JavaDoc](https://carmjos.github.io/EasyConfiguration) 。
+基于 [Github Pages](https://pages.github.com/) 搭建，请访问 [JavaDoc](https://carmjos.github.io/configured) 。
 
 ## 如何实现？
 

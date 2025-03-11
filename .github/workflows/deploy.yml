@@ -47,7 +47,7 @@ jobs:
         id: sitemap
         uses: cicirello/generate-sitemap@v1
         with:
-          base-url-path: https://CarmJos.github.io/EasyConfiguration
+          base-url-path: https://CarmJos.github.io/configured
           path-to-root: docs
 
       - name: "Output stats"
@@ -72,7 +72,7 @@ jobs:
         run: |
           cd docs
           git init
-          git remote add origin git@github.com:CarmJos/EasyConfiguration.git
+          git remote add origin git@github.com:CarmJos/configured.git
           git checkout -b gh-pages
           git add -A
           git commit -m "API Document generated."

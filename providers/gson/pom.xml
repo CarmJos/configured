@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>easyconfiguration-parent</artifactId>
+        <artifactId>configured-parent</artifactId>
         <groupId>cc.carm.lib</groupId>
         <version>4.0.11</version>
         <relativePath>../../pom.xml</relativePath>
@@ -15,35 +15,35 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
     </properties>
-    <artifactId>easyconfiguration-gson</artifactId>
+    <artifactId>configured-gson</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>easyconfiguration-core</artifactId>
+            <artifactId>configured-core</artifactId>
             <version>${project.parent.version}</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>easyconfiguration-feature-file</artifactId>
+            <artifactId>configured-feature-file</artifactId>
             <version>${project.parent.version}</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>easyconfiguration-feature-section</artifactId>
+            <artifactId>configured-feature-section</artifactId>
             <version>${project.parent.version}</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>easyconfiguration-demo</artifactId>
+            <artifactId>configured-demo</artifactId>
             <version>${project.parent.version}</version>
             <scope>test</scope>
         </dependency>
