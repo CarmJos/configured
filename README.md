@@ -1,10 +1,7 @@
-```text
-   ____                _____          ____                    __  _
-  / __/__ ____ __ __  / ___/__  ___  / _(_)__ ___ _________ _/ /_(_)__  ___
- / _// _ `(_-</ // / / /__/ _ \/ _ \/ _/ / _ `/ // / __/ _ `/ __/ / _ \/ _ \
-/___/\_,_/___/\_, /  \___/\___/_//_/_//_/\_, /\_,_/_/  \_,_/\__/_/\___/_//_/
-             /___/                      /___/
-```
+<div align=center>
+<img src=".doc/images/banner.png"  alt="Banner"/>
+</div>
+
 
 README LANGUAGES [ [**English**](README.md) | [中文](README_CN.md)  ]
 
@@ -42,6 +39,7 @@ For a detailed development guide, [CLICK HERE](.doc/README.md).
 ### Code Samples
 
 To quickly demonstrate the applicability of the project, here are a few practical demonstrations:
+
 - [Database configuration.](demo/src/main/java/cc/carm/lib/configuration/demo/DatabaseConfiguration.java)
 - [Demonstration of all types of configuration instance classes.](demo/src/main/java/cc/carm/lib/configuration/demo/tests/conf/DemoConfiguration.java)
 
@@ -49,35 +47,36 @@ Check out all code demonstrations [HERE](demo/src/main/java/cc/carm/lib/configur
 For more examples, see the [Development Guide](.doc/README.md).
 
 ```java
+
 @ConfigPath(root = true)
 @HeaderComments("Configurations for sample")
 public interface SampleConfig extends Configuration {
 
-  @InlineComment("Enabled?") // Inline comment
-  ConfiguredValue<Boolean> ENABLED = ConfiguredValue.of(true);
+    @InlineComment("Enabled?") // Inline comment
+    ConfiguredValue<Boolean> ENABLED = ConfiguredValue.of(true);
 
-  @HeaderComments("Server configurations") // Header comment
-  ConfiguredValue<Integer> PORT = ConfiguredValue.of(Integer.class);
+    @HeaderComments("Server configurations") // Header comment
+    ConfiguredValue<Integer> PORT = ConfiguredValue.of(Integer.class);
 
-  @HeaderComments({"[ UUID >-----------------------------------", "A lot of UUIDs"})
-  @FooterComments("[ UUID >-----------------------------------")
-  ConfiguredList<UUID> UUIDS = ConfiguredList.builderOf(UUID.class).fromString()
-          .parse(UUID::fromString).serialize(UUID::toString)
-          .defaults(
-                  UUID.fromString("00000000-0000-0000-0000-000000000000"),
-                  UUID.fromString("00000000-0000-0000-0000-000000000001")
-          ).build();
+    @HeaderComments({"[ UUID >-----------------------------------", "A lot of UUIDs"})
+    @FooterComments("[ UUID >-----------------------------------")
+    ConfiguredList<UUID> UUIDS = ConfiguredList.builderOf(UUID.class).fromString()
+            .parse(UUID::fromString).serialize(UUID::toString)
+            .defaults(
+                    UUID.fromString("00000000-0000-0000-0000-000000000000"),
+                    UUID.fromString("00000000-0000-0000-0000-000000000001")
+            ).build();
 
-  @ConfigPath("info") // Custom path
-  interface INFO extends Configuration {
+    @ConfigPath("info") // Custom path
+    interface INFO extends Configuration {
 
-    @HeaderComments("Configure your name!") // Header comment
-    ConfiguredValue<String> NAME = ConfiguredValue.of("Joker");
+        @HeaderComments("Configure your name!") // Header comment
+        ConfiguredValue<String> NAME = ConfiguredValue.of("Joker");
 
-    @ConfigPath("how-old-are-you") // Custom path
-    ConfiguredValue<Integer> AGE = ConfiguredValue.of(24);
+        @ConfigPath("how-old-are-you") // Custom path
+        ConfiguredValue<Integer> AGE = ConfiguredValue.of(24);
 
-  }
+    }
 
 }
 
@@ -85,23 +84,23 @@ public interface SampleConfig extends Configuration {
 
 ```java
 public class Sample {
-  public static void main(String[] args) {
-    // 1. Make a configuration provider from a file.
-    ConfigurationHolder<?> holder = YAMLConfigFactory.from("target/config.yml")
-            .resourcePath("configs/sample.yml")
-            .indent(4) // Optional: Set the indentation of the configuration file.
-            .build();
+    public static void main(String[] args) {
+        // 1. Make a configuration provider from a file.
+        ConfigurationHolder<?> holder = YAMLConfigFactory.from("target/config.yml")
+                .resourcePath("configs/sample.yml")
+                .indent(4) // Optional: Set the indentation of the configuration file.
+                .build();
 
-    // 2. Initialize the configuration classes or instances.
-    holder.initialize(SampleConfig.class);
-    // 3. Enjoy using the configuration!
-    System.out.println("Enabled? -> " + SampleConfig.ENABLED.resolve()); // true
-    SampleConfig.ENABLED.set(false);
-    System.out.println("And now? -> " + SampleConfig.ENABLED.resolve()); // false
-    // p.s. Changes not save so enable value will still be true in the next run.
+        // 2. Initialize the configuration classes or instances.
+        holder.initialize(SampleConfig.class);
+        // 3. Enjoy using the configuration!
+        System.out.println("Enabled? -> " + SampleConfig.ENABLED.resolve()); // true
+        SampleConfig.ENABLED.set(false);
+        System.out.println("And now? -> " + SampleConfig.ENABLED.resolve()); // false
+        // p.s. Changes not save so enable value will still be true in the next run.
 
-    System.out.println("Your name is " + SampleConfig.INFO.NAME.resolve() + " (age=" + SampleConfig.INFO.AGE.resolve() + ")!");
-  }
+        System.out.println("Your name is " + SampleConfig.INFO.NAME.resolve() + " (age=" + SampleConfig.INFO.AGE.resolve() + ")!");
+    }
 }
 
 ```
@@ -243,7 +242,7 @@ dependencies {
 configured for MineCraft!
 Easily manage configurations on MineCraft-related server platforms.
 
-Currently, it supports BungeeCord, Velocity, Bukkit (Spigot) servers, 
+Currently, it supports BungeeCord, Velocity, Bukkit (Spigot) servers,
 with more platforms to be supported soon.
 
 ## Support and Donation
@@ -256,7 +255,7 @@ Many thanks to Jetbrains for kindly providing a license for us to work on this a
 
 [![](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)](https://www.jetbrains.com/?from=https://github.com/CarmJos/configured)
 
-Many thanks to [ArtformGames](https://github.com/ArtformGames) for their 
+Many thanks to [ArtformGames](https://github.com/ArtformGames) for their
 strong support and active contribution to this project!
 
 <img src="https://raw.githubusercontent.com/ArtformGames/.github/master/logo/logo_full.svg" width="317px" height="117px" alt="ArtformGames">

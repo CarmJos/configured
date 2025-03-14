@@ -1,10 +1,6 @@
-```text
-  _____          ____                    __  _
- / ___/__  ___  / _(_)__ ___ _________ _/ /_(_)__  ___
-/ /__/ _ \/ _ \/ _/ / _ `/ // / __/ _ `/ __/ / _ \/ _ \
-\___/\___/_//_/_//_/\_, /\_,_/_/  \_,_/\__/_/\___/_//_/
-                   /___/
-```
+<div align=center>
+<img src=".doc/images/banner.png"  alt="Banner"/>
+</div>
 
 README LANGUAGES [ [English](README.md) | [**中文**](README_CN.md)  ]
 
