@@ -1,10 +1,5 @@
 <div align=center>
 <img src=".doc/images/banner.png"  alt="Banner"/>
-</div>
-
-README LANGUAGES [ [English](README.md) | [**中文**](README_CN.md)  ]
-
-# configured
 
 [![version](https://img.shields.io/github/v/release/CarmJos/configured)](https://github.com/CarmJos/configured/releases)
 [![License](https://img.shields.io/github/license/CarmJos/configured)](https://www.gnu.org/licenses/lgpl-3.0.html)
@@ -13,7 +8,13 @@ README LANGUAGES [ [English](README.md) | [**中文**](README_CN.md)  ]
 ![CodeSize](https://img.shields.io/github/languages/code-size/CarmJos/configured)
 ![](https://visitor-badge.glitch.me/badge?page_id=configured.readme)
 
-**轻松(做)配置！**
+README LANGUAGES [ [English](README.md) | [**中文**](README_CN.md)  ]
+
+</div>
+
+# configured (config-framework)
+
+**一次配置，轻松读取！**
 
 一款简单便捷的通用配置文件加载、读取与更新工具，可自定义配置的格式。
 
