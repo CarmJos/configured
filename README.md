@@ -1,11 +1,5 @@
 <div align=center>
 <img src=".doc/images/banner.png"  alt="Banner"/>
-</div>
-
-
-README LANGUAGES [ [**English**](README.md) | [中文](README_CN.md)  ]
-
-# configured
 
 [![version](https://img.shields.io/github/v/release/CarmJos/configured)](https://github.com/CarmJos/configured/releases)
 [![License](https://img.shields.io/github/license/CarmJos/configured)](https://www.gnu.org/licenses/lgpl-3.0.html)
@@ -14,10 +8,17 @@ README LANGUAGES [ [**English**](README.md) | [中文](README_CN.md)  ]
 ![CodeSize](https://img.shields.io/github/languages/code-size/CarmJos/configured)
 ![](https://visitor-badge.glitch.me/badge?page_id=configured.readme)
 
-**Easy _(to make)_ Configurations!**
+README LANGUAGES [ [**English**](README.md) | [中文](README_CN.md)  ]
+</div>
 
-A simple, easy-to-use and universal solution for managing configuration files.
-Enjoy the ease of use with customizable formats for loading, reading, and updating your configuration files.
+# configured (config-framework)
+
+_**"Once set, Simple get."**_ 
+
+A simple, easy-to-use and universal solution for managing, loading, reading, 
+and updating configuration files. 
+
+Supported **JSON**, **YAML**, **Hocon**, **TOML**, **SQL**, **MongoDB**... and much more!
 
 ## Features & Advantages
 
