@@ -49,9 +49,7 @@ public abstract class AbstractSectionBuilder<
     }
 
     public @NotNull SELF serialize(@NotNull DataFunction<PARAM, ? extends Map<String, Object>> serializer) {
-        return serialize((p, value) -> {
-            return serializer.handle(value);
-        });
+        return serialize((p, value) -> serializer.handle(value));
     }
 
     public @NotNull SELF serialize(@NotNull ValueConsumer<Map<String, Object>, PARAM> serializer) {

@@ -110,7 +110,7 @@ public class ValueManifest<T> {
     }
 
     @ApiStatus.Internal
-    protected Object getData() {
+    protected @Nullable Object getData() {
         return config().get(path());
     }
 
