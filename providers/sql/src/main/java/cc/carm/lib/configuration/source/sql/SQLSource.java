@@ -75,10 +75,10 @@ public class SQLSource extends ConfigureSource<SourcedSection, Map<String, Objec
         List<Object[]> dataValues = new ArrayList<>();
 
         SourcedSection section = section();
-        Map<String, ConfigValue<?>> values = holder().registeredValues();
-        for (Map.Entry<String, ConfigValue<?>> entry : values.entrySet()) {
+        Map<String, ConfigValue<?, ?>> values = holder().registeredValues();
+        for (Map.Entry<String, ConfigValue<?, ?>> entry : values.entrySet()) {
             @NotNull String path = entry.getKey();
-            @NotNull ConfigValue<?> config = entry.getValue();
+            @NotNull ConfigValue<?, ?> config = entry.getValue();
             @Nullable Object value = section.get(path);
 
             if (value instanceof SourcedSection) {

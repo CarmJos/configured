@@ -17,7 +17,8 @@ public class ConfiguredMsg extends ConfiguredText<String, PrintStream> {
         return builder().defaults(text).build();
     }
 
-    public ConfiguredMsg(@NotNull ValueManifest<TextContents> manifest, @NotNull String[] params) {
+    public ConfiguredMsg(@NotNull ValueManifest<TextContents, TextContents> manifest,
+                         @NotNull String[] params) {
         super(
                 manifest,
                 (p, s) -> s,

@@ -22,7 +22,7 @@ import java.util.function.Consumer;
  */
 public class ConfiguredText<MSG, RECEIVER> extends ConfiguredValue<TextContents> {
 
-    public static <M, R> Builder<M, R, ?> builder() {
+    public static <M, R> Builder<M, R, ?> create() {
         return new StardardBuilder<>();
     }
 
@@ -38,7 +38,7 @@ public class ConfiguredText<MSG, RECEIVER> extends ConfiguredValue<TextContents>
 
     protected final @NotNull String[] params; // The parameters of the message.
 
-    public ConfiguredText(@NotNull ValueManifest<TextContents> manifest,
+    public ConfiguredText(@NotNull ValueManifest<TextContents, TextContents> manifest,
                           @NotNull BiFunction<RECEIVER, String, String> parser,
                           @NotNull BiFunction<RECEIVER, String, MSG> compiler,
                           @NotNull BiConsumer<RECEIVER, List<MSG>> dispatcher,
@@ -121,7 +121,7 @@ public class ConfiguredText<MSG, RECEIVER> extends ConfiguredValue<TextContents>
     }
 
     public abstract static class Builder<MSG, RECEIVER, SELF extends Builder<MSG, RECEIVER, SELF>>
-            extends AbstractConfigBuilder<TextContents, ConfiguredText<MSG, RECEIVER>, ConfigurationHolder<?>, SELF> {
+            extends AbstractConfigBuilder<TextContents, TextContents, ConfiguredText<MSG, RECEIVER>, ConfigurationHolder<?>, SELF> {
         protected @NotNull TextContents.Builder defaultBuilder = TextContents.builder();
         protected @NotNull String[] params = new String[0];
 
