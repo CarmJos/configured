@@ -16,7 +16,7 @@
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
     </properties>
 
-    <artifactId>configured-feature-versioned</artifactId>
+    <artifactId>configured-feature-validators</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>

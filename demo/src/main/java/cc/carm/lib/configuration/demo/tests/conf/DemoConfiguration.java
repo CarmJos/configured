@@ -4,7 +4,6 @@ import cc.carm.lib.configuration.Configuration;
 import cc.carm.lib.configuration.annotation.*;
 import cc.carm.lib.configuration.demo.tests.model.ItemStack;
 import cc.carm.lib.configuration.demo.tests.model.UserRecord;
-import cc.carm.lib.configuration.value.ConfigValue;
 import cc.carm.lib.configuration.value.standard.ConfiguredList;
 import cc.carm.lib.configuration.value.standard.ConfiguredMap;
 import cc.carm.lib.configuration.value.standard.ConfiguredValue;
@@ -26,15 +25,18 @@ public interface DemoConfiguration extends Configuration {
 
     @ConfigPath(root = true)
     @ConfigVersion(2)
-    ConfigValue<Double> VERSION = ConfiguredValue.of(Double.class, 2.0D);
+    ConfiguredValue<Double> VERSION = ConfiguredValue.of(Double.class, 2.0D);
 
     @ConfigPath(root = true)
     @FooterComments({"此处内容将显示在配置条目的下方", "可用于补充说明，但一般不建议使用"})
-    ConfigValue<Long> TEST_NUMBER = ConfiguredValue.of(1000000L);
+    ConfiguredValue<Long> TEST_NUMBER = ConfiguredValue.with(Long.class)
+            .validate(l -> l > 100, "数值必须大于100")
+            .validate(l -> l < 100000000, "数值必须小于100000000")
+            .defaults(123456789L).build();
 
     @HeaderComments({"枚举类型测试"})
     @FooterComments({"上述的枚举内容本质上是通过STRING解析的"})
-    ConfigValue<ChronoUnit> TEST_ENUM = ConfiguredValue.of(ChronoUnit.class, ChronoUnit.DAYS);
+    ConfiguredValue<ChronoUnit> TEST_ENUM = ConfiguredValue.of(ChronoUnit.class, ChronoUnit.DAYS);
 
     @HeaderComments({"空值测试"})
     @InlineComment("空值Inline注释")
@@ -72,7 +74,7 @@ public interface DemoConfiguration extends Configuration {
     class SUB implements Configuration {
 
         @ConfigPath(value = "uuid-value", root = true)
-        public static final ConfigValue<UUID> UUID_CONFIG_VALUE = ConfiguredValue
+        public static final ConfiguredValue<UUID> UUID_CONFIG_VALUE = ConfiguredValue
                 .builderOf(UUID.class).fromString()
                 .parse((holder, data) -> UUID.fromString(data))
                 .build();

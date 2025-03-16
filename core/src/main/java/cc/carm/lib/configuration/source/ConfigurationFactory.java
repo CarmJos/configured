@@ -38,10 +38,11 @@ public abstract class ConfigurationFactory<
     protected @NotNull Map<String, ConfigurationMetaHolder> metadata = new HashMap<>();
     protected ConfigurationInitializer initializer = new ConfigurationInitializer();
 
-    public ConfigurationFactory() {
+    protected ConfigurationFactory() {
         this.adapters.register(StandardAdapters.PRIMITIVES);
         this.adapters.register(StandardAdapters.SECTIONS);
         this.adapters.register(StandardAdapters.ENUMS);
+        this.adapters.register(StandardAdapters.UUID);
     }
 
     protected abstract SELF self();

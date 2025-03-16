@@ -5,6 +5,7 @@ import cc.carm.lib.configuration.adapter.ValueParser;
 import cc.carm.lib.configuration.adapter.ValueSerializer;
 import cc.carm.lib.configuration.adapter.ValueType;
 import cc.carm.lib.configuration.builder.list.ConfigListBuilder;
+import cc.carm.lib.configuration.builder.list.SourceListBuilder;
 import cc.carm.lib.configuration.value.ValueManifest;
 import cc.carm.lib.configuration.value.impl.CachedConfigValue;
 import org.jetbrains.annotations.NotNull;
@@ -15,7 +16,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class ConfiguredList<V> extends CachedConfigValue<List<V>> implements List<V> {
+public class ConfiguredList<V> extends CachedConfigValue<List<V>, V> implements List<V> {
 
     public static <T> @NotNull ConfigListBuilder<T> builderOf(@NotNull Class<T> type) {
         return builderOf(ValueType.of(type));
@@ -25,10 +26,26 @@ public class ConfiguredList<V> extends CachedConfigValue<List<V>> implements Lis
         return new ConfigListBuilder<>(type);
     }
 
+    public static <T> @NotNull SourceListBuilder<T, T> with(@NotNull Class<T> registeredType) {
+        return with(ValueType.of(registeredType));
+    }
+
+    public static <T> @NotNull SourceListBuilder<T, T> with(@NotNull ValueType<T> registeredType) {
+        return new ConfigListBuilder<>(registeredType).from(registeredType);
+    }
+
+    @SafeVarargs
+    public static <T> @NotNull ConfiguredList<T> of(@NotNull T value, @NotNull T... values) {
+        List<T> list = new ArrayList<>();
+        list.add(value);
+        Collections.addAll(list, values);
+        return with(ValueType.of(value)).defaults(list).build();
+    }
+
     protected final @NotNull Supplier<? extends List<V>> constructor;
     protected final @NotNull ValueAdapter<V> paramAdapter;
 
-    public ConfiguredList(@NotNull ValueManifest<List<V>> manifest,
+    public ConfiguredList(@NotNull ValueManifest<List<V>, V> manifest,
                           @NotNull Supplier<? extends List<V>> constructor,
                           @NotNull ValueAdapter<V> paramAdapter) {
         super(manifest);
@@ -79,7 +96,7 @@ public class ConfiguredList<V> extends CachedConfigValue<List<V>> implements Lis
         for (Object dataVal : data) {
             if (dataVal == null) continue;
             try {
-                list.add(parser.parse(holder(), paramType(), dataVal));
+                list.add(withValidated(parser.parse(holder(), paramType(), dataVal)));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -88,20 +105,21 @@ public class ConfiguredList<V> extends CachedConfigValue<List<V>> implements Lis
     }
 
     @Override
-    public void set(@Nullable List<V> value) {
-        updateCache(value);
-        if (value == null) {
+    public void set(@Nullable List<V> list) {
+        updateCache(list);
+        if (list == null) {
             setData(null);
             return;
         }
-
+        
         ValueSerializer<V> serializer = serializer();
         if (serializer == null) return;
+
         List<Object> data = new ArrayList<>();
-        for (V val : value) {
+        for (V val : list) {
             if (val == null) continue;
             try {
-                data.add(serializer.serialize(holder(), paramType(), val));
+                data.add(serializer.serialize(holder(), paramType(), withValidated(val)));
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

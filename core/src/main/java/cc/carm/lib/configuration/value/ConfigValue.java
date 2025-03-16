@@ -33,9 +33,9 @@ import java.util.Optional;
  * @see ValueManifest Base class providing metadata and default value handling
  * @see ConfigurationHolder Responsible for configuration source persistence
  */
-public abstract class ConfigValue<T> extends ValueManifest<T> {
+public abstract class ConfigValue<T, U> extends ValueManifest<T, U> {
 
-    protected ConfigValue(@NotNull ValueManifest<T> manifest) {
+    protected ConfigValue(@NotNull ValueManifest<T, U> manifest) {
         super(manifest);
     }
 

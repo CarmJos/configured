@@ -1,6 +1,7 @@
 package cc.carm.lib.configuration.value;
 
 import cc.carm.lib.configuration.adapter.ValueType;
+import cc.carm.lib.configuration.function.ValueValidator;
 import cc.carm.lib.configuration.source.ConfigurationHolder;
 import cc.carm.lib.configuration.source.meta.ConfigurationMetaHolder;
 import cc.carm.lib.configuration.source.section.ConfigureSource;
@@ -11,37 +12,48 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
-public class ValueManifest<T> {
+public class ValueManifest<TYPE, UNIT> {
 
-    protected final @NotNull ValueType<T> type;
+    protected final @NotNull ValueType<TYPE> type;
     protected final @NotNull BiConsumer<@NotNull ConfigurationHolder<?>, @NotNull String> initializer;
 
     protected @Nullable ConfigurationHolder<?> holder;
     protected @Nullable String path; // Section path
 
-    protected @NotNull Supplier<@Nullable T> defaultSupplier;
+    protected @NotNull ValueValidator<? super UNIT> validator;
+    protected @NotNull Supplier<@Nullable TYPE> defaultSupplier;
 
-    public ValueManifest(@NotNull ValueType<T> type) {
-        this(type, () -> null, EMPTY_INITIALIZER, null, null);
+    public ValueManifest(@NotNull ValueType<TYPE> type) {
+        this(type, () -> null, ValueValidator.none(), EMPTY_INITIALIZER, null, null);
     }
 
-    public ValueManifest(@NotNull T defaultValue) {
+    public ValueManifest(@NotNull TYPE defaultValue) {
         this(ValueType.of(defaultValue), () -> defaultValue);
     }
 
-    public ValueManifest(@NotNull ValueType<T> type, @NotNull Supplier<@Nullable T> defaultSupplier) {
-        this(type, defaultSupplier, EMPTY_INITIALIZER, null, null);
+    public ValueManifest(@NotNull ValueType<TYPE> type, @NotNull Supplier<@Nullable TYPE> defaultSupplier) {
+        this(type, defaultSupplier, ValueValidator.none(), EMPTY_INITIALIZER, null, null);
     }
 
-    public ValueManifest(@NotNull ValueType<T> type, @NotNull Supplier<@Nullable T> defaultSupplier,
+    public ValueManifest(@NotNull ValueType<TYPE> type,
+                         @NotNull Supplier<@Nullable TYPE> defaultSupplier,
+                         @NotNull ValueValidator<? super UNIT> validator) {
+        this(type, defaultSupplier, validator, EMPTY_INITIALIZER, null, null);
+    }
+
+    public ValueManifest(@NotNull ValueType<TYPE> type, @NotNull Supplier<@Nullable TYPE> defaultSupplier,
+                         @NotNull ValueValidator<? super UNIT> validator,
                          @NotNull BiConsumer<@NotNull ConfigurationHolder<?>, @NotNull String> initializer) {
-        this(type, defaultSupplier, initializer, null, null);
+        this(type, defaultSupplier, validator, initializer, null, null);
     }
 
-    public ValueManifest(@NotNull ValueType<T> type, @NotNull Supplier<@Nullable T> defaultSupplier,
+    public ValueManifest(@NotNull ValueType<TYPE> type,
+                         @NotNull Supplier<@Nullable TYPE> defaultSupplier,
+                         @NotNull ValueValidator<? super UNIT> validator,
                          @NotNull BiConsumer<@NotNull ConfigurationHolder<?>, @NotNull String> initializer,
                          @Nullable ConfigurationHolder<?> holder, @Nullable String path) {
         this.type = type;
+        this.validator = validator;
         this.initializer = initializer;
         this.defaultSupplier = defaultSupplier;
         this.holder = holder;
@@ -49,8 +61,8 @@ public class ValueManifest<T> {
         initialize();
     }
 
-    protected ValueManifest(@NotNull ValueManifest<T> manifest) {
-        this(manifest.type, manifest.defaultSupplier, manifest.initializer, manifest.holder, manifest.path);
+    protected ValueManifest(@NotNull ValueManifest<TYPE, UNIT> manifest) {
+        this(manifest.type, manifest.defaultSupplier, manifest.validator, manifest.initializer, manifest.holder, manifest.path);
     }
 
     public void initialize(@NotNull ConfigurationHolder<?> holder, @NotNull String path) {
@@ -63,7 +75,7 @@ public class ValueManifest<T> {
         if (holder != null && path != null) this.initializer.accept(holder, path);
     }
 
-    public @NotNull ValueType<T> type() {
+    public @NotNull ValueType<TYPE> type() {
         return this.type;
     }
 
@@ -75,20 +87,40 @@ public class ValueManifest<T> {
         this.path = path;
     }
 
-    public @Nullable T defaults() {
+    public @Nullable TYPE defaults() {
         return this.defaultSupplier.get();
     }
 
-    public void defaults(@Nullable T defaultValue) {
+    public void defaults(@Nullable TYPE defaultValue) {
         defaults(() -> defaultValue);
     }
 
-    public void defaults(@NotNull Supplier<@Nullable T> defaultValue) {
+    public void defaults(@NotNull Supplier<@Nullable TYPE> defaultValue) {
         this.defaultSupplier = defaultValue;
     }
 
     public boolean hasDefaults() {
-        return this.defaultSupplier.get() != null;
+        return defaults() != null;
+    }
+
+    public @NotNull ValueValidator<? super UNIT> validator() {
+        return this.validator;
+    }
+
+    public void validator(@NotNull ValueValidator<? super UNIT> validator) {
+        this.validator = validator;
+    }
+
+    public void validate(@NotNull ValueValidator<? super UNIT> validator) {
+        validator((h, v) -> {
+            this.validator.validate(h, v);
+            validator.validate(h, v);
+        });
+    }
+
+    protected UNIT withValidated(@Nullable UNIT value) throws Exception {
+        validator.validate(holder(), value);
+        return value;
     }
 
     public @NotNull String path() {
@@ -105,7 +137,7 @@ public class ValueManifest<T> {
         return holder().config();
     }
 
-    public ConfigurationMetaHolder metadata() {
+    public @NotNull ConfigurationMetaHolder metadata() {
         return holder().metadata(path());
     }
 

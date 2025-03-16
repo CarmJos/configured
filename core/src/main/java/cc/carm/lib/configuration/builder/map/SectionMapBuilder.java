@@ -14,10 +14,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class SectionMapBuilder<MAP extends Map<K, V>, K, V>
-        extends AbstractSectionBuilder<
-        Map<K, V>, V, ConfiguredMap<K, V>,
-        SectionMapBuilder<MAP, K, V>
-        > {
+        extends AbstractSectionBuilder<Map<K, V>, V, ConfiguredMap<K, V>, SectionMapBuilder<MAP, K, V>> {
 
     protected final @NotNull ValueType<K> keyType;
 

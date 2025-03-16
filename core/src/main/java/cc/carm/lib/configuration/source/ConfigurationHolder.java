@@ -86,7 +86,7 @@ public abstract class ConfigurationHolder<SOURCE extends ConfigureSource<?, ?, S
 
     @NotNull
     @UnmodifiableView
-    public Map<String, ConfigValue<?>> registeredValues() {
+    public Map<String, ConfigValue<?, ?>> registeredValues() {
         return extractMetadata(StandardMeta.VALUE);
     }
 
@@ -129,7 +129,7 @@ public abstract class ConfigurationHolder<SOURCE extends ConfigureSource<?, ?, S
         }
     }
 
-    public void initialize(@NotNull ValueManifest<?> value) {
+    public void initialize(@NotNull ValueManifest<?, ?> value) {
         value.holder(this);
     }
 

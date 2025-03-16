@@ -7,6 +7,6 @@ public interface StandardMeta {
     /**
      * To mark the {@link ConfigValue} instance of specific path.
      */
-    ConfigurationMetadata<ConfigValue<?>> VALUE = ConfigurationMetadata.of();
+    ConfigurationMetadata<ConfigValue<?, ?>> VALUE = ConfigurationMetadata.of();
 
 }

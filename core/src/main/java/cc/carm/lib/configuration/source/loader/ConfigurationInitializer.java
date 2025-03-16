@@ -21,7 +21,7 @@ import java.util.function.Function;
 public class ConfigurationInitializer {
 
     protected @NotNull PathGenerator pathGenerator;
-    protected @NotNull ConfigInitializeHandler<Field, ConfigValue<?>> valueInitializer;
+    protected @NotNull ConfigInitializeHandler<Field, ConfigValue<?, ?>> valueInitializer;
     protected @NotNull ConfigInitializeHandler<Class<? extends Configuration>, Object> classInitializer;
 
     public ConfigurationInitializer() {
@@ -29,7 +29,7 @@ public class ConfigurationInitializer {
     }
 
     public ConfigurationInitializer(@NotNull PathGenerator pathGenerator,
-                                    @NotNull ConfigInitializeHandler<Field, ConfigValue<?>> valueInitializer,
+                                    @NotNull ConfigInitializeHandler<Field, ConfigValue<?, ?>> valueInitializer,
                                     @NotNull ConfigInitializeHandler<Class<? extends Configuration>, Object> classInitializer) {
         this.pathGenerator = pathGenerator;
         this.valueInitializer = valueInitializer;
@@ -44,11 +44,11 @@ public class ConfigurationInitializer {
         return pathGenerator;
     }
 
-    public ConfigInitializeHandler<Field, ConfigValue<?>> fieldInitializer() {
+    public ConfigInitializeHandler<Field, ConfigValue<?, ?>> fieldInitializer() {
         return valueInitializer;
     }
 
-    public void fieldInitializer(@NotNull ConfigInitializeHandler<Field, ConfigValue<?>> fieldInitializer) {
+    public void fieldInitializer(@NotNull ConfigInitializeHandler<Field, ConfigValue<?,?>> fieldInitializer) {
         this.valueInitializer = fieldInitializer;
     }
 
@@ -60,7 +60,7 @@ public class ConfigurationInitializer {
         this.classInitializer = classInitializer;
     }
 
-    public void appendFieldInitializer(@NotNull ConfigInitializeHandler<Field, ConfigValue<?>> fieldInitializer) {
+    public void appendFieldInitializer(@NotNull ConfigInitializeHandler<Field, ConfigValue<?,?>> fieldInitializer) {
         this.valueInitializer = this.valueInitializer.andThen(fieldInitializer);
     }
 
@@ -163,9 +163,9 @@ public class ConfigurationInitializer {
             field.setAccessible(true);
             Object object = field.get(source);
 //
-            if (object instanceof ConfigValue<?>) {
+            if (object instanceof ConfigValue<?,?>) {
                 // 目标是 ConfigValue 实例，进行具体的初始化注入
-                ConfigValue<?> value = (ConfigValue<?>) object;
+                ConfigValue<?,?> value = (ConfigValue<?,?>) object;
                 String path = getFieldPath(holder, parent, field);
                 if (path == null) return;
                 value.initialize(holder, path);

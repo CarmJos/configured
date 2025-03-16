@@ -9,19 +9,19 @@ import cc.carm.lib.configuration.value.ConfigValue;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractSourceBuilder<
-        V, SOURCE, PARAM, RESULT extends ConfigValue<V>,
-        SELF extends AbstractSourceBuilder<V, SOURCE, PARAM, RESULT, SELF>
-        > extends CommonConfigBuilder<V, RESULT, SELF> {
+        V, SOURCE, UNIT, RESULT extends ConfigValue<V, UNIT>,
+        SELF extends AbstractSourceBuilder<V, SOURCE, UNIT, RESULT, SELF>
+        > extends CommonConfigBuilder<V, UNIT, RESULT, SELF> {
 
     protected final @NotNull ValueType<SOURCE> sourceType;
-    protected final @NotNull ValueType<PARAM> paramType;
-    protected @NotNull ValueHandler<SOURCE, PARAM> valueParser;
-    protected @NotNull ValueHandler<PARAM, SOURCE> valueSerializer;
+    protected final @NotNull ValueType<UNIT> paramType;
+    protected @NotNull ValueHandler<SOURCE, UNIT> valueParser;
+    protected @NotNull ValueHandler<UNIT, SOURCE> valueSerializer;
 
     protected AbstractSourceBuilder(@NotNull ValueType<V> type,
-                                    @NotNull ValueType<SOURCE> sourceType, @NotNull ValueType<PARAM> paramType,
-                                    @NotNull ValueHandler<SOURCE, PARAM> parser,
-                                    @NotNull ValueHandler<PARAM, SOURCE> serializer) {
+                                    @NotNull ValueType<SOURCE> sourceType, @NotNull ValueType<UNIT> paramType,
+                                    @NotNull ValueHandler<SOURCE, UNIT> parser,
+                                    @NotNull ValueHandler<UNIT, SOURCE> serializer) {
         super(type);
         this.sourceType = sourceType;
         this.paramType = paramType;
@@ -29,25 +29,25 @@ public abstract class AbstractSourceBuilder<
         this.valueSerializer = serializer;
     }
 
-    public @NotNull SELF parse(@NotNull DataFunction<SOURCE, PARAM> parser) {
+    public @NotNull SELF parse(@NotNull DataFunction<SOURCE, UNIT> parser) {
         return parse((p, source) -> parser.handle(source));
     }
 
-    public @NotNull SELF parse(@NotNull ValueHandler<SOURCE, PARAM> parser) {
+    public @NotNull SELF parse(@NotNull ValueHandler<SOURCE, UNIT> parser) {
         this.valueParser = parser;
         return self();
     }
 
-    public @NotNull SELF serialize(@NotNull ValueHandler<PARAM, SOURCE> serializer) {
+    public @NotNull SELF serialize(@NotNull ValueHandler<UNIT, SOURCE> serializer) {
         this.valueSerializer = serializer;
         return self();
     }
 
-    public @NotNull SELF serialize(@NotNull DataFunction<PARAM, SOURCE> serializer) {
+    public @NotNull SELF serialize(@NotNull DataFunction<UNIT, SOURCE> serializer) {
         return serialize((p, value) -> serializer.handle(value));
     }
 
-    protected ValueAdapter<PARAM> buildAdapter() {
+    protected ValueAdapter<UNIT> buildAdapter() {
         return new ValueAdapter<>(this.paramType)
                 .parser((holder, type, data) -> {
                     SOURCE source = holder.deserialize(this.sourceType, data);

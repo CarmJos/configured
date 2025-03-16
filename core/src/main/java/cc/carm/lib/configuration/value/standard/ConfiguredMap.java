@@ -17,7 +17,11 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class ConfiguredMap<K, V> extends CachedConfigValue<Map<K, V>> implements Map<K, V> {
+public class ConfiguredMap<K, V> extends CachedConfigValue<Map<K, V>, V> implements Map<K, V> {
+
+    public static <V> ConfigMapCreator<String, V> builderOf(@NotNull Class<V> valueType) {
+        return builderOf(String.class, valueType);
+    }
 
     public static <K, V> ConfigMapCreator<K, V> builderOf(@NotNull ValueType<K> keyType, @NotNull ValueType<V> valueType) {
         return new ConfigMapCreator<>(keyType, valueType);
@@ -38,7 +42,7 @@ public class ConfiguredMap<K, V> extends CachedConfigValue<Map<K, V>> implements
     protected final @NotNull ValueAdapter<K> keyAdapter;
     protected final @NotNull ValueAdapter<V> valueAdapter;
 
-    public ConfiguredMap(@NotNull ValueManifest<Map<K, V>> manifest,
+    public ConfiguredMap(@NotNull ValueManifest<Map<K, V>, V> manifest,
                          @NotNull Supplier<? extends Map<K, V>> constructor,
                          @NotNull ValueAdapter<K> keyAdapter, @NotNull ValueAdapter<V> valueAdapter) {
         super(manifest);
@@ -80,8 +84,9 @@ public class ConfiguredMap<K, V> extends CachedConfigValue<Map<K, V>> implements
         if (keys.isEmpty()) return getDefaultFirst(map);
 
         ValueParser<K> keyParser = parserFor(keyAdapter);
+        if (keyParser == null) return getDefaultFirst(map);
         ValueParser<V> valueParser = parserFor(valueAdapter);
-        if (keyParser == null || valueParser == null) return getDefaultFirst(map);
+        if (valueParser == null) return getDefaultFirst(map);
 
         for (String dataKey : keys) {
             Object dataVal = section.get(dataKey);
@@ -89,7 +94,7 @@ public class ConfiguredMap<K, V> extends CachedConfigValue<Map<K, V>> implements
             try {
                 K key = keyParser.parse(holder(), keyType(), dataKey);
                 V value = valueParser.parse(holder(), valueType(), dataVal);
-                map.put(key, value);
+                map.put(key, withValidated(value));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -116,8 +121,9 @@ public class ConfiguredMap<K, V> extends CachedConfigValue<Map<K, V>> implements
         }
 
         ValueSerializer<K> keySerializer = serializerFor(keyAdapter);
+        if (keySerializer == null) return;
         ValueSerializer<V> valueSerializer = serializerFor(valueAdapter);
-        if (keySerializer == null || valueSerializer == null) return;
+        if (valueSerializer == null) return;
 
         Map<Object, Object> data = new LinkedHashMap<>();
 
@@ -125,7 +131,7 @@ public class ConfiguredMap<K, V> extends CachedConfigValue<Map<K, V>> implements
             try {
                 data.put(
                         keySerializer.serialize(holder(), keyType(), entry.getKey()),
-                        valueSerializer.serialize(holder(), valueType(), entry.getValue())
+                        valueSerializer.serialize(holder(), valueType(), withValidated(entry.getValue()))
                 );
             } catch (Exception e) {
                 e.printStackTrace();

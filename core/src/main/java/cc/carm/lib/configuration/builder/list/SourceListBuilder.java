@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class SourceListBuilder<SOURCE, V>
@@ -32,6 +33,23 @@ public class SourceListBuilder<SOURCE, V>
 
     public final @NotNull SourceListBuilder<SOURCE, V> defaults(@NotNull Collection<V> values) {
         return defaults(new ArrayList<>(values));
+    }
+
+    public final @NotNull SourceListBuilder<SOURCE, V> defaults(@NotNull Consumer<List<V>> constructor) {
+        return defaults(() -> {
+            List<V> list = new ArrayList<>();
+            constructor.accept(list);
+            return list;
+        });
+    }
+
+    public SourceListBuilder<SOURCE, V> constructor(@NotNull Supplier<? extends List<V>> constructor) {
+        this.constructor = constructor;
+        return this;
+    }
+
+    public <LIST extends List<V>> SourceListBuilder<SOURCE, V> construct(@NotNull LIST list) {
+        return constructor(() -> list);
     }
 
     @Override

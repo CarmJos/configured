@@ -13,10 +13,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class SourceMapBuilder<MAP extends Map<K, V>, SOURCE, K, V>
-        extends AbstractSourceBuilder<
-        Map<K, V>, SOURCE, V, ConfiguredMap<K, V>,
-        SourceMapBuilder<MAP, SOURCE, K, V>
-        > {
+        extends AbstractSourceBuilder<Map<K, V>, SOURCE, V, ConfiguredMap<K, V>, SourceMapBuilder<MAP, SOURCE, K, V>> {
 
     protected final @NotNull ValueType<K> keyType;
 

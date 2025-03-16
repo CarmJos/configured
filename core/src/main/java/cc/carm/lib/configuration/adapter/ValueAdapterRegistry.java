@@ -61,7 +61,9 @@ public class ValueAdapterRegistry {
         }
     }
 
-    public <T> void register(@NotNull ValueType<T> type, @Nullable ValueSerializer<T> serializer, @Nullable ValueParser<T> deserializer) {
+    public <T> void register(@NotNull ValueType<T> type,
+                             @Nullable ValueSerializer<T> serializer,
+                             @Nullable ValueParser<T> deserializer) {
         if (serializer == null && deserializer == null) return;
         ValueAdapter<T> existing = adapterOf(type);
         if (existing != null) {

@@ -1,7 +1,6 @@
 package cc.carm.lib.configuration.builder.value;
 
 import cc.carm.lib.configuration.adapter.ValueType;
-import cc.carm.lib.configuration.builder.impl.AbstractSectionBuilder;
 import cc.carm.lib.configuration.function.ValueHandler;
 import cc.carm.lib.configuration.source.section.ConfigureSection;
 import org.jetbrains.annotations.NotNull;

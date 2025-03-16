@@ -6,7 +6,6 @@ import cc.carm.lib.configuration.annotation.FooterComments;
 import cc.carm.lib.configuration.annotation.HeaderComments;
 import cc.carm.lib.configuration.annotation.InlineComment;
 import cc.carm.lib.configuration.demo.tests.model.UserRecord;
-import cc.carm.lib.configuration.value.ConfigValue;
 import cc.carm.lib.configuration.value.standard.ConfiguredValue;
 
 import java.util.UUID;
@@ -20,7 +19,7 @@ public class RegistryConfig implements Configuration {
     @FooterComments({"12313213212"})
     @InlineComment(value = "用户名(匹配注释)", regex = "name") // 通过注解给配置添加注释。
     @InlineComment(value = "信息", regex = {"info.*", "info.game.*"}) // 通过注解给配置添加注释。
-    public final ConfigValue<UserRecord> OWNER = ConfiguredValue.builderOf(UserRecord.class).fromSection()
+    public final ConfiguredValue<UserRecord> OWNER = ConfiguredValue.builderOf(UserRecord.class).fromSection()
             .defaults(new UserRecord("Carm", UUID.randomUUID()))
             .parse((holder, section) -> UserRecord.deserialize(section))
             .serialize((holder, data) -> data.serialize()).build();

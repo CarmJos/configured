@@ -9,12 +9,12 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class CachedConfigValue<T> extends ConfigValue<T> {
+public abstract class CachedConfigValue<T, U> extends ConfigValue<T, U> {
 
     protected @Nullable T cachedValue;
     protected long parsedTime = -1;
 
-    protected CachedConfigValue(@NotNull ValueManifest<T> manifest) {
+    protected CachedConfigValue(@NotNull ValueManifest<T, U> manifest) {
         super(manifest);
     }
 

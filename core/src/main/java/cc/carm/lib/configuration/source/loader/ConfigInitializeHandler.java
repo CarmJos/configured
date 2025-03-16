@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 public interface ConfigInitializeHandler<T, V> {
 
     static <T, V> ConfigInitializeHandler<T, V> start() {
-        return (provider, path, value, instace) -> {
+        return (provider, path, value, instance) -> {
         };
     }
 

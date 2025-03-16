@@ -8,9 +8,11 @@ import cc.carm.lib.configuration.value.standard.ConfiguredList;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class SectionListBuilder<V> extends AbstractSectionBuilder<List<V>, V, ConfiguredList<V>, SectionListBuilder<V>> {
+public class SectionListBuilder<V>
+        extends AbstractSectionBuilder<List<V>, V, ConfiguredList<V>, SectionListBuilder<V>> {
 
     protected @NotNull Supplier<? extends List<V>> constructor;
 
@@ -30,6 +32,14 @@ public class SectionListBuilder<V> extends AbstractSectionBuilder<List<V>, V, Co
 
     public final @NotNull SectionListBuilder<V> defaults(@NotNull Collection<V> values) {
         return defaults(new ArrayList<>(values));
+    }
+
+    public final @NotNull SectionListBuilder<V> defaults(@NotNull Consumer<List<V>> constructor) {
+        return defaults(() -> {
+            List<V> list = new ArrayList<>();
+            constructor.accept(list);
+            return list;
+        });
     }
 
     public SectionListBuilder<V> constructor(@NotNull Supplier<? extends List<V>> constructor) {

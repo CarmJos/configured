@@ -5,6 +5,8 @@ import cc.carm.lib.configuration.adapter.ValueType;
 import cc.carm.lib.configuration.source.section.ConfigureSection;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.UUID;
+
 import static cc.carm.lib.configuration.adapter.strandard.PrimitiveAdapter.*;
 
 public interface StandardAdapters {
@@ -16,6 +18,12 @@ public interface StandardAdapters {
     };
 
     @NotNull ValueAdapter<Enum<?>> ENUMS = PrimitiveAdapter.ofEnum();
+
+    @NotNull ValueAdapter<UUID> UUID = new ValueAdapter<>(
+            ValueType.of(UUID.class),
+            (provider, type, value) -> value.toString(),
+            (provider, type, value) -> java.util.UUID.fromString(value.toString())
+    );
 
     @NotNull ValueAdapter<ConfigureSection> SECTIONS = new ValueAdapter<>(
             ValueType.of(ConfigureSection.class),

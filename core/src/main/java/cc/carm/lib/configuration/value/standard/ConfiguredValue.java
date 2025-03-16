@@ -5,6 +5,8 @@ import cc.carm.lib.configuration.adapter.ValueParser;
 import cc.carm.lib.configuration.adapter.ValueSerializer;
 import cc.carm.lib.configuration.adapter.ValueType;
 import cc.carm.lib.configuration.builder.value.ConfigValueBuilder;
+import cc.carm.lib.configuration.builder.value.SourceValueBuilder;
+import cc.carm.lib.configuration.source.ConfigurationHolder;
 import cc.carm.lib.configuration.value.ValueManifest;
 import cc.carm.lib.configuration.value.impl.CachedConfigValue;
 import org.jetbrains.annotations.NotNull;
@@ -12,14 +14,52 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
-public class ConfiguredValue<V> extends CachedConfigValue<V> {
+public class ConfiguredValue<V> extends CachedConfigValue<V, V> {
 
+    /**
+     * Create a new value builder.
+     *
+     * @param type The type of the value.
+     * @param <V>  The type of the value.
+     * @return a {@link ConfigValueBuilder} with the specified type.
+     */
     public static <V> ConfigValueBuilder<V> builderOf(@NotNull Class<V> type) {
         return new ConfigValueBuilder<>(ValueType.of(type));
     }
 
+    /**
+     * Create a new value builder.
+     *
+     * @param type The type of the value.
+     * @param <V>  The type of the value.
+     * @return a {@link ConfigValueBuilder} with the specified type.
+     */
     public static <V> ConfigValueBuilder<V> builderOf(@NotNull ValueType<V> type) {
         return new ConfigValueBuilder<>(type);
+    }
+
+    /**
+     * Create a new value builder with the specified {@link ConfigurationHolder#registeredValues()} type.
+     *
+     * @param registeredType The type of the value.
+     * @param <V>            The type of the value.
+     * @return a {@link SourceValueBuilder} with the specified registered type.
+     * @see ValueAdapter
+     */
+    public static <V> SourceValueBuilder<V, V> with(@NotNull Class<V> registeredType) {
+        return with(ValueType.of(registeredType));
+    }
+
+    /**
+     * Create a new value builder with the specified {@link ConfigurationHolder#registeredValues()} type.
+     *
+     * @param registeredType The type of the value.
+     * @param <V>            The type of the value.
+     * @return a {@link SourceValueBuilder} with the specified registered type.
+     * @see ValueAdapter
+     */
+    public static <V> SourceValueBuilder<V, V> with(@NotNull ValueType<V> registeredType) {
+        return new ConfigValueBuilder<>(registeredType).from(registeredType);
     }
 
     public static <V> ConfiguredValue<V> of(@NotNull V defaults) {
@@ -51,7 +91,7 @@ public class ConfiguredValue<V> extends CachedConfigValue<V> {
         );
     }
 
-    public static <V> ConfiguredValue<V> of(@NotNull ValueManifest<V> manifest,
+    public static <V> ConfiguredValue<V> of(@NotNull ValueManifest<V, V> manifest,
                                             @Nullable ValueParser<V> parser,
                                             @Nullable ValueSerializer<V> serializer) {
         ValueAdapter<V> adapter = new ValueAdapter<>(manifest.type());
@@ -60,13 +100,13 @@ public class ConfiguredValue<V> extends CachedConfigValue<V> {
         return of(manifest, adapter);
     }
 
-    public static <V> ConfiguredValue<V> of(@NotNull ValueManifest<V> manifest, @NotNull ValueAdapter<V> adapter) {
+    public static <V> ConfiguredValue<V> of(@NotNull ValueManifest<V, V> manifest, @NotNull ValueAdapter<V> adapter) {
         return new ConfiguredValue<>(manifest, adapter);
     }
 
     protected final @NotNull ValueAdapter<V> adapter;
 
-    public ConfiguredValue(@NotNull ValueManifest<V> manifest, @NotNull ValueAdapter<V> adapter) {
+    public ConfiguredValue(@NotNull ValueManifest<V, V> manifest, @NotNull ValueAdapter<V> adapter) {
         super(manifest);
         this.adapter = adapter;
     }
@@ -103,11 +143,13 @@ public class ConfiguredValue<V> extends CachedConfigValue<V> {
         ValueParser<V> parser = parser();
         if (parser == null) return defaults(); // No parser, return default value.
 
+
         try {
             // If there are no errors, update the cache and return.
-            return updateCache(parser.parse(holder(), type(), data));
+            V parsed = parser.parse(holder(), type(), data);
+            return updateCache(withValidated(parsed));
         } catch (Exception e) {
-            // There was a parsing error, prompted and returned the default value.
+            // There was a validate or parsing error, prompted and returned the default value.
             e.printStackTrace();
             return defaults();
         }
@@ -121,18 +163,18 @@ public class ConfiguredValue<V> extends CachedConfigValue<V> {
      * @param value The value to be set
      */
     @Override
-    public void set(V value) {
+    public void set(@Nullable V value) {
         updateCache(value); // Update cache
         if (value == null) {
             setData(null);
             return;
         }
-
+        
         ValueSerializer<V> serializer = serializer();
         if (serializer == null) return; // No serializer, do nothing.
 
         try {
-            setData(serializer.serialize(holder(), type(), value));
+            setData(serializer.serialize(holder(), type(), withValidated(value)));
         } catch (Exception e) {
             e.printStackTrace();
         }
