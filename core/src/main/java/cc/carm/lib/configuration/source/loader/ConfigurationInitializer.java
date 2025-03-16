@@ -1,6 +1,7 @@
 package cc.carm.lib.configuration.source.loader;
 
 import cc.carm.lib.configuration.Configuration;
+import cc.carm.lib.configuration.function.ValueValidator;
 import cc.carm.lib.configuration.source.ConfigurationHolder;
 import cc.carm.lib.configuration.source.meta.ConfigurationMetadata;
 import cc.carm.lib.configuration.source.meta.StandardMeta;
@@ -48,7 +49,7 @@ public class ConfigurationInitializer {
         return valueInitializer;
     }
 
-    public void fieldInitializer(@NotNull ConfigInitializeHandler<Field, ConfigValue<?,?>> fieldInitializer) {
+    public void fieldInitializer(@NotNull ConfigInitializeHandler<Field, ConfigValue<?, ?>> fieldInitializer) {
         this.valueInitializer = fieldInitializer;
     }
 
@@ -60,7 +61,7 @@ public class ConfigurationInitializer {
         this.classInitializer = classInitializer;
     }
 
-    public void appendFieldInitializer(@NotNull ConfigInitializeHandler<Field, ConfigValue<?,?>> fieldInitializer) {
+    public void appendFieldInitializer(@NotNull ConfigInitializeHandler<Field, ConfigValue<?, ?>> fieldInitializer) {
         this.valueInitializer = this.valueInitializer.andThen(fieldInitializer);
     }
 
@@ -95,6 +96,14 @@ public class ConfigurationInitializer {
         registerFieldAnnotation(annotation, metadata, extractor);
     }
 
+    public <A extends Annotation> void registerValidAnnotation(@NotNull Class<A> annotation,
+                                                               @NotNull Function<A, ValueValidator<Object>> builder) {
+        appendFieldInitializer((holder, path, field, instance) -> {
+            A data = field.getAnnotation(annotation);
+            if (data == null) return;
+            instance.validate((h, t) -> builder.apply(data).validate(h, t));
+        });
+    }
 
     public @Nullable String getFieldPath(@NotNull ConfigurationHolder<?> holder, @Nullable String parentPath, @NotNull Field field) {
         return pathGenerator.getFieldPath(holder, parentPath, field);
@@ -163,9 +172,9 @@ public class ConfigurationInitializer {
             field.setAccessible(true);
             Object object = field.get(source);
 //
-            if (object instanceof ConfigValue<?,?>) {
+            if (object instanceof ConfigValue<?, ?>) {
                 // 目标是 ConfigValue 实例，进行具体的初始化注入
-                ConfigValue<?,?> value = (ConfigValue<?,?>) object;
+                ConfigValue<?, ?> value = (ConfigValue<?, ?>) object;
                 String path = getFieldPath(holder, parent, field);
                 if (path == null) return;
                 value.initialize(holder, path);
