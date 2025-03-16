@@ -29,7 +29,7 @@ public abstract class AbstractConfigBuilder<
     protected @Nullable HOLDER holder;
     protected @Nullable String path;
 
-    protected @NotNull ValueValidator<? super UNIT> valueValidator = ValueValidator.none();
+    protected @NotNull ValueValidator<UNIT> valueValidator = ValueValidator.none();
     protected @NotNull Supplier<@Nullable TYPE> defaultValueSupplier = () -> null;
     protected @NotNull BiConsumer<ConfigurationHolder<?>, String> initializer = (h, p) -> {
     };
@@ -63,7 +63,7 @@ public abstract class AbstractConfigBuilder<
      * @param validator The validator to set.
      * @return this builder
      */
-    public SELF validator(@NotNull ValueValidator<? super UNIT> validator) {
+    public SELF validator(@NotNull ValueValidator<UNIT> validator) {
         this.valueValidator = validator;
         return self();
     }
@@ -81,20 +81,17 @@ public abstract class AbstractConfigBuilder<
     /**
      * Validate the value with the specified condition.
      *
-     * @param validator The validator to set.
+     * @param validator The validator to append.
      * @return this builder
      */
     public SELF validate(@NotNull ValueValidator<? super UNIT> validator) {
-        return validator((h, v) -> {
-            this.valueValidator.validate(h, v);
-            validator.validate(h, v);
-        });
+        return validator(this.valueValidator.and(validator));
     }
 
     /**
      * Validate the value with the specified condition.
      *
-     * @param validator The validator to set.
+     * @param validator The validator to append.
      * @return this builder
      */
     public SELF validate(@NotNull DataValidator<? super UNIT> validator) {

@@ -137,20 +137,19 @@ public class ConfiguredValue<V> extends CachedConfigValue<V, V> {
         if (!cacheExpired()) return getCachedOrDefault();
         // Data that is outdated and needs to be parsed again.
 
-        Object data = getData();
-        if (data == null) return defaults();
-
-        ValueParser<V> parser = parser();
-        if (parser == null) return defaults(); // No parser, return default value.
-
-
         try {
+            Object data = getData();
+            if (data == null) return defaults();
+
+            ValueParser<V> parser = parser();
+            if (parser == null) return defaults(); // No parser, return default value.
+
             // If there are no errors, update the cache and return.
             V parsed = parser.parse(holder(), type(), data);
             return updateCache(withValidated(parsed));
         } catch (Exception e) {
             // There was a validate or parsing error, prompted and returned the default value.
-            e.printStackTrace();
+            throwing(e);
             return defaults();
         }
 
@@ -169,14 +168,14 @@ public class ConfiguredValue<V> extends CachedConfigValue<V, V> {
             setData(null);
             return;
         }
-        
-        ValueSerializer<V> serializer = serializer();
-        if (serializer == null) return; // No serializer, do nothing.
 
         try {
+            ValueSerializer<V> serializer = serializer();
+            if (serializer == null) return; // No serializer, do nothing.
+
             setData(serializer.serialize(holder(), type(), withValidated(value)));
         } catch (Exception e) {
-            e.printStackTrace();
+            throwing(e);
         }
 
     }

@@ -134,7 +134,7 @@ public class ConfigurationInitializer {
         try {
             this.classInitializer.whenInitialize(holder, path, root.getClass(), root);
         } catch (Exception e) {
-            e.printStackTrace();
+            holder.throwing(path, e);
         }
         Arrays.stream(root.getClass().getDeclaredFields()).forEach(field -> initializeField(holder, root, field, path));
     }
@@ -151,7 +151,7 @@ public class ConfigurationInitializer {
         try {
             this.classInitializer.whenInitialize(holder, path, (Class<? extends Configuration>) clazz, configField);
         } catch (Exception e) {
-            e.printStackTrace();
+            holder.throwing(path, e);
         }
 
         for (Field field : clazz.getDeclaredFields()) {
@@ -185,7 +185,7 @@ public class ConfigurationInitializer {
                 try {
                     this.valueInitializer.whenInitialize(holder, path, field, value);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    holder.throwing(path, e);
                 }
                 if (holder.option(StandardOptions.PRELOAD)) {
                     value.get(); // Preload the value by calling #get method.

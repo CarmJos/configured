@@ -77,27 +77,31 @@ public class ConfiguredMap<K, V> extends CachedConfigValue<Map<K, V>, V> impleme
         // If the value is expired, we need to update it
         Map<K, V> map = createMap();
 
-        ConfigureSection section = config().getSection(path());
-        if (section == null) return getDefaultFirst(map);
+        try {
+            ConfigureSection section = config().getSection(path());
+            if (section == null) return getDefaultFirst(map);
 
-        Set<String> keys = section.getKeys(false);
-        if (keys.isEmpty()) return getDefaultFirst(map);
+            Set<String> keys = section.getKeys(false);
+            if (keys.isEmpty()) return getDefaultFirst(map);
 
-        ValueParser<K> keyParser = parserFor(keyAdapter);
-        if (keyParser == null) return getDefaultFirst(map);
-        ValueParser<V> valueParser = parserFor(valueAdapter);
-        if (valueParser == null) return getDefaultFirst(map);
+            ValueParser<K> keyParser = parserFor(keyAdapter);
+            if (keyParser == null) return getDefaultFirst(map);
+            ValueParser<V> valueParser = parserFor(valueAdapter);
+            if (valueParser == null) return getDefaultFirst(map);
 
-        for (String dataKey : keys) {
-            Object dataVal = section.get(dataKey);
-            if (dataVal == null) continue;
-            try {
-                K key = keyParser.parse(holder(), keyType(), dataKey);
-                V value = valueParser.parse(holder(), valueType(), dataVal);
-                map.put(key, withValidated(value));
-            } catch (Exception e) {
-                e.printStackTrace();
+            for (String dataKey : keys) {
+                Object dataVal = section.get(dataKey);
+                if (dataVal == null) continue;
+                try {
+                    K key = keyParser.parse(holder(), keyType(), dataKey);
+                    V value = valueParser.parse(holder(), valueType(), dataVal);
+                    map.put(key, withValidated(value));
+                } catch (Exception e) {
+                    throwing(path + "." + dataKey, e);
+                }
             }
+        } catch (Exception ex) {
+            throwing(ex);
         }
 
         return updateCache(map);
@@ -120,24 +124,28 @@ public class ConfiguredMap<K, V> extends CachedConfigValue<Map<K, V>, V> impleme
             return;
         }
 
-        ValueSerializer<K> keySerializer = serializerFor(keyAdapter);
-        if (keySerializer == null) return;
-        ValueSerializer<V> valueSerializer = serializerFor(valueAdapter);
-        if (valueSerializer == null) return;
+        try {
+            ValueSerializer<K> keySerializer = serializerFor(keyAdapter);
+            if (keySerializer == null) return;
+            ValueSerializer<V> valueSerializer = serializerFor(valueAdapter);
+            if (valueSerializer == null) return;
 
-        Map<Object, Object> data = new LinkedHashMap<>();
+            Map<Object, Object> data = new LinkedHashMap<>();
 
-        for (Map.Entry<K, V> entry : value.entrySet()) {
-            try {
-                data.put(
-                        keySerializer.serialize(holder(), keyType(), entry.getKey()),
-                        valueSerializer.serialize(holder(), valueType(), withValidated(entry.getValue()))
-                );
-            } catch (Exception e) {
-                e.printStackTrace();
+            for (Map.Entry<K, V> entry : value.entrySet()) {
+                try {
+                    data.put(
+                            keySerializer.serialize(holder(), keyType(), entry.getKey()),
+                            valueSerializer.serialize(holder(), valueType(), withValidated(entry.getValue()))
+                    );
+                } catch (Exception e) {
+                    throwing(path + "." + entry.getKey(), e);
+                }
             }
+            setData(data);
+        } catch (Exception ex) {
+            throwing(ex);
         }
-        setData(data);
     }
 
     public <T> @NotNull T handle(Function<Map<K, V>, T> function) {

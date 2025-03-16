@@ -13,6 +13,7 @@
         <maven.compiler.target>${project.jdk.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+
     </properties>
     <artifactId>configured-demo</artifactId>
     <packaging>jar</packaging>
@@ -36,6 +37,13 @@
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
             <artifactId>configured-feature-versioned</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>configured-feature-validators</artifactId>
             <version>${project.parent.version}</version>
             <scope>compile</scope>
         </dependency>

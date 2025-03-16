@@ -3,6 +3,7 @@ package cc.carm.lib.configuration.source;
 import cc.carm.lib.configuration.Configuration;
 import cc.carm.lib.configuration.adapter.ValueAdapterRegistry;
 import cc.carm.lib.configuration.adapter.ValueType;
+import cc.carm.lib.configuration.function.ConfigExceptionHandler;
 import cc.carm.lib.configuration.source.loader.ConfigurationInitializer;
 import cc.carm.lib.configuration.source.meta.ConfigurationMetaHolder;
 import cc.carm.lib.configuration.source.meta.ConfigurationMetadata;
@@ -31,14 +32,25 @@ public abstract class ConfigurationHolder<SOURCE extends ConfigureSource<?, ?, S
 
     protected final @NotNull ConfigurationInitializer initializer;
 
+    protected @NotNull ConfigExceptionHandler exceptionHandler;
+
     public ConfigurationHolder(@NotNull ValueAdapterRegistry adapters,
                                @NotNull ConfigurationOptionHolder options,
                                @NotNull Map<String, ConfigurationMetaHolder> metadata,
                                @NotNull ConfigurationInitializer initializer) {
+        this(adapters, options, metadata, initializer, ConfigExceptionHandler.print());
+    }
+
+    public ConfigurationHolder(@NotNull ValueAdapterRegistry adapters,
+                               @NotNull ConfigurationOptionHolder options,
+                               @NotNull Map<String, ConfigurationMetaHolder> metadata,
+                               @NotNull ConfigurationInitializer initializer,
+                               @NotNull ConfigExceptionHandler exceptionHandler) {
         this.initializer = initializer;
         this.adapters = adapters;
         this.options = options;
         this.metadata = metadata;
+        this.exceptionHandler = exceptionHandler;
     }
 
     public abstract @NotNull SOURCE config();
@@ -117,7 +129,7 @@ public abstract class ConfigurationHolder<SOURCE extends ConfigureSource<?, ?, S
         try {
             initializer.initialize(this, configClass);
         } catch (Exception e) {
-            e.printStackTrace();
+            throwing(configClass.getName(), e);
         }
     }
 
@@ -125,12 +137,20 @@ public abstract class ConfigurationHolder<SOURCE extends ConfigureSource<?, ?, S
         try {
             initializer.initialize(this, config);
         } catch (Exception e) {
-            e.printStackTrace();
+            throwing(config.getClass().getName(), e);
         }
     }
 
     public void initialize(@NotNull ValueManifest<?, ?> value) {
         value.holder(this);
+    }
+
+    public void throwing(@NotNull String path, @NotNull Throwable e) {
+        this.exceptionHandler.handle(path, e);
+    }
+
+    public void exceptionally(@NotNull ConfigExceptionHandler handler) {
+        this.exceptionHandler = handler;
     }
 
 }

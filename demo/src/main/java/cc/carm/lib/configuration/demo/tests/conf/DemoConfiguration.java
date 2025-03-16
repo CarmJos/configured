@@ -29,10 +29,7 @@ public interface DemoConfiguration extends Configuration {
 
     @ConfigPath(root = true)
     @FooterComments({"此处内容将显示在配置条目的下方", "可用于补充说明，但一般不建议使用"})
-    ConfiguredValue<Long> TEST_NUMBER = ConfiguredValue.with(Long.class)
-            .validate(l -> l > 100, "数值必须大于100")
-            .validate(l -> l < 100000000, "数值必须小于100000000")
-            .defaults(123456789L).build();
+    ConfiguredValue<Long> TEST_NUMBER = ConfiguredValue.with(Long.class).defaults(123456789L).build();
 
     @HeaderComments({"枚举类型测试"})
     @FooterComments({"上述的枚举内容本质上是通过STRING解析的"})

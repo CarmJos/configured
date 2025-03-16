@@ -2,7 +2,9 @@ package cc.carm.lib.configuration.source;
 
 import cc.carm.lib.configuration.adapter.*;
 import cc.carm.lib.configuration.adapter.strandard.StandardAdapters;
+import cc.carm.lib.configuration.function.ConfigExceptionHandler;
 import cc.carm.lib.configuration.function.DataFunction;
+import cc.carm.lib.configuration.function.ValueValidator;
 import cc.carm.lib.configuration.source.loader.ConfigurationInitializer;
 import cc.carm.lib.configuration.source.loader.PathGenerator;
 import cc.carm.lib.configuration.source.meta.ConfigurationMetaHolder;
@@ -33,10 +35,11 @@ public abstract class ConfigurationFactory<
         SELF
         > {
 
-    protected ValueAdapterRegistry adapters = new ValueAdapterRegistry();
-    protected ConfigurationOptionHolder options = new ConfigurationOptionHolder();
+    protected @NotNull ValueAdapterRegistry adapters = new ValueAdapterRegistry();
+    protected @NotNull ConfigurationOptionHolder options = new ConfigurationOptionHolder();
     protected @NotNull Map<String, ConfigurationMetaHolder> metadata = new HashMap<>();
-    protected ConfigurationInitializer initializer = new ConfigurationInitializer();
+    protected @NotNull ConfigurationInitializer initializer = new ConfigurationInitializer();
+    protected @NotNull ConfigExceptionHandler exceptionHandler = ConfigExceptionHandler.print();
 
     protected ConfigurationFactory() {
         this.adapters.register(StandardAdapters.PRIMITIVES);
@@ -147,6 +150,11 @@ public abstract class ConfigurationFactory<
         return self();
     }
 
+    public SELF exceptionally(@NotNull ConfigExceptionHandler handler) {
+        this.exceptionHandler = handler;
+        return self();
+    }
+
     /**
      * Supply the base path generator for this configuration holder
      *
@@ -154,9 +162,7 @@ public abstract class ConfigurationFactory<
      * @return this
      */
     public SELF pathGenerator(PathGenerator generator) {
-        return initializer(loader -> {
-            loader.pathGenerator(generator);
-        });
+        return initializer(loader -> loader.pathGenerator(generator));
     }
 
     /**
@@ -173,6 +179,19 @@ public abstract class ConfigurationFactory<
                                                          @NotNull ConfigurationMetadata<M> metadata,
                                                          @NotNull Function<A, M> extractor) {
         return initializer(loader -> loader.registerAnnotation(annotation, metadata, extractor));
+    }
+
+    /**
+     * Register a new annotation for {@link ValueValidator} to the configuration loader
+     *
+     * @param annotation The {@link Annotation}
+     * @param builder    The {@link Function} to build the {@link ValueValidator} from the annotation
+     * @param <A>        The annotation type
+     * @return this
+     */
+    public <A extends Annotation> SELF validAnnotation(@NotNull Class<A> annotation,
+                                                       @NotNull Function<A, ValueValidator<Object>> builder) {
+        return initializer(loader -> loader.registerValidAnnotation(annotation, builder));
     }
 
     /**

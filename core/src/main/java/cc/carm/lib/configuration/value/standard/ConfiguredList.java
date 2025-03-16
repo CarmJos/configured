@@ -87,19 +87,24 @@ public class ConfiguredList<V> extends CachedConfigValue<List<V>, V> implements 
         if (!cacheExpired()) return getCachedOrDefault(createList());
         // Data that is outdated and needs to be parsed again.
         List<V> list = createList();
-        List<?> data = config().contains(path()) ? config().getList(path()) : null;
-        if (data == null) return getDefaultFirst(list);
+        try {
+            List<?> data = config().contains(path()) ? config().getList(path()) : null;
+            if (data == null) return getDefaultFirst(list);
 
-        ValueParser<V> parser = parser();
-        if (parser == null) return getDefaultFirst(list);
+            ValueParser<V> parser = parser();
+            if (parser == null) return getDefaultFirst(list);
 
-        for (Object dataVal : data) {
-            if (dataVal == null) continue;
-            try {
-                list.add(withValidated(parser.parse(holder(), paramType(), dataVal)));
-            } catch (Exception e) {
-                e.printStackTrace();
+            int i = 0;
+            for (Object dataVal : data) {
+                if (dataVal == null) continue;
+                try {
+                    list.add(withValidated(parser.parse(holder(), paramType(), dataVal)));
+                } catch (Exception e) {
+                    throwing(path + "[" + i + "]", e);
+                }
             }
+        } catch (Exception ex) {
+            throwing(ex);
         }
         return updateCache(list);
     }
@@ -111,7 +116,7 @@ public class ConfiguredList<V> extends CachedConfigValue<List<V>, V> implements 
             setData(null);
             return;
         }
-        
+
         ValueSerializer<V> serializer = serializer();
         if (serializer == null) return;
 
@@ -121,7 +126,7 @@ public class ConfiguredList<V> extends CachedConfigValue<List<V>, V> implements 
             try {
                 data.add(serializer.serialize(holder(), paramType(), withValidated(val)));
             } catch (Exception ex) {
-                ex.printStackTrace();
+                throwing(ex);
             }
         }
         setData(data);

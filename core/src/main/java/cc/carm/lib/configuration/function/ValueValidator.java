@@ -9,7 +9,7 @@ public interface ValueValidator<T> {
 
     void validate(@NotNull ConfigurationHolder<?> holder, @Nullable T value) throws Exception;
 
-    default ValueValidator<T> compose(ValueValidator<? super T> other) {
+    default ValueValidator<T> and(ValueValidator<? super T> other) {
         return (holder, value) -> {
             validate(holder, value);
             other.validate(holder, value);

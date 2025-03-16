@@ -1,11 +1,11 @@
 package yaml.test;
 
-import cc.carm.lib.configuration.commentable.Commentable;
 import cc.carm.lib.configuration.commentable.CommentableMeta;
 import cc.carm.lib.configuration.demo.tests.ConfigurationTest;
 import cc.carm.lib.configuration.source.ConfigurationHolder;
 import cc.carm.lib.configuration.source.yaml.YAMLConfigFactory;
 import cc.carm.lib.configuration.source.yaml.YAMLSource;
+import cc.carm.lib.configuration.validators.Validators;
 import org.junit.Test;
 
 import java.util.List;
@@ -18,6 +18,8 @@ public class YamlTests {
 
         ConfigurationHolder<YAMLSource> holder = YAMLConfigFactory.from("target/tests.yml")
                 .resourcePath("configs/sample.yml").build();
+
+        Validators.activate(holder);
 
         ConfigurationTest.testDemo(holder);
         ConfigurationTest.testInner(holder);

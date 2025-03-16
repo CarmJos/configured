@@ -11,7 +11,11 @@ import java.util.regex.Pattern;
 
 public class Validators {
 
-    public static void initialize(ConfigurationHolder<?> holder) {
+    private Validators() {
+        throw new UnsupportedOperationException("API Register.");
+    }
+
+    public static void activate(ConfigurationHolder<?> holder) {
         holder.initializer().registerValidAnnotation(ValueRange.class, r -> (ho, value) -> {
             if (!(value instanceof Number)) {
                 throw new IllegalArgumentException("Value is not a number: " + value);

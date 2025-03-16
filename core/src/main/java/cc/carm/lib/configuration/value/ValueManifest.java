@@ -20,7 +20,7 @@ public class ValueManifest<TYPE, UNIT> {
     protected @Nullable ConfigurationHolder<?> holder;
     protected @Nullable String path; // Section path
 
-    protected @NotNull ValueValidator<? super UNIT> validator;
+    protected @NotNull ValueValidator<UNIT> validator;
     protected @NotNull Supplier<@Nullable TYPE> defaultSupplier;
 
     public ValueManifest(@NotNull ValueType<TYPE> type) {
@@ -37,19 +37,19 @@ public class ValueManifest<TYPE, UNIT> {
 
     public ValueManifest(@NotNull ValueType<TYPE> type,
                          @NotNull Supplier<@Nullable TYPE> defaultSupplier,
-                         @NotNull ValueValidator<? super UNIT> validator) {
+                         @NotNull ValueValidator<UNIT> validator) {
         this(type, defaultSupplier, validator, EMPTY_INITIALIZER, null, null);
     }
 
     public ValueManifest(@NotNull ValueType<TYPE> type, @NotNull Supplier<@Nullable TYPE> defaultSupplier,
-                         @NotNull ValueValidator<? super UNIT> validator,
+                         @NotNull ValueValidator<UNIT> validator,
                          @NotNull BiConsumer<@NotNull ConfigurationHolder<?>, @NotNull String> initializer) {
         this(type, defaultSupplier, validator, initializer, null, null);
     }
 
     public ValueManifest(@NotNull ValueType<TYPE> type,
                          @NotNull Supplier<@Nullable TYPE> defaultSupplier,
-                         @NotNull ValueValidator<? super UNIT> validator,
+                         @NotNull ValueValidator<UNIT> validator,
                          @NotNull BiConsumer<@NotNull ConfigurationHolder<?>, @NotNull String> initializer,
                          @Nullable ConfigurationHolder<?> holder, @Nullable String path) {
         this.type = type;
@@ -103,19 +103,16 @@ public class ValueManifest<TYPE, UNIT> {
         return defaults() != null;
     }
 
-    public @NotNull ValueValidator<? super UNIT> validator() {
+    public @NotNull ValueValidator<UNIT> validator() {
         return this.validator;
     }
 
-    public void validator(@NotNull ValueValidator<? super UNIT> validator) {
+    public void validator(@NotNull ValueValidator<UNIT> validator) {
         this.validator = validator;
     }
 
-    public void validate(@NotNull ValueValidator<? super UNIT> validator) {
-        validator((h, v) -> {
-            this.validator.validate(h, v);
-            validator.validate(h, v);
-        });
+    public void validate(@NotNull ValueValidator<UNIT> validator) {
+        validator(this.validator.and(validator));
     }
 
     protected UNIT withValidated(@Nullable UNIT value) throws Exception {
@@ -149,6 +146,15 @@ public class ValueManifest<TYPE, UNIT> {
     @ApiStatus.Internal
     protected void setData(@Nullable Object value) {
         config().set(path(), value);
+    }
+
+    protected void throwing(@NotNull Throwable throwable) {
+        throwing(path, throwable);
+    }
+
+    protected void throwing(@NotNull String path, @NotNull Throwable throwable) {
+        if (holder == null) throwable.printStackTrace();
+        else holder.throwing(path, throwable);
     }
 
     private static final @NotNull BiConsumer<@NotNull ConfigurationHolder<?>, @NotNull String> EMPTY_INITIALIZER = (provider, valuePath) -> {
