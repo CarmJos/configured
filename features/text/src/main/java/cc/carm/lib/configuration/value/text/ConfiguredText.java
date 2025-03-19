@@ -7,7 +7,6 @@ import cc.carm.lib.configuration.source.ConfigurationHolder;
 import cc.carm.lib.configuration.value.ValueManifest;
 import cc.carm.lib.configuration.value.standard.ConfiguredValue;
 import cc.carm.lib.configuration.value.text.data.TextContents;
-import cc.carm.lib.configuration.value.text.function.TextDispatcher;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -50,7 +49,7 @@ public class ConfiguredText<MSG, RECEIVER> extends ConfiguredValue<TextContents>
         this.params = params;
     }
 
-    public TextDispatcher<MSG, RECEIVER, ?> prepare(@NotNull Object... values) {
+    public PreparedText<MSG, RECEIVER> prepare(@NotNull Object... values) {
         return new PreparedText<MSG, RECEIVER>(resolve(), this.params)
                 .parser(this.parser).compiler(this.compiler)
                 .dispatcher(this.dispatcher).placeholders(values);

@@ -5,7 +5,6 @@ import org.jetbrains.annotations.NotNull;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -56,8 +55,12 @@ public abstract class ValueType<T> {
         };
     }
 
-    public static <T> ValueType<T> of(final Class<T> clazz) {
+    public static <T> ValueType<T> of(final @NotNull Class<T> clazz) {
         return of((Type) clazz);
+    }
+
+    public static <T> ValueType<List<T>> ofList(final @NotNull Class<T> paramType) {
+        return of(List.class, paramType);
     }
 
     /**

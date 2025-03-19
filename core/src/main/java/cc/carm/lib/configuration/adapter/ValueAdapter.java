@@ -55,16 +55,20 @@ public class ValueAdapter<TYPE>
 
     @Override
     public @Nullable Object serialize(
-            @NotNull ConfigurationHolder<?> holder, @NotNull ValueType<? super TYPE> type,
-            @NotNull TYPE value) throws Exception {
+            @NotNull ConfigurationHolder<?> holder,
+            @NotNull ValueType<? super TYPE> type,
+            @NotNull TYPE value
+    ) throws Exception {
         if (serializer == null) throw new UnsupportedOperationException("Serializer is not supported");
         return serializer.serialize(holder, type, value);
     }
 
     @Override
     public @Nullable TYPE parse(
-            @NotNull ConfigurationHolder<?> holder, @NotNull ValueType<? super TYPE> type,
-            @NotNull Object value) throws Exception {
+            @NotNull ConfigurationHolder<?> holder,
+            @NotNull ValueType<? super TYPE> type,
+            @NotNull Object value
+    ) throws Exception {
         if (deserializer == null) throw new UnsupportedOperationException("Deserializer is not supported");
         return deserializer.parse(holder, type, value);
     }

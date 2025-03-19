@@ -33,11 +33,11 @@ public class ItemStack {
         return amount;
     }
 
-    public String getName() {
+    public @Nullable String getName() {
         return name;
     }
 
-    public List<String> getLore() {
+    public @Nullable List<String> getLore() {
         return lore;
     }
 
@@ -49,11 +49,11 @@ public class ItemStack {
         this.amount = amount;
     }
 
-    public void setName(String name) {
+    public void setName(@Nullable String name) {
         this.name = name;
     }
 
-    public void setLore(List<String> lore) {
+    public void setLore(@Nullable List<String> lore) {
         this.lore = lore;
     }
 

@@ -166,12 +166,12 @@ public class ImmutableSection implements ConfigureSection {
     }
 
     @Override
-    public <T> @Nullable T get(@NotNull String path, @Nullable T defaults, @NotNull Class<T> clazz) {
+    public <T> @Nullable T get(@NotNull String path, T defaults, @NotNull Class<T> clazz) {
         return raw().get(path, defaults, clazz);
     }
 
     @Override
-    public <T> @Nullable T get(@NotNull String path, @Nullable T defaultValue, @NotNull DataFunction<Object, T> parser) {
+    public <T> @Nullable T get(@NotNull String path, T defaultValue, @NotNull DataFunction<Object, T> parser) {
         return raw().get(path, defaultValue, parser);
     }
 

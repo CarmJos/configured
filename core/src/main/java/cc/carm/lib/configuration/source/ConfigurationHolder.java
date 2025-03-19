@@ -13,7 +13,6 @@ import cc.carm.lib.configuration.source.option.ConfigurationOptionHolder;
 import cc.carm.lib.configuration.source.section.ConfigureSource;
 import cc.carm.lib.configuration.value.ConfigValue;
 import cc.carm.lib.configuration.value.ValueManifest;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.UnmodifiableView;
@@ -87,7 +86,7 @@ public abstract class ConfigurationHolder<SOURCE extends ConfigureSource<?, ?, S
 
     @NotNull
     @UnmodifiableView
-    public <M> Map<String, M> extractMetadata(@NotNull ConfigurationMetadata<M> type, @NotNull Predicate<M> filter) {
+    public <M> Map<String, M> extractMetadata(@NotNull ConfigurationMetadata<M> type, @NotNull Predicate<@Nullable M> filter) {
         Map<String, M> metas = new LinkedHashMap<>();
         for (Map.Entry<String, ConfigurationMetaHolder> entry : this.metadata.entrySet()) {
             M data = entry.getValue().get(type);
@@ -110,17 +109,17 @@ public abstract class ConfigurationHolder<SOURCE extends ConfigureSource<?, ?, S
         return initializer;
     }
 
-    @Contract("_,null -> null")
+    @Nullable
     public <T> T deserialize(@NotNull Class<T> type, @Nullable Object source) throws Exception {
         return adapters().deserialize(this, type, source);
     }
 
-    @Contract("_,null -> null")
+    @Nullable
     public <T> T deserialize(@NotNull ValueType<T> type, @Nullable Object source) throws Exception {
         return adapters().deserialize(this, type, source);
     }
 
-    @Contract("null -> null")
+    @Nullable
     public <T> Object serialize(@Nullable T value) throws Exception {
         return adapters().serialize(this, value);
     }

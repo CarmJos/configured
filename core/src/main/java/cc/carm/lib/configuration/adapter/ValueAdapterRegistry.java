@@ -2,7 +2,6 @@ package cc.carm.lib.configuration.adapter;
 
 import cc.carm.lib.configuration.function.DataFunction;
 import cc.carm.lib.configuration.source.ConfigurationHolder;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -84,7 +83,9 @@ public class ValueAdapterRegistry {
 
     @SuppressWarnings("unchecked")
     public <T> @Nullable ValueAdapter<T> adapterOf(@NotNull ValueType<T> type) {
-        ValueAdapter<?> matched = adapters.stream().filter(adapter -> adapter.type().equals(type)).findFirst().orElse(null);
+        ValueAdapter<?> matched = adapters.stream()
+                .filter(adapter -> adapter.type().equals(type))
+                .findFirst().orElse(null);
         if (matched != null) return (ValueAdapter<T>) matched;
 
         // If no adapter found, try to find the adapter for the super type
@@ -101,12 +102,10 @@ public class ValueAdapterRegistry {
         return adapterOf(ValueType.of(type));
     }
 
-    @Contract("_,_,null -> null")
     public <T> T deserialize(@NotNull ConfigurationHolder<?> holder, @NotNull Class<T> type, @Nullable Object source) throws Exception {
         return deserialize(holder, ValueType.of(type), source);
     }
 
-    @Contract("_,_,null -> null")
     public <T> T deserialize(@NotNull ConfigurationHolder<?> holder, @NotNull ValueType<T> type, @Nullable Object source) throws Exception {
         if (source == null) return null; // Null check
         if (type.isInstance(source)) return type.cast(source); // Not required to deserialize
@@ -115,7 +114,7 @@ public class ValueAdapterRegistry {
         return adapter.parse(holder, type, source);
     }
 
-    @Contract("_,null -> null")
+    @Nullable
     public <T> Object serialize(@NotNull ConfigurationHolder<?> holder, @Nullable T value) throws Exception {
         if (value == null) return null; // Null check
         ValueType<T> type = ValueType.of(value);

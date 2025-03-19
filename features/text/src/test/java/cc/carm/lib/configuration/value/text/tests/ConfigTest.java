@@ -7,6 +7,7 @@ import cc.carm.lib.configuration.value.text.tests.conf.AppMessages;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.List;
 
 public class ConfigTest {
 
@@ -27,11 +28,11 @@ public class ConfigTest {
 
         System.out.println("--------------------------");
 
-        AppMessages.WELCOME.prepare()
+        List<String> str = AppMessages.WELCOME.prepare()
                 .placeholders("Carm")
                 .insert("guidance")
                 .insert("websites", WEBSITES)
-                .to(System.out);
+                .compile(System.out);
 
         System.out.println("--------------------------");
 
