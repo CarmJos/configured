@@ -13,10 +13,12 @@ README LANGUAGES [ [**English**](README.md) | [中文](README_CN.md)  ]
 
 # configured (config-framework)
 
-_**"Once set, Simple get."**_ 
+<img src=".doc/images/logo-bg.png"  alt="logo" style="float: right"/>
 
-A simple, easy-to-use and universal solution for managing, loading, reading, 
-and updating configuration files. 
+_**"Once set, Simple get."**_
+
+A simple, easy-to-use and universal solution for managing, loading, reading,
+and updating configuration files.
 
 Supported **JSON**, **YAML**, **Hocon**, **TOML**, **SQL**, **MongoDB**... and much more!
 

@@ -14,6 +14,8 @@ README LANGUAGES [ [English](README.md) | [**中文**](README_CN.md)  ]
 
 # configured (config-framework)
 
+<img src=".doc/images/logo-bg.png"  alt="logo" style="float: right"/>
+
 **一次配置，轻松读取！**
 
 一款简单便捷的通用配置文件加载、读取与更新工具，可自定义配置的格式。
