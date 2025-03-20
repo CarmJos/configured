@@ -1,6 +1,7 @@
 package cc.carm.lib.configuration.value.text.function;
 
 import cc.carm.lib.configuration.value.text.data.TextContents;
+import cc.carm.lib.configuration.value.text.function.modifier.ContentReplacer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -46,6 +47,7 @@ public abstract class ContentHandler<RECEIVER, SELF extends ContentHandler<RECEI
             "^\\?\\[(?<id>.+)](?<content>.*)$"
     );
 
+    public static final @NotNull Function<String, String>
     public static final @NotNull UnaryOperator<String> DEFAULT_PARAM_BUILDER = s -> "%(" + s + ")";
 
     protected BiFunction<RECEIVER, String, String> parser = (receiver, value) -> value;
@@ -57,6 +59,9 @@ public abstract class ContentHandler<RECEIVER, SELF extends ContentHandler<RECEI
     protected @NotNull Map<String, Object> placeholders = new HashMap<>();
     protected @NotNull UnaryOperator<String> paramFormatter = DEFAULT_PARAM_BUILDER;
     protected @NotNull String[] params;
+
+    protected @NotNull List<ContentReplacer> replacers = new ArrayList<>();
+    protected @NotNull List<ContentReplacer> inserters = new ArrayList<>();
 
     /**
      * Used to store the insertion of the message

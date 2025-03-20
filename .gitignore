@@ -1,4 +1,4 @@
 .idea/*
-!.idea/icon.png
+!.idea/icon.svg
 **/target/
 **.iml
