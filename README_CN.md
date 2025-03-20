@@ -12,7 +12,7 @@ README LANGUAGES [ [English](README.md) | [**中文**](README_CN.md)  ]
 
 </div>
 
-# configured (config-framework)
+# configured _(配置文件框架)_
 
 <img src=".doc/images/logo-bg.png"  alt="logo" align="right" style="float: right"/>
 

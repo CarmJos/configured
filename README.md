@@ -11,7 +11,7 @@
 README LANGUAGES [ [**English**](README.md) | [中文](README_CN.md)  ]
 </div>
 
-# configured (config-framework)
+# configured _(config framework)_
 
 <img src=".doc/images/logo-bg.png"  alt="logo" align="right" style="float: right"/>
 
@@ -39,7 +39,7 @@ For the latest JavaDoc release, [CLICK HERE](https://CarmJos.github.io/configure
 
 For a detailed development guide, [CLICK HERE](.doc/README.md).
 
-### Code Samples
+### Preview
 
 To quickly demonstrate the applicability of the project, here are a few practical demonstrations:
 
