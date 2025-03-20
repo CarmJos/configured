@@ -156,6 +156,11 @@ public abstract class ContentHandler<RECEIVER, SELF extends ContentHandler<RECEI
         return self();
     }
 
+    public SELF paramReplacer(@NotNull ParamReplacer<RECEIVER> paramReplacer) {
+        this.paramReplacer = paramReplacer;
+        return self();
+    }
+
     @Override
     public List<ContentInserter<RECEIVER>> inserters() {
         return this.inserters;
@@ -244,6 +249,16 @@ public abstract class ContentHandler<RECEIVER, SELF extends ContentHandler<RECEI
             }
             lineConsumer.accept(parse(receiver, line));
         }
+    }
+
+    public static String setPlaceholders(@NotNull String messages,
+                                         @NotNull Map<String, Object> placeholders) {
+        if (messages.isEmpty()) return messages;
+        String parsed = messages;
+        for (Map.Entry<String, Object> entry : placeholders.entrySet()) {
+            parsed = parsed.replace(entry.getKey(), entry.getValue() == null ? "" : entry.getValue().toString());
+        }
+        return parsed;
     }
 
     public static Map<String, Object> buildParams(@NotNull UnaryOperator<String> paramBuilder,
