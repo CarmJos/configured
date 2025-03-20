@@ -14,7 +14,7 @@ README LANGUAGES [ [English](README.md) | [**中文**](README_CN.md)  ]
 
 # configured (config-framework)
 
-<img src=".doc/images/logo-bg.png"  alt="logo" style="float: right"/>
+<img src=".doc/images/logo-bg.png"  alt="logo" align="right" style="float: right"/>
 
 **一次配置，轻松读取！**
 
