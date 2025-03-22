@@ -1,11 +1,13 @@
 package cc.carm.lib.configuration.demo.tests;
 
 import cc.carm.lib.configuration.demo.tests.conf.DemoConfiguration;
+import cc.carm.lib.configuration.demo.tests.conf.KotlinConfiguration;
 import cc.carm.lib.configuration.demo.tests.conf.RegistryConfig;
 import cc.carm.lib.configuration.demo.tests.model.UserRecord;
 import cc.carm.lib.configuration.source.ConfigurationHolder;
 import org.jetbrains.annotations.TestOnly;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -77,6 +79,22 @@ public class ConfigurationTest {
 
         System.out.println("> Test Inner value after:");
         System.out.println(TEST.INSTANCE.STATUS.resolve());
+
+    }
+
+    public static void testKotlin(ConfigurationHolder<?> provider) {
+        provider.initialize(KotlinConfiguration.class);
+
+        System.out.println("> Test Kotlin value before:");
+        System.out.println(KotlinConfiguration.INSTANCE.getLINKED_MAP().get());
+
+        LinkedHashMap<String, String> map = new LinkedHashMap<>();
+        map.put("Language", "Kotlin");
+        System.out.println("> Test Kotlin value -> " + map);
+        KotlinConfiguration.INSTANCE.getLINKED_MAP().set(map);
+
+        System.out.println("> Test Kotlin value after:");
+        System.out.println(KotlinConfiguration.INSTANCE.getLINKED_MAP().get());
 
     }
 

@@ -44,5 +44,13 @@ public class YamlTests {
         ConfigurationTest.save(holder);
     }
 
+    @Test
+    public void testKotlin() {
+        ConfigurationHolder<YAMLSource> holder = YAMLConfigFactory.from("target/kotlin.yml").build();
+
+        ConfigurationTest.testKotlin(holder);
+
+        ConfigurationTest.save(holder);
+    }
 }
 
