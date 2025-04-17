@@ -14,9 +14,6 @@
         <maven.compiler.target>${project.jdk.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-
-        <deps.mysql-driver.version>8.0.33</deps.mysql-driver.version>
-        <deps.log4j.version>2.24.3</deps.log4j.version>
     </properties>
     <artifactId>configured-sql</artifactId>
 
@@ -59,55 +56,6 @@
             <groupId>cc.carm.lib</groupId>
             <artifactId>easysql-api</artifactId>
             <version>0.4.7</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cc.carm.lib</groupId>
-            <artifactId>easysql-beecp</artifactId>
-            <version>0.4.7</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>${project.parent.groupId}</groupId>
-            <artifactId>configured-demo</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>${deps.log4j.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>${deps.log4j.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-            <version>${deps.log4j.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>${project.parent.groupId}</groupId>
-            <artifactId>configured-gson</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${deps.mysql-driver.version}</version>
-            <scope>test</scope>
         </dependency>
 
     </dependencies>

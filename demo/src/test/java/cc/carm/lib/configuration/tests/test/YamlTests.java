@@ -1,4 +1,4 @@
-package yaml.test;
+package cc.carm.lib.configuration.tests.test;
 
 import cc.carm.lib.configuration.commentable.CommentableMeta;
 import cc.carm.lib.configuration.demo.tests.ConfigurationTest;

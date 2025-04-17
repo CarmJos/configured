@@ -1,4 +1,4 @@
-package config;
+package cc.carm.lib.configuration.tests.test;
 
 import cc.carm.lib.configuration.demo.tests.ConfigurationTest;
 import cc.carm.lib.configuration.source.ConfigurationHolder;
@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import java.io.File;
 
-public class JSONConfigTest {
+public class JSONConfigTests {
 
     protected final ConfigurationHolder<?> holder = JSONConfigFactory
             .from(new File("target"), "config.json")

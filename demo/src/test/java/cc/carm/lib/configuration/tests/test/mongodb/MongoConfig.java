@@ -1,4 +1,4 @@
-package config;
+package cc.carm.lib.configuration.tests.test.mongodb;
 
 import cc.carm.lib.configuration.Configuration;
 import cc.carm.lib.configuration.value.standard.ConfiguredValue;

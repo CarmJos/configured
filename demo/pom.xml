@@ -13,7 +13,10 @@
         <maven.compiler.target>${project.jdk.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <maven.deploy.skip>true</maven.deploy.skip>
 
+        <deps.mysql-driver.version>8.0.33</deps.mysql-driver.version>
+        <log4j.version>2.24.3</log4j.version>
     </properties>
     <artifactId>configured-demo</artifactId>
     <packaging>jar</packaging>
@@ -24,40 +27,106 @@
             <groupId>${project.parent.groupId}</groupId>
             <artifactId>configured-core</artifactId>
             <version>${project.parent.version}</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
             <artifactId>configured-feature-commentable</artifactId>
             <version>${project.parent.version}</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
             <artifactId>configured-feature-versioned</artifactId>
             <version>${project.parent.version}</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
             <artifactId>configured-feature-validators</artifactId>
             <version>${project.parent.version}</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
             <artifactId>configured-feature-kotlin</artifactId>
             <version>${project.parent.version}</version>
-            <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>configured-yaml</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>configured-gson</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>configured-sql</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cc.carm.lib</groupId>
+            <artifactId>easysql-beecp</artifactId>
+            <version>0.4.7</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${deps.mysql-driver.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>configured-mongodb</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>configured-hocon</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
             <version>${kotlin.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j.version}</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
