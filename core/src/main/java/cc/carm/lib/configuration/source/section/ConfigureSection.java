@@ -477,7 +477,7 @@ public interface ConfigureSection {
      * @return The boolean if the path exists and is a boolean, otherwise false.
      */
     default boolean getBoolean(@NotNull String path) {
-        return getBoolean(path, false);
+        return getBoolean(path, null);
     }
 
     /**
@@ -509,7 +509,7 @@ public interface ConfigureSection {
      * @return The byte if the path exists and is a byte, otherwise 0.
      */
     default @Nullable Byte getByte(@NotNull String path) {
-        return getByte(path, (byte) 0);
+        return getByte(path, null);
     }
 
     /**
@@ -541,7 +541,7 @@ public interface ConfigureSection {
      * @return The short if the path exists and is a short, otherwise 0.
      */
     default @Nullable Short getShort(@NotNull String path) {
-        return getShort(path, (short) 0);
+        return getShort(path, null);
     }
 
     /**
@@ -573,7 +573,7 @@ public interface ConfigureSection {
      * @return The int if the path exists and is an int, otherwise 0.
      */
     default @Nullable Integer getInt(@NotNull String path) {
-        return getInt(path, 0);
+        return getInt(path, null);
     }
 
     /**
@@ -606,7 +606,7 @@ public interface ConfigureSection {
      * @return The long if the path exists and is a long, otherwise 0.
      */
     default @Nullable Long getLong(@NotNull String path) {
-        return getLong(path, 0L);
+        return getLong(path, null);
     }
 
     /**
@@ -638,7 +638,7 @@ public interface ConfigureSection {
      * @return The float if the path exists and is a float, otherwise 0.
      */
     default @Nullable Float getFloat(@NotNull String path) {
-        return getFloat(path, 0.0F);
+        return getFloat(path, null);
     }
 
     /**
@@ -670,7 +670,7 @@ public interface ConfigureSection {
      * @return The double if the path exists and is a double, otherwise 0.
      */
     default @Nullable Double getDouble(@NotNull String path) {
-        return getDouble(path, 0.0D);
+        return getDouble(path, null);
     }
 
     /**
@@ -692,7 +692,7 @@ public interface ConfigureSection {
      * @return True if the value is present and is a char, false otherwise.
      */
     default boolean isChar(@NotNull String path) {
-        return isType(path, Boolean.class);
+        return isType(path, Character.class);
     }
 
     /**
@@ -750,7 +750,7 @@ public interface ConfigureSection {
     }
 
     /**
-     * Get a list of values from the section
+     * Get a list of values from current section
      * <p>
      * If the path does not exist, an empty list will be returned
      * <br>Any changes please use {@link #set(String, Object)} after changes
@@ -765,7 +765,7 @@ public interface ConfigureSection {
     }
 
     /**
-     * Get a list of strings from the section
+     * Get a list of strings from current section
      * <p> Limitations see {@link #getList(String, DataFunction)}
      *
      * @param path The path to get the list from
@@ -776,7 +776,7 @@ public interface ConfigureSection {
     }
 
     /**
-     * Get a list of integer from the section
+     * Get a list of integer from current section
      * <p> Limitations see {@link #getList(String, DataFunction)}
      *
      * @param path The path to get the list from
@@ -787,7 +787,7 @@ public interface ConfigureSection {
     }
 
     /**
-     * Get a list of long from the section
+     * Get a list of long from current section
      * <p> Limitations see {@link #getList(String, DataFunction)}
      *
      * @param path The path to get the list from
@@ -798,7 +798,7 @@ public interface ConfigureSection {
     }
 
     /**
-     * Get a list of double from the section
+     * Get a list of double from current section
      * <p> Limitations see {@link #getList(String, DataFunction)}
      *
      * @param path The path to get the list from
@@ -809,7 +809,7 @@ public interface ConfigureSection {
     }
 
     /**
-     * Get a list of floats from the section
+     * Get a list of floats from current section
      * <p> Limitations see {@link #getList(String, DataFunction)}
      *
      * @param path The path to get the list from
@@ -820,7 +820,7 @@ public interface ConfigureSection {
     }
 
     /**
-     * Get a list of bytes from the section
+     * Get a list of bytes from current section
      * <p> Limitations see {@link #getList(String, DataFunction)}
      *
      * @param path The path to get the list from
@@ -831,7 +831,7 @@ public interface ConfigureSection {
     }
 
     /**
-     * Get a list of char from the section
+     * Get a list of char from current section
      * <p> Limitations see {@link #getList(String, DataFunction)}
      *
      * @param path The path to get the list from
@@ -842,7 +842,22 @@ public interface ConfigureSection {
     }
 
     /**
-     * Get the specific type of collection from the section.
+     * Get a list of {@link ConfigureSection} from current section
+     *
+     * @param path The path to get the list from
+     * @return The list of {@link ConfigureSection}
+     */
+    default @NotNull List<ConfigureSection> getSectionList(@NotNull String path) {
+        return getList(path, obj -> {
+            if (obj instanceof ConfigureSection) {
+                return (ConfigureSection) obj;
+            }
+            return null;
+        });
+    }
+
+    /**
+     * Get the specific type of collection from current section.
      *
      * @param path        The path to get the collection from
      * @param constructor The constructor of the collection
@@ -858,7 +873,7 @@ public interface ConfigureSection {
     }
 
     /**
-     * Get the specific type of steam from the section.
+     * Get the specific type of steam from current section.
      *
      * @param path The path to get the stream from
      * @return The stream of values
@@ -869,7 +884,7 @@ public interface ConfigureSection {
     }
 
     /**
-     * Get the specific type of steam from the section.
+     * Get the specific type of steam from current section.
      *
      * @param path   The path to get the stream from
      * @param parser The function to parse the values

@@ -74,7 +74,7 @@ public class ImmutableSection implements ConfigureSection {
     @Override
     public @Nullable ConfigureSection getSection(@NotNull String path) {
         ConfigureSection get = raw().getSection(path);
-        if (get != null && !(get instanceof ImmutableSection)) {
+        if (!(get instanceof ImmutableSection)) {
             return new ImmutableSection(this, get);
         }
         return get;
@@ -348,6 +348,11 @@ public class ImmutableSection implements ConfigureSection {
     @Override
     public @NotNull List<Character> getCharList(@NotNull String path) {
         return raw().getCharList(path);
+    }
+
+    @Override
+    public @NotNull List<ConfigureSection> getSectionList(@NotNull String path) {
+        return raw().getSectionList(path);
     }
 
     @Override
