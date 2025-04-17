@@ -1,4 +1,4 @@
-package config;
+package cc.carm.lib.configuration.tests.test.sql;
 
 import cc.carm.lib.configuration.demo.DatabaseConfiguration;
 import cc.carm.lib.configuration.demo.tests.ConfigurationTest;

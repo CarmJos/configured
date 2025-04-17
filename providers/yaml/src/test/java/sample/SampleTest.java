@@ -4,7 +4,7 @@ import cc.carm.lib.configuration.source.ConfigurationHolder;
 import cc.carm.lib.configuration.source.yaml.YAMLConfigFactory;
 import org.junit.Test;
 
-public class  SampleTest {
+public class SampleTest {
 
     @Test
     public void test() {

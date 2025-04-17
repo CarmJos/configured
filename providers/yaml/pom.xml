@@ -64,13 +64,6 @@
             <scope>compile</scope>
         </dependency>
 
-        <dependency>
-            <groupId>${project.parent.groupId}</groupId>
-            <artifactId>configured-demo</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>test</scope>
-        </dependency>
-
     </dependencies>
 
     <build>
