@@ -11,12 +11,14 @@
 README LANGUAGES [ [**English**](README.md) | [中文](README_CN.md)  ]
 </div>
 
-# configured (config-framework)
+# configured _(config framework)_
 
-_**"Once set, Simple get."**_ 
+<img src=".doc/images/logo-bg.svg" width="150px" alt="logo" align="right" style="float: right"/>
 
-A simple, easy-to-use and universal solution for managing, loading, reading, 
-and updating configuration files. 
+_**"Once set, Simple get."**_
+
+A simple, easy-to-use and universal solution for managing, loading, reading,
+and updating configuration files.
 
 Supported **JSON**, **YAML**, **Hocon**, **TOML**, **SQL**, **MongoDB**... and much more!
 
@@ -37,7 +39,7 @@ For the latest JavaDoc release, [CLICK HERE](https://CarmJos.github.io/configure
 
 For a detailed development guide, [CLICK HERE](.doc/README.md).
 
-### Code Samples
+### Preview
 
 To quickly demonstrate the applicability of the project, here are a few practical demonstrations:
 

@@ -11,13 +11,11 @@ import java.util.List;
 
 public class ConfigTest {
 
-
     public static final String[] WEBSITES = new String[]{
             "https://carm.cc",
             "https://www.baidu.com",
             "https://www.google.com"
     };
-
 
     @Test
     public void test() {

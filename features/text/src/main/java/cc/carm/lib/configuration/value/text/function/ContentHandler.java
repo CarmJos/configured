@@ -1,52 +1,27 @@
 package cc.carm.lib.configuration.value.text.function;
 
 import cc.carm.lib.configuration.value.text.data.TextContents;
+import cc.carm.lib.configuration.value.text.function.common.AppendLineInserter;
+import cc.carm.lib.configuration.value.text.function.common.OptionalLineInserter;
+import cc.carm.lib.configuration.value.text.function.common.ParamReplacer;
+import cc.carm.lib.configuration.value.text.function.inserter.ContentInserter;
+import cc.carm.lib.configuration.value.text.function.inserter.Insertable;
+import cc.carm.lib.configuration.value.text.function.replacer.ContentReplacer;
+import cc.carm.lib.configuration.value.text.function.replacer.Replaceable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.IntStream;
 
-public abstract class ContentHandler<RECEIVER, SELF extends ContentHandler<RECEIVER, SELF>> {
-
-    /**
-     * Used to match the message insertion.
-     * <p>
-     * format:
-     * <br>- to insert parsed line {prefix}#content-id#{offset-above,offset-down}
-     * <br>- to insert original line {prefix}@content-id@{offset-above,offset-down}
-     * <br>  original lines will not be parsed
-     * <br> example:
-     * <ul>
-     *     <li>{- }#content-id#{1,1}</li>
-     *     <li>@content-id@{1,1}</li>
-     * </ul>
-     */
-    public static final @NotNull Pattern INSERT_PATTERN = Pattern.compile(
-            "^(?:\\{(?<prefix>.*)})?(?<type>[#@])(?<id>.*)[#@](?:\\{(?<above>-?\\d+)(?:,(?<down>-?\\d+))?})?$"
-    );
-
-    /**
-     * Used to match the message which can be inserted
-     * <p>
-     * format:
-     * <br>- ?[id]Message content
-     * <br> example:
-     * <ul>
-     *     <li>?[click]Click to use this item!</li>
-     * </ul>
-     */
-    public static final @NotNull Pattern ENABLE_PATTERN = Pattern.compile(
-            "^\\?\\[(?<id>.+)](?<content>.*)$"
-    );
-
-    public static final @NotNull UnaryOperator<String> DEFAULT_PARAM_BUILDER = s -> "%(" + s + ")";
+public abstract class ContentHandler<RECEIVER, SELF extends ContentHandler<RECEIVER, SELF>>
+        implements Replaceable<RECEIVER, SELF>, Insertable<RECEIVER, SELF> {
 
     protected BiFunction<RECEIVER, String, String> parser = (receiver, value) -> value;
     protected String lineSeparator = System.lineSeparator();
@@ -54,15 +29,23 @@ public abstract class ContentHandler<RECEIVER, SELF extends ContentHandler<RECEI
     /**
      * Used to store the placeholders of the message
      */
-    protected @NotNull Map<String, Object> placeholders = new HashMap<>();
-    protected @NotNull UnaryOperator<String> paramFormatter = DEFAULT_PARAM_BUILDER;
+    protected @NotNull ParamReplacer<RECEIVER> paramReplacer = ParamReplacer.defaults();
     protected @NotNull String[] params;
+
+    protected @NotNull List<ContentReplacer<RECEIVER>> replacers = new ArrayList<>();
+    protected @NotNull List<ContentInserter<RECEIVER>> inserters = new ArrayList<>();
 
     /**
      * Used to store the insertion of the message
      */
-    protected @NotNull Map<String, @Nullable Function<RECEIVER, List<String>>> insertion = new HashMap<>();
+    protected final @NotNull Map<String, @Nullable Function<RECEIVER, List<String>>> insertion = new HashMap<>();
     protected boolean disableInsertion = false;
+
+    public ContentHandler() {
+        inserters.add(new AppendLineInserter<>(0));
+        inserters.add(new OptionalLineInserter<>(0));
+    }
+
 
     public abstract SELF self();
 
@@ -87,6 +70,11 @@ public abstract class ContentHandler<RECEIVER, SELF extends ContentHandler<RECEI
         return self();
     }
 
+    @Override
+    public boolean noneInsertion() {
+        return this.insertion.isEmpty();
+    }
+
     /**
      * Set the line separator for the text.
      *
@@ -106,7 +94,7 @@ public abstract class ContentHandler<RECEIVER, SELF extends ContentHandler<RECEI
      * @return the current {@link ContentHandler} instance
      */
     public SELF placeholders(@NotNull Map<String, Object> placeholders) {
-        this.placeholders = placeholders;
+        this.paramReplacer.set(placeholders);
         return self();
     }
 
@@ -117,7 +105,7 @@ public abstract class ContentHandler<RECEIVER, SELF extends ContentHandler<RECEI
      * @return the current {@link ContentHandler} instance
      */
     public SELF placeholders(@NotNull Consumer<Map<String, Object>> consumer) {
-        consumer.accept(this.placeholders);
+        consumer.accept(this.paramReplacer.placeholders());
         return self();
     }
 
@@ -128,7 +116,8 @@ public abstract class ContentHandler<RECEIVER, SELF extends ContentHandler<RECEI
      * @return the current {@link ContentHandler} instance
      */
     public SELF placeholders(@Nullable Object... values) {
-        return placeholders(map -> map.putAll(buildParams(this.paramFormatter, this.params, values)));
+        this.paramReplacer.putAll(this.params, values);
+        return self();
     }
 
     /**
@@ -139,7 +128,7 @@ public abstract class ContentHandler<RECEIVER, SELF extends ContentHandler<RECEI
      * @return the current {@link ContentHandler} instance
      */
     public SELF placeholder(@NotNull String key, @Nullable Object value) {
-        this.placeholders.put(paramFormatter.apply(key), value);
+        this.paramReplacer.put(key, value);
         return self();
     }
 
@@ -155,49 +144,57 @@ public abstract class ContentHandler<RECEIVER, SELF extends ContentHandler<RECEI
         return self();
     }
 
-    /**
-     * Insert the specific contents by the id.
-     *
-     * @param id the id of the insertion text
-     * @return the current {@link ContentHandler} instance
-     */
-    public SELF insert(@NotNull String id) {
-        this.insertion.put(id, null);
+    @Override
+    public List<ContentReplacer<RECEIVER>> replacers() {
+        return this.replacers;
+    }
+
+    @Override
+    public SELF replacer(@NotNull ContentReplacer<RECEIVER> replacer) {
+        this.replacers.add(replacer);
+        this.replacers.sort(ContentReplacer::compareTo);
         return self();
     }
 
-    /**
-     * Insert the specific contents by the id.
-     *
-     * @param id            the id of the insertion text
-     * @param linesSupplier to supply the lines to insert
-     * @return the current {@link ContentHandler} instance
-     */
-    public SELF insert(@NotNull String id, @NotNull Function<RECEIVER, List<String>> linesSupplier) {
-        this.insertion.put(id, linesSupplier);
+    public SELF paramReplacer(@NotNull ParamReplacer<RECEIVER> paramReplacer) {
+        this.paramReplacer = paramReplacer;
         return self();
     }
 
-    /**
-     * Insert the specific contents by the id.
-     *
-     * @param id    the id of the insertion text
-     * @param lines the lines to insert
-     * @return the current {@link ContentHandler} instance
-     */
-    public SELF insert(@NotNull String id, @NotNull String... lines) {
-        return insert(id, Arrays.asList(lines));
+    @Override
+    public List<ContentInserter<RECEIVER>> inserters() {
+        return this.inserters;
     }
 
-    /**
-     * Insert the specific contents by the id.
-     *
-     * @param id    the id of the insertion text
-     * @param lines the lines to insert
-     * @return the current {@link ContentHandler} instance
-     */
-    public SELF insert(@NotNull String id, @NotNull List<String> lines) {
-        return insert(id, receiver -> lines);
+    @Override
+    public SELF inserter(@NotNull ContentInserter<RECEIVER> inserter) {
+        this.inserters.add(inserter);
+        this.inserters.sort(ContentInserter::compareTo);
+        return self();
+    }
+
+    @Override
+    public SELF insert(@NotNull String id, @Nullable Function<RECEIVER, List<String>> supplier) {
+        this.insertion.put(id, supplier);
+        return self();
+    }
+
+    @Override
+    public boolean inserting(@NotNull String id) {
+        return this.insertion.keySet().stream().anyMatch(key -> key.equalsIgnoreCase(id));
+    }
+
+    @Override
+    public @Nullable List<String> getInsertion(@NotNull String id, @Nullable RECEIVER receiver) {
+        Function<RECEIVER, List<String>> function = this.insertion.get(id);
+        if (function == null) return null;
+        return function.apply(receiver);
+    }
+
+    @Override
+    public SELF removeInsert(@NotNull String id) {
+        this.insertion.remove(id);
+        return self();
     }
 
     /**
@@ -219,61 +216,39 @@ public abstract class ContentHandler<RECEIVER, SELF extends ContentHandler<RECEI
      * @return the parsed text
      */
     protected @Nullable String parse(@Nullable RECEIVER receiver, @NotNull String text) {
-        return this.parser.apply(receiver, setPlaceholders(text, this.placeholders));
+        text = applyReplacements(receiver, text); // First, apply the custom replacements
+        text = this.paramReplacer.replace(text, receiver); // Then, apply the static placeholders
+        return this.parser.apply(receiver, text); // Finally, parse the text
     }
 
     public void handle(@NotNull TextContents contents, @Nullable RECEIVER receiver,
                        @NotNull Consumer<String> lineConsumer) {
         if (contents.isEmpty()) return; // Nothing to parse
 
-        if (this.disableInsertion) {
+        if (this.disableInsertion || noneInsertion()) {
             contents.lines().forEach(line -> lineConsumer.accept(parse(receiver, line)));
             return; // Simple parsed
         }
 
+        // Set the default insertion of the text
+        for (Map.Entry<String, @Nullable Function<RECEIVER, List<String>>> entry : this.insertion.entrySet()) {
+            if (entry.getValue() != null) continue;
+            List<String> lines = contents.optionalLines().get(entry.getKey());
+            if (lines == null) continue;
+            entry.setValue(r -> lines);
+        }
+
+        lines:
         for (String line : contents.lines()) {
-            Matcher insertMatcher = INSERT_PATTERN.matcher(line);
-            if (insertMatcher.matches()) {
-                doInsert(insertMatcher, receiver, lineConsumer);
-                continue;
-            }
-
-            Matcher enableMatcher = ENABLE_PATTERN.matcher(line);
-            if (enableMatcher.matches()) {
-                if (this.insertion.containsKey(enableMatcher.group("id"))) {
-                    lineConsumer.accept(parse(receiver, enableMatcher.group("content")));
+            for (ContentInserter<RECEIVER> inserter : inserters) {
+                List<String> inserted = inserter.handle(receiver, line, this);
+                if (inserted != null) { // Found the insertion
+                    inserted.forEach(l -> lineConsumer.accept(parse(receiver, l)));
+                    continue lines; // Go to the next line
                 }
-                continue;
             }
-
             lineConsumer.accept(parse(receiver, line));
         }
-    }
-
-    private void doInsert(Matcher matcher, @Nullable RECEIVER receiver,
-                          @NotNull Consumer<String> lineConsumer) {
-        String id = matcher.group("id");
-        List<String> values = Optional.ofNullable(this.insertion.get(id))
-                .map(f -> f.apply(receiver))
-                .orElse(null);
-        if (values == null || values.isEmpty()) return; // No values to insert
-
-        String prefix = matcher.group("prefix");
-        String type = matcher.group("type");
-        boolean original = type.equals("@");
-        int offsetAbove = Optional.ofNullable(matcher.group("above"))
-                .map(Integer::parseInt).orElse(0);
-        int offsetDown = Optional.ofNullable(matcher.group("down"))
-                .map(Integer::parseInt).orElse(offsetAbove); // If offsetDown is not set, use offsetAbove
-
-        IntStream.range(0, Math.max(0, offsetAbove)).mapToObj(i -> "").forEach(lineConsumer);
-        String prefixContent = Optional.ofNullable(prefix).map(p -> parse(receiver, p)).orElse("");
-        if (original) {
-            values.stream().map(value -> prefixContent + value).forEach(lineConsumer);
-        } else {
-            values.stream().map(value -> prefixContent + parse(receiver, value)).forEach(lineConsumer);
-        }
-        IntStream.range(0, Math.max(0, offsetDown)).mapToObj(i -> "").forEach(lineConsumer);
     }
 
     public static String setPlaceholders(@NotNull String messages,
