@@ -8,167 +8,46 @@
 ![CodeSize](https://img.shields.io/github/languages/code-size/CarmJos/configured)
 ![](https://visitor-badge.glitch.me/badge?page_id=configured.readme)
 
-README
-LANGUAGES [ [
-*
-*English
-**](README.md) | [中文](README_CN.md)  ]
+README LANGUAGES [ [**English**](README.md) | [中文](README_CN.md)  ]
 </div>
 
-# configured
-_(
-config
-framework)_
+# configured _(config framework)_
 
 <img src=".doc/images/logo-bg.svg" width="150px" alt="logo" align="right" style="float: right"/>
 
-_
-*
-*"
-Once
-set,
-Simple
-get."
-**_
+_**"Once set, Simple get."**_
 
-A
-simple,
-easy-to-use
-and
-universal
-solution
-for
-managing,
-loading,
-reading,
-and
-updating
-configuration
-files.
+A simple, easy-to-use and universal solution for managing, loading, reading,
+and updating configuration files.
 
-Supported
-*
-*JSON
-**,
-*
-*YAML
-**,
-*
-*Hocon
-**,
-*
-*TOML
-**,
-*
-*SQL
-**,
-*
-*MongoDB
-**...
-and
-much
-more!
+Supported **JSON**, **YAML**, **Hocon**, **TOML**, **SQL**, **MongoDB**... and much more!
 
 ## Features & Advantages
 
-Supported [YAML](providers/yaml), [JSON](providers/json), [HOCON](providers/hocon)
-and [SQL](providers/sql)
-based
-configuration
-files
-format.
+Supported [YAML](providers/yaml), [JSON](providers/json), [HOCON](providers/hocon) and [SQL](providers/sql) 
+based configuration files format.
 
--
-Class-based
-mechanism
-for
-initializing,
-loading,
-retrieving,
-and
-updating
-configuration
-files,
-ensuring
-convenience
-and
-efficiency.
--
-Supports
-manual
-serialization
-and
-deserialization
-of
-complex
-configurations.
--
-Offers
-multiple
-builder
-forms
-for
-rapid
-construction
-of
-`ConfigValue<?>`
-objects.
--
-Enables
-specification
-of
-configuration
-paths,
-comments,
-and
-more
-via
-annotations.
+- Class-based mechanism for initializing, loading, retrieving, and updating configuration files, ensuring convenience
+  and efficiency.
+- Supports manual serialization and deserialization of complex configurations.
+- Offers multiple builder forms for rapid construction of `ConfigValue<?>` objects.
+- Enables specification of configuration paths, comments, and more via annotations.
 
 ## Development
 
-For
-the
-latest
-JavaDoc
-release, [CLICK HERE](https://CarmJos.github.io/configured).
+For the latest JavaDoc release, [CLICK HERE](https://CarmJos.github.io/configured).
 
-For
-a
-detailed
-development
-guide, [CLICK HERE](.doc/README.md).
+For a detailed development guide, [CLICK HERE](.doc/README.md).
 
 ### Preview
 
-To
-quickly
-demonstrate
-the
-applicability
-of
-the
-project,
-here
-are
-a
-few
-practical
-demonstrations:
+To quickly demonstrate the applicability of the project, here are a few practical demonstrations:
 
 - [Database configuration.](demo/src/main/java/cc/carm/lib/configuration/demo/DatabaseConfiguration.java)
-- [Demonstration of configuration instance classes.](demo/src/main/java/cc/carm/lib/configuration/demo/tests/conf/DemoConfiguration.java)
+- [Demonstration of configurations instance classes.](demo/src/main/java/cc/carm/lib/configuration/demo/tests/conf/DemoConfiguration.java)
 
-Check
-out
-all
-code
-demonstrations [HERE](demo/src/main/java/cc/carm/lib/configuration/demo/DatabaseConfiguration.java).
-For
-more
-examples,
-see
-the [Development Guide](.doc/README.md).
+Check out all code demonstrations [HERE](demo/src/main/java/cc/carm/lib/configuration/demo/DatabaseConfiguration.java).
+For more examples, see the [Development Guide](.doc/README.md).
 
 ```java
 
@@ -361,104 +240,30 @@ dependencies {
 
 ## Derived Projects
 
-### [
-*
-*MineConfiguration
-**](https://github.com/CarmJos/MineConfiguration) (by @CarmJos)
+### [**MineConfiguration**](https://github.com/CarmJos/MineConfiguration) (by @CarmJos)
 
-configured
-for
-MineCraft!
-Easily
-manage
-configurations
-on
-MineCraft-related
-server
-platforms.
+configured for MineCraft!
+Easily manage configurations on MineCraft-related server platforms.
 
-Currently,
-it
-supports
-BungeeCord,
-Velocity,
-Bukkit (
-Spigot)
-servers,
-with
-more
-platforms
-to
-be
-supported
-soon.
+Currently, it supports BungeeCord, Velocity, Bukkit (Spigot) servers,
+with more platforms to be supported soon.
 
 ## Support and Donation
 
-If
-you
-appreciate
-this
-plugin,
-consider
-supporting
-me
-with
-a
-donation!
+If you appreciate this plugin, consider supporting me with a donation!
 
-Thank
-you
-for
-supporting
-open-source
-projects!
+Thank you for supporting open-source projects!
 
-Many
-thanks
-to
-Jetbrains
-for
-kindly
-providing
-a
-license
-for
-us
-to
-work
-on
-this
-and
-other
-open-source
-projects.
+Many thanks to Jetbrains for kindly providing a license for us to work on this and other open-source projects.
 
 [![](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)](https://www.jetbrains.com/?from=https://github.com/CarmJos/configured)
 
-Many
-thanks
-to [ArtformGames](https://github.com/ArtformGames)
-for
-their
-strong
-support
-and
-active
-contribution
-to
-this
-project!
+Many thanks to [ArtformGames](https://github.com/ArtformGames) for their
+strong support and active contribution to this project!
 
 <img src="https://raw.githubusercontent.com/ArtformGames/.github/master/logo/logo_full.svg" width="317px" height="117px" alt="ArtformGames">
 
 ## Open Source License
 
-This
-project's
-source
-code
-is
-licensed
-under
+This project's source code is licensed under
 the [GNU LESSER GENERAL PUBLIC LICENSE](https://www.gnu.org/licenses/lgpl-3.0.html).

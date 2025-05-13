@@ -342,5 +342,5 @@ tab_width = 2
 max_line_length = 120
 
 [*.md]
-max_line_length = 0
+max_line_length = 500
 trim_trailing_whitespace = false

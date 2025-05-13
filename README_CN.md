@@ -8,48 +8,30 @@
 ![CodeSize](https://img.shields.io/github/languages/code-size/CarmJos/configured)
 ![](https://visitor-badge.glitch.me/badge?page_id=configured.readme)
 
-README
-LANGUAGES [ [English](README.md) | [
-*
-*中文
-**](README_CN.md)  ]
+README LANGUAGES [ [English](README.md) | [**中文**](README_CN.md)  ]
 
 </div>
 
-# configured
-_(
-配置文件框架)_
+# configured _(配置文件框架)_
 
 <img src=".doc/images/logo-bg.svg" width="150px" alt="logo" align="right" style="float: right"/>
 
-*
-*一次配置，轻松读取！
-**
+**一次配置，轻松读取！**
 
 一款简单便捷的通用配置文件加载、读取与更新工具，可自定义配置的格式。
 
 ## 特性 & 优势
 
-支持 [YAML](providers/yaml), [JSON](providers/gson), [HOCON](providers/hocon)
-和 [SQL](providers/sql)
-等多种配置文件格式。
+支持 [YAML](providers/yaml), [JSON](providers/gson), [HOCON](providers/hocon) 和 [SQL](providers/sql) 等多种配置文件格式。
 
--
-基于类的配置文件初始化、加载、获取与更新机制，方便快捷。
--
-支持复杂配置的手动序列化、反序列化。
--
-提供多种builder形式，快速构建
-`ConfigValue<?>`
-对象。
--
-支持通过注解规定配置对应的路径、注释等信息。
+- 基于类的配置文件初始化、加载、获取与更新机制，方便快捷。
+- 支持复杂配置的手动序列化、反序列化。
+- 提供多种builder形式，快速构建 `ConfigValue<?>` 对象。
+- 支持通过注解规定配置对应的路径、注释等信息。
 
 ## 开发
 
-详细开发介绍请 [点击这里](.doc/README.md) ,
-JavaDoc(
-最新Release)
+详细开发介绍请 [点击这里](.doc/README.md) , JavaDoc(最新Release)
 请 [点击这里](https://CarmJos.github.io/configured) 。
 
 ### 示例代码
@@ -278,25 +260,12 @@ dependencies {
 
 ## 衍生项目
 
-### [
-*
-*MineConfiguration
-**](https://github.com/CarmJos/MineConfiguration) (by @CarmJos )
+### [**MineConfiguration**](https://github.com/CarmJos/MineConfiguration) (by @CarmJos )
 
-configured
-for
-MineCraft!
-开始在
-MineCraft
-相关服务器平台上轻松(
-做)
-配置吧！
+configured for MineCraft!
+开始在 MineCraft 相关服务器平台上轻松(做)配置吧！
 
-目前支持
-BungeeCord,
-Bukkit(
-Spigot)
-服务端，后续将支持更多平台。
+目前支持 BungeeCord, Bukkit(Spigot) 服务端，后续将支持更多平台。
 
 ## 支持与捐赠
 
@@ -304,18 +273,14 @@ Spigot)
 
 感谢您对开源项目的支持！
 
-万分感谢
-Jetbrains
-为我们提供了从事此项目和其他开源项目的许可！
+万分感谢 Jetbrains 为我们提供了从事此项目和其他开源项目的许可！
 
 [![](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)](https://www.jetbrains.com/?from=https://github.com/CarmJos/configured)
 
-万分感谢来自 [ArtformGames](https://github.com/ArtformGames)
-对本项目的大力支持与积极贡献！
+万分感谢来自 [ArtformGames](https://github.com/ArtformGames) 对本项目的大力支持与积极贡献！
 
 <img src="https://raw.githubusercontent.com/ArtformGames/.github/master/logo/logo_full.svg" width="317px" height="117px" alt="ArtformGames">
 
 ## 开源协议
 
-本项目源码采用 [GNU LESSER GENERAL PUBLIC LICENSE](https://www.gnu.org/licenses/lgpl-3.0.html)
-开源协议。
+本项目源码采用 [GNU LESSER GENERAL PUBLIC LICENSE](https://www.gnu.org/licenses/lgpl-3.0.html) 开源协议。
