@@ -21,7 +21,7 @@ import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 public abstract class ContentHandler<RECEIVER, SELF extends ContentHandler<RECEIVER, SELF>>
-        implements Replaceable<RECEIVER, SELF>, Insertable<RECEIVER, SELF> {
+    implements Replaceable<RECEIVER, SELF>, Insertable<RECEIVER, SELF> {
 
     protected BiFunction<RECEIVER, String, String> parser = (receiver, value) -> value;
     protected String lineSeparator = System.lineSeparator();

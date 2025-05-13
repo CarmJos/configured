@@ -104,10 +104,10 @@ public class SQLSource extends ConfigureSource<SourcedSection, Map<String, Objec
 
                 int version = holder().metadata(path).get(VersionedMetaTypes.VERSION, 0);
                 dataValues.add(new Object[]{
-                        namespace, path, time, version, typeID, data,
-                        Commentable.getInlineComment(holder(), path),
-                        gson.toJson(Commentable.getHeaderComments(holder(), path)),
-                        gson.toJson(Commentable.getFooterComments(holder(), path))
+                    namespace, path, time, version, typeID, data,
+                    Commentable.getInlineComment(holder(), path),
+                    gson.toJson(Commentable.getHeaderComments(holder(), path)),
+                    gson.toJson(Commentable.getFooterComments(holder(), path))
                 });
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -118,18 +118,18 @@ public class SQLSource extends ConfigureSource<SourcedSection, Map<String, Objec
             purge();
         }
         this.table.createReplaceBatch()
-                .setColumnNames(
-                        "namespace", "path", "update_time", "version", "type", "value",
-                        "inline_comment", "header_comments", "footer_comments"
-                ).setAllParams(dataValues).execute();
+            .setColumnNames(
+                "namespace", "path", "update_time", "version", "type", "value",
+                "inline_comment", "header_comments", "footer_comments"
+            ).setAllParams(dataValues).execute();
     }
 
     @Override
     protected void onReload() throws Exception {
         Map<String, Object> loaded = new LinkedHashMap<>();
         try (SQLQuery query = this.table.createQuery()
-                .addCondition("namespace", namespace)
-                .build().execute()) {
+            .addCondition("namespace", namespace)
+            .build().execute()) {
             ResultSet rs = query.getResultSet();
             while (rs.next()) {
                 String path = rs.getString("path");
@@ -161,9 +161,9 @@ public class SQLSource extends ConfigureSource<SourcedSection, Map<String, Objec
 
     protected int typeIdOf(@NotNull Object value) {
         return this.resolvers.entrySet().stream()
-                .filter(entry -> entry.getValue().isInstance(value))
-                .findFirst().map(Map.Entry::getKey)
-                .orElseThrow(() -> new IllegalStateException("No resolvers for value " + value.getClass().getName()));
+            .filter(entry -> entry.getValue().isInstance(value))
+            .findFirst().map(Map.Entry::getKey)
+            .orElseThrow(() -> new IllegalStateException("No resolvers for value " + value.getClass().getName()));
     }
 
 

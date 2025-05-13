@@ -85,9 +85,9 @@ public class ConfiguredValue<V> extends CachedConfigValue<V, V> {
 
     public static <V> ConfiguredValue<V> of(@NotNull ValueType<V> type, @NotNull Supplier<@Nullable V> defaultSupplier) {
         return of(
-                new ValueManifest<>(type, defaultSupplier),
-                (provider, t, data) -> provider.deserialize(type, data),
-                (provider, t, value) -> provider.serialize(value)
+            new ValueManifest<>(type, defaultSupplier),
+            (provider, t, data) -> provider.deserialize(type, data),
+            (provider, t, value) -> provider.serialize(value)
         );
     }
 

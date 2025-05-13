@@ -17,7 +17,7 @@ public class YamlTests {
     public void test() {
 
         ConfigurationHolder<YAMLSource> holder = YAMLConfigFactory.from("target/tests.yml")
-                .resourcePath("configs/sample.yml").build();
+            .resourcePath("configs/sample.yml").build();
 
         Validators.activate(holder);
 

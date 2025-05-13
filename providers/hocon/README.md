@@ -1,6 +1,13 @@
 # configured-HOCON
 
-HOCON file-based implementation, compatible with all Java environments.
+HOCON
+file-based
+implementation,
+compatible
+with
+all
+Java
+environments.
 
 ## Dependencies
 

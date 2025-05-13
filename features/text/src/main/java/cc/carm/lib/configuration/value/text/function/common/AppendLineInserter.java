@@ -29,7 +29,7 @@ public class AppendLineInserter<RECEIVER> extends ContentInserter<RECEIVER> {
      * </ul>
      */
     public static final @NotNull Pattern APPEND_PATTERN = Pattern.compile(
-            "^(?:\\{(?<prefix>.*)})?#(?<id>.*)#(?:\\{(?<above>-?\\d+)(?:,(?<down>-?\\d+))?})?$"
+        "^(?:\\{(?<prefix>.*)})?#(?<id>.*)#(?:\\{(?<above>-?\\d+)(?:,(?<down>-?\\d+))?})?$"
     );
 
     public AppendLineInserter(int priority) {
@@ -50,9 +50,9 @@ public class AppendLineInserter<RECEIVER> extends ContentInserter<RECEIVER> {
 
         String prefix = Optional.ofNullable(matcher.group("prefix")).orElse("");
         int offsetAbove = Optional.ofNullable(matcher.group("above"))
-                .map(Integer::parseInt).orElse(0);
+            .map(Integer::parseInt).orElse(0);
         int offsetDown = Optional.ofNullable(matcher.group("down"))
-                .map(Integer::parseInt).orElse(offsetAbove); // If offsetDown is not set, use offsetAbove
+            .map(Integer::parseInt).orElse(offsetAbove); // If offsetDown is not set, use offsetAbove
 
         List<String> contents = new ArrayList<>();
 

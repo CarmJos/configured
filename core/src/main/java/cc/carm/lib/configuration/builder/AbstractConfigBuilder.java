@@ -19,9 +19,9 @@ import java.util.function.Supplier;
 
 @NotNullByDefault
 public abstract class AbstractConfigBuilder<
-        TYPE, UNIT, RESULT extends ConfigValue<TYPE, UNIT>, HOLDER extends ConfigurationHolder<?>,
-        SELF extends AbstractConfigBuilder<TYPE, UNIT, RESULT, HOLDER, SELF>
-        > {
+    TYPE, UNIT, RESULT extends ConfigValue<TYPE, UNIT>, HOLDER extends ConfigurationHolder<?>,
+    SELF extends AbstractConfigBuilder<TYPE, UNIT, RESULT, HOLDER, SELF>
+    > {
 
     protected final Class<? super HOLDER> providerClass;
     protected final ValueType<TYPE> type;
@@ -156,8 +156,8 @@ public abstract class AbstractConfigBuilder<
 
     protected @NotNull ValueManifest<TYPE, UNIT> buildManifest() {
         return new ValueManifest<>(
-                type(), this.defaultValueSupplier, this.valueValidator,
-                this.initializer, this.holder, this.path
+            type(), this.defaultValueSupplier, this.valueValidator,
+            this.initializer, this.holder, this.path
         );
     }
 

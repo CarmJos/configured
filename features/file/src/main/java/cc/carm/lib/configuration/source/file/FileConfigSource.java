@@ -17,7 +17,7 @@ import java.nio.file.Files;
 import java.util.Objects;
 
 public abstract class FileConfigSource<SECTION extends ConfigureSection, ORIGINAL, SELF extends FileConfigSource<SECTION, ORIGINAL, SELF>>
-        extends ConfigureSource<SECTION, ORIGINAL, SELF> {
+    extends ConfigureSource<SECTION, ORIGINAL, SELF> {
 
     protected final @NotNull File file;
     protected final @Nullable String resourcePath;
@@ -116,7 +116,7 @@ public abstract class FileConfigSource<SECTION extends ConfigureSection, ORIGINA
     }
 
     protected void saveResource(@NotNull String resourcePath, boolean replace)
-            throws IOException, IllegalArgumentException {
+        throws IOException, IllegalArgumentException {
         Objects.requireNonNull(resourcePath, "ResourcePath cannot be null");
         if (resourcePath.isEmpty()) throw new IllegalArgumentException("ResourcePath cannot be empty");
 

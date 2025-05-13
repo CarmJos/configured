@@ -1,6 +1,5 @@
 package cc.carm.lib.configuration.value.text.function;
 
-import cc.carm.lib.configuration.value.text.data.TextContents;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;

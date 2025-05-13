@@ -1,8 +1,16 @@
 # configured-SQL
 
-SQL database implementation, support for MySQL or MariaDB.
+SQL
+database
+implementation,
+support
+for
+MySQL
+or
+MariaDB.
 
 ## Table schema
+
 ```mysql
 CREATE TABLE IF NOT EXISTS conf
 (
@@ -16,9 +24,11 @@ CREATE TABLE IF NOT EXISTS conf
     `version`        MEDIUMINT UNSIGNED NOT NULL DEFAULT 0,                 # 配置项的版本
     `create_time`    DATETIME           NOT NULL DEFAULT CURRENT_TIMESTAMP, # 创建时间
     `update_time`    DATETIME           NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (`namespace`, `path`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4;
+    PRIMARY KEY (`namespace`,
+                 `path`)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4;
 ```
 
 ## Dependencies
@@ -32,16 +42,30 @@ CREATE TABLE IF NOT EXISTS conf
 
         <repository>
             <!-- Using Maven Central Repository for secure and stable updates, though synchronization might be needed. -->
-            <id>maven</id>
-            <name>Maven Central</name>
-            <url>https://repo1.maven.org/maven2</url>
+            <id>
+                maven
+            </id>
+            <name>
+                Maven
+                Central
+            </name>
+            <url>
+                https://repo1.maven.org/maven2
+            </url>
         </repository>
 
         <repository>
             <!-- Using GitHub dependencies for real-time updates, configuration required (recommended). -->
-            <id>configured</id>
-            <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/CarmJos/configured</url>
+            <id>
+                configured
+            </id>
+            <name>
+                GitHub
+                Packages
+            </name>
+            <url>
+                https://maven.pkg.github.com/CarmJos/configured
+            </url>
         </repository>
 
     </repositories>
@@ -53,10 +77,19 @@ CREATE TABLE IF NOT EXISTS conf
 <project>
     <dependencies>
         <dependency>
-            <groupId>cc.carm.lib</groupId>
-            <artifactId>configured-sql</artifactId>
-            <version>[LATEST RELEASE]</version>
-            <scope>compile</scope>
+            <groupId>
+                cc.carm.lib
+            </groupId>
+            <artifactId>
+                configured-sql
+            </artifactId>
+            <version>
+                [LATEST
+                RELEASE]
+            </version>
+            <scope>
+                compile
+            </scope>
         </dependency>
     </dependencies>
 </project>

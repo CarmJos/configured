@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class SectionMapBuilder<MAP extends Map<K, V>, K, V>
-        extends AbstractSectionBuilder<Map<K, V>, V, ConfiguredMap<K, V>, SectionMapBuilder<MAP, K, V>> {
+    extends AbstractSectionBuilder<Map<K, V>, V, ConfiguredMap<K, V>, SectionMapBuilder<MAP, K, V>> {
 
     protected final @NotNull ValueType<K> keyType;
 
@@ -78,14 +78,14 @@ public class SectionMapBuilder<MAP extends Map<K, V>, K, V>
 
     public @NotNull ValueAdapter<K> buildKeyAdapter() {
         return new ValueAdapter<>(this.keyType)
-                .parser((holder, type, data) -> {
-                    String source = holder.deserialize(String.class, data);
-                    return this.keyParser.handle(holder, source);
-                })
-                .serializer((holder, type, data) -> {
-                    String source = this.keySerializer.handle(holder, data);
-                    return holder.serialize(source);
-                });
+            .parser((holder, type, data) -> {
+                String source = holder.deserialize(String.class, data);
+                return this.keyParser.handle(holder, source);
+            })
+            .serializer((holder, type, data) -> {
+                String source = this.keySerializer.handle(holder, data);
+                return holder.serialize(source);
+            });
     }
 
     @Override

@@ -10,9 +10,9 @@ import java.io.File;
 public class JSONConfigTests {
 
     protected final ConfigurationHolder<?> holder = JSONConfigFactory
-            .from(new File("target"), "config.json")
-            .resourcePath("example.json")
-            .build();
+        .from(new File("target"), "config.json")
+        .resourcePath("example.json")
+        .build();
 
     @Test
     public void onTest() {

@@ -7,7 +7,7 @@ import cc.carm.lib.configuration.value.standard.ConfiguredValue;
 import org.jetbrains.annotations.NotNull;
 
 public class SourceValueBuilder<S, V>
-        extends AbstractSourceBuilder<V, S, V, ConfiguredValue<V>, SourceValueBuilder<S, V>> {
+    extends AbstractSourceBuilder<V, S, V, ConfiguredValue<V>, SourceValueBuilder<S, V>> {
 
 
     public SourceValueBuilder(@NotNull ValueType<S> sourceType, @NotNull ValueType<V> valueType,

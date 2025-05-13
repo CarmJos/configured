@@ -10,13 +10,13 @@ public interface DatabaseConfiguration extends Configuration {
 
     @ConfigPath("driver")
     @HeaderComments({
-            "数据库驱动配置，请根据数据库类型设置。",
-            "- MySQL(旧): com.mysql.jdbc.Driver",
-            "- MySQL(新): com.mysql.cj.jdbc.Driver",
-            "- MariaDB(推荐): org.mariadb.jdbc.Driver",
+        "数据库驱动配置，请根据数据库类型设置。",
+        "- MySQL(旧): com.mysql.jdbc.Driver",
+        "- MySQL(新): com.mysql.cj.jdbc.Driver",
+        "- MariaDB(推荐): org.mariadb.jdbc.Driver",
     })
     ConfiguredValue<String> DRIVER_NAME = ConfiguredValue.of(
-            String.class, "com.mysql.cj.jdbc.Driver"
+        String.class, "com.mysql.cj.jdbc.Driver"
     );
 
     ConfiguredValue<String> HOST = ConfiguredValue.of(String.class, "127.0.0.1");

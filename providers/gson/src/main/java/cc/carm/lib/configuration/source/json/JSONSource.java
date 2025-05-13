@@ -17,11 +17,11 @@ import java.util.Objects;
 public class JSONSource extends FileConfigSource<SourcedSection, Map<String, Object>, JSONSource> {
 
     public static final @NotNull Gson DEFAULT_GSON = new GsonBuilder()
-            .serializeNulls().disableHtmlEscaping().setPrettyPrinting()
-            .registerTypeAdapter(
-                    SourcedSection.class,
-                    (JsonSerializer<SourcedSection>) (src, t, c) -> c.serialize(src.data())
-            ).create();
+        .serializeNulls().disableHtmlEscaping().setPrettyPrinting()
+        .registerTypeAdapter(
+            SourcedSection.class,
+            (JsonSerializer<SourcedSection>) (src, t, c) -> c.serialize(src.data())
+        ).create();
 
     protected final @NotNull Gson gson;
     protected @Nullable SourcedSection rootSection;

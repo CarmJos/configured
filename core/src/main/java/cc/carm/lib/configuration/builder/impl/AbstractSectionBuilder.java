@@ -14,10 +14,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public abstract class AbstractSectionBuilder<
-        TYPE, UNIT,
-        RESULT extends ConfigValue<TYPE, UNIT>,
-        SELF extends AbstractSectionBuilder<TYPE, UNIT, RESULT, SELF>
-        > extends CommonConfigBuilder<TYPE, UNIT, RESULT, SELF> {
+    TYPE, UNIT,
+    RESULT extends ConfigValue<TYPE, UNIT>,
+    SELF extends AbstractSectionBuilder<TYPE, UNIT, RESULT, SELF>
+    > extends CommonConfigBuilder<TYPE, UNIT, RESULT, SELF> {
 
 
     protected final @NotNull ValueType<UNIT> paramType;
@@ -62,15 +62,15 @@ public abstract class AbstractSectionBuilder<
 
     protected ValueAdapter<UNIT> buildAdapter() {
         return new ValueAdapter<>(this.paramType)
-                .parser((p, type, data) -> {
-                    ConfigureSection section = p.deserialize(ConfigureSection.class, data);
-                    if (section == null) return null;
-                    return this.parser.handle(p, section);
-                })
-                .serializer((p, type, data) -> {
-                    Map<String, Object> map = this.serializer.handle(p, data);
-                    return map == null || map.isEmpty() ? null : map;
-                });
+            .parser((p, type, data) -> {
+                ConfigureSection section = p.deserialize(ConfigureSection.class, data);
+                if (section == null) return null;
+                return this.parser.handle(p, section);
+            })
+            .serializer((p, type, data) -> {
+                Map<String, Object> map = this.serializer.handle(p, data);
+                return map == null || map.isEmpty() ? null : map;
+            });
     }
 
 }

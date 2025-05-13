@@ -11,11 +11,11 @@ import java.util.Arrays;
 public class PrimitiveAdapter<T> extends ValueAdapter<T> {
 
     public static final String[] TRUE_VALUES = new String[]{
-            "true", "yes", "on", "1", "enabled", "enable", "active"
+        "true", "yes", "on", "1", "enabled", "enable", "active"
     };
 
     public static final String[] FALSE_VALUES = new String[]{
-            "false", "no", "off", "0", "disabled", "disable", "inactive"
+        "false", "no", "off", "0", "disabled", "disable", "inactive"
     };
 
     @SuppressWarnings({"unchecked", "rawtypes"})

@@ -9,7 +9,7 @@
 //import java.util.LinkedList;
 //import java.util.List;
 //
-///**
+/// **
 // * @author Chris2018998
 // */
 //public class OffsetUtil {
@@ -25,15 +25,15 @@
 //        } catch (NoSuchFieldException | IllegalAccessException e) {
 //            e.printStackTrace();
 //        }
-////        try {
-////            unsafe = AccessController.doPrivileged((PrivilegedExceptionAction<Unsafe>) () -> {
-////                Field theUnsafe = Unsafe.class.getDeclaredField("theUnsafe");
-////                theUnsafe.setAccessible(true);
-////                return (Unsafe) theUnsafe.get(null);
-////            });
-////        } catch (Throwable e) {
-////            System.err.println("Unable to load unsafe");
-////        }
+/// /        try {
+/// /            unsafe = AccessController.doPrivileged((PrivilegedExceptionAction<Unsafe>) () -> {
+/// /                Field theUnsafe = Unsafe.class.getDeclaredField("theUnsafe");
+/// /                theUnsafe.setAccessible(true);
+/// /                return (Unsafe) theUnsafe.get(null);
+/// /            });
+/// /        } catch (Throwable e) {
+/// /            System.err.println("Unable to load unsafe");
+/// /        }
 //    }
 //
 //    public static List<FieldOffset> getClassMemberOffset(Class<?> beanClass) {

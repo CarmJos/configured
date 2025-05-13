@@ -27,8 +27,8 @@ public class ConfiguredText<MSG, RECEIVER> extends ConfiguredValue<TextContents>
 
     public static final ValueType<TextContents> TEXT_TYPE = ValueType.of(TextContents.class);
     public static final ValueAdapter<TextContents> TEXT_ADAPTER = new ValueAdapter<>(TEXT_TYPE,
-            (h, t, d) -> d.serialize(),
-            (h, t, d) -> TextContents.deserialize(d)
+        (h, t, d) -> d.serialize(),
+        (h, t, d) -> TextContents.deserialize(d)
     );
 
     protected final @NotNull BiFunction<RECEIVER, String, String> parser;
@@ -51,8 +51,8 @@ public class ConfiguredText<MSG, RECEIVER> extends ConfiguredValue<TextContents>
 
     public PreparedText<MSG, RECEIVER> prepare(@NotNull Object... values) {
         return new PreparedText<MSG, RECEIVER>(resolve(), this.params)
-                .parser(this.parser).compiler(this.compiler)
-                .dispatcher(this.dispatcher).placeholders(values);
+            .parser(this.parser).compiler(this.compiler)
+            .dispatcher(this.dispatcher).placeholders(values);
     }
 
     /**
@@ -120,7 +120,7 @@ public class ConfiguredText<MSG, RECEIVER> extends ConfiguredValue<TextContents>
     }
 
     public abstract static class Builder<MSG, RECEIVER, SELF extends Builder<MSG, RECEIVER, SELF>>
-            extends AbstractConfigBuilder<TextContents, TextContents, ConfiguredText<MSG, RECEIVER>, ConfigurationHolder<?>, SELF> {
+        extends AbstractConfigBuilder<TextContents, TextContents, ConfiguredText<MSG, RECEIVER>, ConfigurationHolder<?>, SELF> {
         protected @NotNull TextContents.Builder defaultBuilder = TextContents.builder();
         protected @NotNull String[] params = new String[0];
 

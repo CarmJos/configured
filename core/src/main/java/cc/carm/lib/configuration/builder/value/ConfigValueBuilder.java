@@ -38,8 +38,8 @@ public class ConfigValueBuilder<V> {
     }
 
     public @NotNull SectionValueBuilder<V> fromSection(
-            @NotNull ValueHandler<ConfigureSection, V> valueParser,
-            @NotNull ValueHandler<V, ? extends Map<String, Object>> valueSerializer
+        @NotNull ValueHandler<ConfigureSection, V> valueParser,
+        @NotNull ValueHandler<V, ? extends Map<String, Object>> valueSerializer
     ) {
         return new SectionValueBuilder<>(this.type, valueParser, valueSerializer);
     }

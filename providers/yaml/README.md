@@ -1,6 +1,13 @@
 # configured-YAML
 
-YAML file-based implementation, compatible with all Java environments.
+YAML
+file-based
+implementation,
+compatible
+with
+all
+Java
+environments.
 
 ## Dependencies
 

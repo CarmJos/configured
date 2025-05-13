@@ -33,9 +33,9 @@ public class SQLConfigTest {
         manager.setDebugMode(true);
 
         ConfigurationHolder<?> holder = SQLConfigFactory.from(manager)
-                .tableName("test_configs")
-                .namespace("testing")
-                .build();
+            .tableName("test_configs")
+            .namespace("testing")
+            .build();
 
         ConfigurationTest.testDemo(holder);
         ConfigurationTest.testInner(holder);

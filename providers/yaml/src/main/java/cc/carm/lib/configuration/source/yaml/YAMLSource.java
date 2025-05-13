@@ -26,8 +26,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class YAMLSource
-        extends FileConfigSource<SourcedSection, Map<String, Object>, YAMLSource>
-        implements CommentedSection {
+    extends FileConfigSource<SourcedSection, Map<String, Object>, YAMLSource>
+    implements CommentedSection {
 
     protected final @NotNull YamlConstructor yamlConstructor;
     protected final @NotNull YamlRepresenter yamlRepresenter;
@@ -109,9 +109,9 @@ public class YAMLSource
     @Override
     public void save() throws Exception {
         CommentedYAMLWriter writer = new CommentedYAMLWriter(
-                String.valueOf(this.pathSeparator()),
-                dumperOptions().getIndent(),
-                holder.option(CommentableOptions.COMMENT_EMPTY_VALUE)
+            String.valueOf(this.pathSeparator()),
+            dumperOptions().getIndent(),
+            holder.option(CommentableOptions.COMMENT_EMPTY_VALUE)
         );
         try {
             fileWriter(w -> w.write(writer.saveToString(this)));

@@ -13,8 +13,8 @@ import org.jetbrains.annotations.Nullable;
 public interface ValueParser<TYPE> {
 
     @Nullable TYPE parse(
-            @NotNull ConfigurationHolder<?> holder,
-            @NotNull ValueType<? super TYPE> type, @NotNull Object data
+        @NotNull ConfigurationHolder<?> holder,
+        @NotNull ValueType<? super TYPE> type, @NotNull Object data
     ) throws Exception;
 
 }

@@ -7,6 +7,6 @@ public interface SQLOptions {
     /**
      * Whether to purge the configuration's in-database data when saving.
      */
-    ConfigurationOption<Boolean> PURGE = ConfigurationOption.of( true);
+    ConfigurationOption<Boolean> PURGE = ConfigurationOption.of(true);
 
 }

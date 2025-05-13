@@ -13,8 +13,8 @@ import org.jetbrains.annotations.Nullable;
 public interface ValueSerializer<TYPE> {
 
     @Nullable Object serialize(
-            @NotNull ConfigurationHolder<?> holder,
-            @NotNull ValueType<? super TYPE> type, @NotNull TYPE value
+        @NotNull ConfigurationHolder<?> holder,
+        @NotNull ValueType<? super TYPE> type, @NotNull TYPE value
     ) throws Exception;
 
 }

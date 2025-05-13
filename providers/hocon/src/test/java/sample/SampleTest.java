@@ -4,14 +4,14 @@ import cc.carm.lib.configuration.source.ConfigurationHolder;
 import cc.carm.lib.configuration.source.hocon.HOCONConfigFactory;
 import org.junit.Test;
 
-public class  SampleTest {
+public class SampleTest {
 
     @Test
     public void test() {
         // 1. Make a configuration provider from a file.
         ConfigurationHolder<?> holder = HOCONConfigFactory.from("target/config.conf")
-                .resourcePath("configs/sample.conf")
-                .build();
+            .resourcePath("configs/sample.conf")
+            .build();
 
         // 2. Initialize the configuration classes or instances.
         holder.initialize(SampleConfig.class);

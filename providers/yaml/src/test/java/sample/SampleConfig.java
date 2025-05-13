@@ -23,11 +23,11 @@ public interface SampleConfig extends Configuration {
     @HeaderComments({"[ UUID >-----------------------------------", "A lot of UUIDs"})
     @FooterComments("[ UUID >-----------------------------------")
     ConfiguredList<UUID> UUIDS = ConfiguredList.builderOf(UUID.class).fromString()
-            .parse(UUID::fromString).serialize(UUID::toString)
-            .defaults(
-                    UUID.fromString("00000000-0000-0000-0000-000000000000"),
-                    UUID.fromString("00000000-0000-0000-0000-000000000001")
-            ).build();
+        .parse(UUID::fromString).serialize(UUID::toString)
+        .defaults(
+            UUID.fromString("00000000-0000-0000-0000-000000000000"),
+            UUID.fromString("00000000-0000-0000-0000-000000000001")
+        ).build();
 
     @ConfigPath("info") // Custom path
     interface INFO extends Configuration {

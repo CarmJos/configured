@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class SourceListBuilder<SOURCE, V>
-        extends AbstractSourceBuilder<List<V>, SOURCE, V, ConfiguredList<V>, SourceListBuilder<SOURCE, V>> {
+    extends AbstractSourceBuilder<List<V>, SOURCE, V, ConfiguredList<V>, SourceListBuilder<SOURCE, V>> {
 
     protected @NotNull Supplier<? extends List<V>> constructor;
 

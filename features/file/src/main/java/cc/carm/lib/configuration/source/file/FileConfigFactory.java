@@ -9,8 +9,8 @@ import java.io.File;
 import java.nio.file.Path;
 
 public abstract class FileConfigFactory<SOURCE extends FileConfigSource<?, ?, SOURCE>,
-        HOLDER extends ConfigurationHolder<SOURCE>, SELF extends FileConfigFactory<SOURCE, HOLDER, SELF>>
-        extends ConfigurationFactory<SOURCE, HOLDER, SELF> {
+    HOLDER extends ConfigurationHolder<SOURCE>, SELF extends FileConfigFactory<SOURCE, HOLDER, SELF>>
+    extends ConfigurationFactory<SOURCE, HOLDER, SELF> {
 
 
     protected @NotNull File file;

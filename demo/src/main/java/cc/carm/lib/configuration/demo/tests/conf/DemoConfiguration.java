@@ -16,10 +16,10 @@ import java.util.UUID;
 @ConfigPath(root = true)
 @HeaderComments({"此处内容将显示在配置文件的最上方"})
 @FooterComments({
-        "------------------------------------------------",
-        "此处内容将显示在配置文件的最下方",
-        "可用于显示版权信息等",
-        "感谢您使用 https://github.com/CarmJos/configured !"
+    "------------------------------------------------",
+    "此处内容将显示在配置文件的最下方",
+    "可用于显示版权信息等",
+    "感谢您使用 https://github.com/CarmJos/configured !"
 })
 public interface DemoConfiguration extends Configuration {
 
@@ -38,30 +38,30 @@ public interface DemoConfiguration extends Configuration {
     @HeaderComments({"空值测试"})
     @InlineComment("空值Inline注释")
     ConfiguredMap<String, String> EMPTY = ConfiguredMap.builderOf(String.class, String.class)
-            .asLinkedMap().fromString()
-            .build();
+        .asLinkedMap().fromString()
+        .build();
 
     @ConfigPath("registered_users") // 通过注解规定配置文件中的路径，若不进行注解则以变量名自动生成。
     @HeaderComments({"Section类型数据测试"}) // 通过注解给配置添加注释。
     @InlineComment("默认地注释会加到Section的首行末尾") // 通过注解给配置添加注释。
     ConfiguredList<UserRecord> ALLOWLISTS = ConfiguredList.builderOf(UserRecord.class).fromSection()
-            .parse(UserRecord::deserialize).serialize(UserRecord::serialize)
-            .defaults(UserRecord.CARM).build();
+        .parse(UserRecord::deserialize).serialize(UserRecord::serialize)
+        .defaults(UserRecord.CARM).build();
 
     @HeaderComments({
-            "------------------------------------------------",
-            "[ID - ItemStack]对照表", "", "用于测试Map类型的解析与序列化保存"
+        "------------------------------------------------",
+        "[ID - ItemStack]对照表", "", "用于测试Map类型的解析与序列化保存"
     })
     @FooterComments("------------------------------------------------")
     ConfiguredMap<Integer, ItemStack> ITEMS = ConfiguredMap.builderOf(Integer.class, ItemStack.class)
-            .asLinkedMap().fromSection()
-            .parseKey(data -> Integer.parseInt(data))
-            .parse(ItemStack::deserialize).serialize(ItemStack::serialize)
-            .defaults(m -> {
-                m.put(1, new ItemStack("stone", 64));
-                m.put(2, new ItemStack("iron", 64, "铁锭", Arrays.asList("一些铁锭", "可以制造东西")));
-            })
-            .build();
+        .asLinkedMap().fromSection()
+        .parseKey(data -> Integer.parseInt(data))
+        .parse(ItemStack::deserialize).serialize(ItemStack::serialize)
+        .defaults(m -> {
+            m.put(1, new ItemStack("stone", 64));
+            m.put(2, new ItemStack("iron", 64, "铁锭", Arrays.asList("一些铁锭", "可以制造东西")));
+        })
+        .build();
 
 
     /**
@@ -72,18 +72,18 @@ public interface DemoConfiguration extends Configuration {
 
         @ConfigPath(value = "uuid-value", root = true)
         public static final ConfiguredValue<UUID> UUID_CONFIG_VALUE = ConfiguredValue
-                .builderOf(UUID.class).fromString()
-                .parse((holder, data) -> UUID.fromString(data))
-                .build();
+            .builderOf(UUID.class).fromString()
+            .parse((holder, data) -> UUID.fromString(data))
+            .build();
 
         @HeaderComments({"内部类的内部类测试", "通过这种方式，您可以轻易实现多层次的配置文件结构"})
         @FooterComments({"-------------"})
         public interface That extends Configuration {
 
             ConfiguredList<UUID> OPERATORS = ConfiguredList
-                    .builderOf(UUID.class).fromString()
-                    .parse(s -> Objects.requireNonNull(UUID.fromString(s)))
-                    .build();
+                .builderOf(UUID.class).fromString()
+                .parse(s -> Objects.requireNonNull(UUID.fromString(s)))
+                .build();
 
         }
     }

@@ -32,9 +32,9 @@ public class ConfigMapBuilder<M extends Map<K, V>, K, V> {
 
     public @NotNull <S> SourceMapBuilder<M, S, K, V> from(@NotNull ValueType<S> sourceType) {
         return from(
-                sourceType,
-                ValueHandler.required(keyType), ValueHandler.stringValue(),
-                ValueHandler.required(valueType), ValueHandler.required()
+            sourceType,
+            ValueHandler.required(keyType), ValueHandler.stringValue(),
+            ValueHandler.required(valueType), ValueHandler.required()
         );
     }
 
@@ -44,35 +44,35 @@ public class ConfigMapBuilder<M extends Map<K, V>, K, V> {
                                                           @NotNull ValueHandler<S, V> valueParser,
                                                           @NotNull ValueHandler<V, S> valueSerializer) {
         return new SourceMapBuilder<>(
-                this.constructor, sourceType, keyType, valueType,
-                keyParser, keySerializer, valueParser, valueSerializer
+            this.constructor, sourceType, keyType, valueType,
+            keyParser, keySerializer, valueParser, valueSerializer
         );
     }
 
     public @NotNull SourceMapBuilder<M, String, K, V> fromString() {
         return from(
-                ValueType.STRING,
-                ValueHandler.required(keyType), ValueHandler.stringValue(),
-                ValueHandler.required(valueType), ValueHandler.stringValue()
+            ValueType.STRING,
+            ValueHandler.required(keyType), ValueHandler.stringValue(),
+            ValueHandler.required(valueType), ValueHandler.stringValue()
         );
     }
 
     public @NotNull SectionMapBuilder<M, K, V> fromSection() {
         return fromSection(
-                ValueHandler.required(keyType), ValueHandler.stringValue(),
-                ValueHandler.required(valueType), ValueHandler.required()
+            ValueHandler.required(keyType), ValueHandler.stringValue(),
+            ValueHandler.required(valueType), ValueHandler.required()
         );
     }
 
     public @NotNull SectionMapBuilder<M, K, V> fromSection(
-            @NotNull ValueHandler<String, K> keyParser,
-            @NotNull ValueHandler<K, String> keySerializer,
-            @NotNull ValueHandler<ConfigureSection, V> valueParser,
-            @NotNull ValueHandler<V, Map<String, Object>> valueSerializer
+        @NotNull ValueHandler<String, K> keyParser,
+        @NotNull ValueHandler<K, String> keySerializer,
+        @NotNull ValueHandler<ConfigureSection, V> valueParser,
+        @NotNull ValueHandler<V, Map<String, Object>> valueSerializer
     ) {
         return new SectionMapBuilder<>(
-                this.constructor, keyType, valueType,
-                keyParser, keySerializer, valueParser, valueSerializer
+            this.constructor, keyType, valueType,
+            keyParser, keySerializer, valueParser, valueSerializer
         );
     }
 

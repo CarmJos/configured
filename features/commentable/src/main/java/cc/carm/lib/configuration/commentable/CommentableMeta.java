@@ -42,12 +42,12 @@ public interface CommentableMeta {
 
     static void register(@NotNull ConfigurationInitializer initializer) {
         initializer.registerAnnotation(
-                HeaderComments.class, HEADER,
-                a -> Arrays.asList(a.value())
+            HeaderComments.class, HEADER,
+            a -> Arrays.asList(a.value())
         );
         initializer.registerAnnotation(
-                FooterComments.class, FOOTER,
-                a -> Arrays.asList(a.value())
+            FooterComments.class, FOOTER,
+            a -> Arrays.asList(a.value())
         );
         initializer.registerAnnotation(InlineComment.class, INLINE, a -> {
             Map<String, String> map = new HashMap<>();

@@ -11,7 +11,7 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 public abstract class TextParser<RECEIVER, SELF extends TextParser<RECEIVER, SELF>>
-        extends ContentHandler<RECEIVER, SELF> {
+    extends ContentHandler<RECEIVER, SELF> {
 
     public abstract TextContents texts();
 

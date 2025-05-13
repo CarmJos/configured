@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class SectionListBuilder<V>
-        extends AbstractSectionBuilder<List<V>, V, ConfiguredList<V>, SectionListBuilder<V>> {
+    extends AbstractSectionBuilder<List<V>, V, ConfiguredList<V>, SectionListBuilder<V>> {
 
     protected @NotNull Supplier<? extends List<V>> constructor;
 

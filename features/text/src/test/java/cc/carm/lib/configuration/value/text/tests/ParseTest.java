@@ -33,17 +33,17 @@ public class ParseTest {
         TextContents textContents = new TextContents(lines, optional);
 
         PreparedText<String, PrintStream> msg = new PreparedText<String, PrintStream>(textContents)
-                .dispatcher((p, s) -> s.forEach(p::println))
-                .parser((p, s) -> s)
-                .compiler((p, s) -> s)
-                .replace(    // Custom replacer, replace $UUID$ with Random UUID
-                        "$UUID$", () -> UUID.randomUUID().toString()
-                );
+            .dispatcher((p, s) -> s.forEach(p::println))
+            .parser((p, s) -> s)
+            .compiler((p, s) -> s)
+            .replace(    // Custom replacer, replace $UUID$ with Random UUID
+                "$UUID$", () -> UUID.randomUUID().toString()
+            );
 
         msg.placeholder("name", "Carm")
-                .insert("guidance")
-                .insert("click")
-                .insert("websites", "Baidu", "Bilibili", "Google");
+            .insert("guidance")
+            .insert("click")
+            .insert("websites", "Baidu", "Bilibili", "Google");
 
 
         System.out.println("----------------------------");

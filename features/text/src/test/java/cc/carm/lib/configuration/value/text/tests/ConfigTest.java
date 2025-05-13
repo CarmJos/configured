@@ -12,9 +12,9 @@ import java.util.List;
 public class ConfigTest {
 
     public static final String[] WEBSITES = new String[]{
-            "https://carm.cc",
-            "https://www.baidu.com",
-            "https://www.google.com"
+        "https://carm.cc",
+        "https://www.baidu.com",
+        "https://www.google.com"
     };
 
     @Test
@@ -27,10 +27,10 @@ public class ConfigTest {
         System.out.println("--------------------------");
 
         List<String> str = AppMessages.WELCOME.prepare()
-                .placeholders("Carm")
-                .insert("guidance")
-                .insert("websites", WEBSITES)
-                .compile(System.out);
+            .placeholders("Carm")
+            .insert("guidance")
+            .insert("websites", WEBSITES)
+            .compile(System.out);
 
         System.out.println("--------------------------");
 

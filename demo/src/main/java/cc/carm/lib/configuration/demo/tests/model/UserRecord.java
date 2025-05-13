@@ -52,8 +52,8 @@ public class UserRecord extends AbstractRecord {
     @Override
     public String toString() {
         return "TestUser{" +
-                "name='" + name + '\'' +
-                ", uuid=" + uuid +
-                '}';
+            "name='" + name + '\'' +
+            ", uuid=" + uuid +
+            '}';
     }
 }

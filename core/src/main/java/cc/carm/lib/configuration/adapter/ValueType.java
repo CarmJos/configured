@@ -31,8 +31,8 @@ public abstract class ValueType<T> {
     public static final ValueType<Character> CHAR_TYPE = ofPrimitiveType(char.class);
 
     public static final ValueType<?>[] PRIMITIVE_TYPES = {
-            STRING, INTEGER, LONG, DOUBLE, FLOAT, BOOLEAN, BYTE, SHORT, CHAR,
-            INTEGER_TYPE, LONG_TYPE, DOUBLE_TYPE, FLOAT_TYPE, BOOLEAN_TYPE, BYTE_TYPE, SHORT_TYPE, CHAR_TYPE
+        STRING, INTEGER, LONG, DOUBLE, FLOAT, BOOLEAN, BYTE, SHORT, CHAR,
+        INTEGER_TYPE, LONG_TYPE, DOUBLE_TYPE, FLOAT_TYPE, BOOLEAN_TYPE, BYTE_TYPE, SHORT_TYPE, CHAR_TYPE
     };
 
     @SuppressWarnings("unchecked")

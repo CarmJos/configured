@@ -20,23 +20,23 @@ public class ConfigListBuilder<V> {
 
     public <S> @NotNull SourceListBuilder<S, V> from(@NotNull ValueType<S> sourceType) {
         return new SourceListBuilder<>(
-                ArrayList::new, sourceType, type,
-                ValueHandler.required(type),
-                ValueHandler.required(sourceType)
+            ArrayList::new, sourceType, type,
+            ValueHandler.required(type),
+            ValueHandler.required(sourceType)
         );
     }
 
     public @NotNull SourceListBuilder<String, V> fromString() {
         return new SourceListBuilder<>(
-                ArrayList::new, ValueType.STRING, type,
-                ValueHandler.required(type), ValueHandler.stringValue()
+            ArrayList::new, ValueType.STRING, type,
+            ValueHandler.required(type), ValueHandler.stringValue()
         );
     }
 
     public @NotNull SectionListBuilder<V> fromSection() {
         return new SectionListBuilder<>(
-                ArrayList::new, type,
-                ValueHandler.required(type), ValueHandler.required()
+            ArrayList::new, type,
+            ValueHandler.required(type), ValueHandler.required()
         );
     }
 

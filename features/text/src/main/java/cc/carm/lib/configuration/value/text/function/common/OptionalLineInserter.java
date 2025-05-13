@@ -23,7 +23,7 @@ public class OptionalLineInserter<RECEIVER> extends ContentInserter<RECEIVER> {
      * </ul>
      */
     public static final @NotNull Pattern OPTIONAL_PATTERN = Pattern.compile(
-            "^\\?\\[(?<id>.+)](?<content>.*)$"
+        "^\\?\\[(?<id>.+)](?<content>.*)$"
     );
 
     public OptionalLineInserter(int priority) {

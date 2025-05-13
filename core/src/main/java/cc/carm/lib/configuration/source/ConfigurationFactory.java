@@ -30,10 +30,10 @@ import java.util.function.Supplier;
  * @param <SELF>   Self builder, for further implement support.
  */
 public abstract class ConfigurationFactory<
-        SOURCE extends ConfigureSource<?, ?, SOURCE>,
-        HOLDER extends ConfigurationHolder<SOURCE>,
-        SELF
-        > {
+    SOURCE extends ConfigureSource<?, ?, SOURCE>,
+    HOLDER extends ConfigurationHolder<SOURCE>,
+    SELF
+    > {
 
     protected @NotNull ValueAdapterRegistry adapters = new ValueAdapterRegistry();
     protected @NotNull ConfigurationOptionHolder options = new ConfigurationOptionHolder();

@@ -17,9 +17,9 @@ import java.util.Set;
  * @see ConfigureSection
  */
 public abstract class ConfigureSource<
-        SECTION extends ConfigureSection, ORIGINAL,
-        SELF extends ConfigureSource<SECTION, ORIGINAL, SELF>>
-        implements ConfigureSection {
+    SECTION extends ConfigureSection, ORIGINAL,
+    SELF extends ConfigureSource<SECTION, ORIGINAL, SELF>>
+    implements ConfigureSection {
 
     protected final @NotNull ConfigurationHolder<? extends SELF> holder;
     protected long lastUpdateMillis;

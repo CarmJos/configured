@@ -69,10 +69,10 @@ public class ItemStack {
 
     public static ItemStack deserialize(ConfigureSection section) {
         return new ItemStack(
-                section.getString("material"),
-                section.getInt("amount", 1),
-                section.getString("name"),
-                section.getStringList("lore")
+            section.getString("material"),
+            section.getInt("amount", 1),
+            section.getString("name"),
+            section.getStringList("lore")
         );
     }
 }

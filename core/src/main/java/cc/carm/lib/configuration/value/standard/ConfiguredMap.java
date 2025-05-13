@@ -135,8 +135,8 @@ public class ConfiguredMap<K, V> extends CachedConfigValue<Map<K, V>, V> impleme
             for (Map.Entry<K, V> entry : value.entrySet()) {
                 try {
                     data.put(
-                            keySerializer.serialize(holder(), keyType(), entry.getKey()),
-                            valueSerializer.serialize(holder(), valueType(), withValidated(entry.getValue()))
+                        keySerializer.serialize(holder(), keyType(), entry.getKey()),
+                        valueSerializer.serialize(holder(), valueType(), withValidated(entry.getValue()))
                     );
                 } catch (Exception e) {
                     throwing(path + "." + entry.getKey(), e);

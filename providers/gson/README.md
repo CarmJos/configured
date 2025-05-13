@@ -1,8 +1,24 @@
 # configured-JSON
 
-JSON file-based implementation, compatible with all Java environments.
+JSON
+file-based
+implementation,
+compatible
+with
+all
+Java
+environments.
 
-**Remember that JSON does not support file comments.**
+*
+*Remember
+that
+JSON
+does
+not
+support
+file
+comments.
+**
 
 ## Dependencies
 

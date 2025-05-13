@@ -9,9 +9,9 @@ import cc.carm.lib.configuration.value.ConfigValue;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractSourceBuilder<
-        V, SOURCE, UNIT, RESULT extends ConfigValue<V, UNIT>,
-        SELF extends AbstractSourceBuilder<V, SOURCE, UNIT, RESULT, SELF>
-        > extends CommonConfigBuilder<V, UNIT, RESULT, SELF> {
+    V, SOURCE, UNIT, RESULT extends ConfigValue<V, UNIT>,
+    SELF extends AbstractSourceBuilder<V, SOURCE, UNIT, RESULT, SELF>
+    > extends CommonConfigBuilder<V, UNIT, RESULT, SELF> {
 
     protected final @NotNull ValueType<SOURCE> sourceType;
     protected final @NotNull ValueType<UNIT> paramType;
@@ -49,14 +49,14 @@ public abstract class AbstractSourceBuilder<
 
     protected ValueAdapter<UNIT> buildAdapter() {
         return new ValueAdapter<>(this.paramType)
-                .parser((holder, type, data) -> {
-                    SOURCE source = holder.deserialize(this.sourceType, data);
-                    return this.valueParser.handle(holder, source);
-                })
-                .serializer((holder, type, data) -> {
-                    SOURCE source = this.valueSerializer.handle(holder, data);
-                    return holder.serialize(source);
-                });
+            .parser((holder, type, data) -> {
+                SOURCE source = holder.deserialize(this.sourceType, data);
+                return this.valueParser.handle(holder, source);
+            })
+            .serializer((holder, type, data) -> {
+                SOURCE source = this.valueSerializer.handle(holder, data);
+                return holder.serialize(source);
+            });
     }
 
 

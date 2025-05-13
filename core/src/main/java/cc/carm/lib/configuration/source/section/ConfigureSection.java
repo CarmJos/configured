@@ -901,9 +901,9 @@ public interface ConfigureSection {
     }
 
     static <T, C extends Collection<T>> @NotNull C parseCollection(
-            @Nullable List<?> data,
-            @NotNull Supplier<C> constructor,
-            @NotNull DataFunction<Object, T> parser
+        @Nullable List<?> data,
+        @NotNull Supplier<C> constructor,
+        @NotNull DataFunction<Object, T> parser
     ) {
         C values = constructor.get();
         if (data == null) return values;

@@ -4,7 +4,6 @@ import cc.carm.lib.configuration.Configuration
 import cc.carm.lib.configuration.annotation.ConfigPath
 import cc.carm.lib.configuration.annotation.ConfigVersion
 import cc.carm.lib.configuration.kotlin.value.*
-import java.util.*
 
 @ConfigPath(root = true)
 object KotlinConfiguration : Configuration {

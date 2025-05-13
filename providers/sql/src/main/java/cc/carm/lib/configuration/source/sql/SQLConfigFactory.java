@@ -32,7 +32,7 @@ public class SQLConfigFactory extends ConfigurationFactory<SQLSource, Configurat
     }
 
     protected static final @NotNull Gson DEFAULT_GSON = new GsonBuilder()
-            .serializeNulls().disableHtmlEscaping().create();
+        .serializeNulls().disableHtmlEscaping().create();
 
     protected static final @NotNull BiConsumer<String, TableCreateBuilder> DEFAULT_TABLE_SCHEMA = (tableName, builder) -> {
         builder.addColumn("namespace", "VARCHAR(32) NOT NULL");
@@ -48,17 +48,17 @@ public class SQLConfigFactory extends ConfigurationFactory<SQLSource, Configurat
         builder.addColumn("version", "MEDIUMINT UNSIGNED NOT NULL DEFAULT 0");
 
         builder.addColumn(
-                "create_time",
-                "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP"
+            "create_time",
+            "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP"
         );
         builder.addColumn(
-                "update_time",
-                "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
+            "update_time",
+            "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
         );
 
         builder.setIndex(
-                IndexType.PRIMARY_KEY, "pk_" + tableName.toLowerCase(),
-                "namespace", "path"
+            IndexType.PRIMARY_KEY, "pk_" + tableName.toLowerCase(),
+            "namespace", "path"
         );
         builder.setTableSettings("ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
     };
@@ -163,8 +163,8 @@ public class SQLConfigFactory extends ConfigurationFactory<SQLSource, Configurat
 
         return new ConfigurationHolder<SQLSource>(this.adapters, this.options, this.metadata, this.initializer) {
             final SQLSource source = new SQLSource(
-                    this, System.currentTimeMillis(),
-                    gson, manager, resolvers, tableName, namespace
+                this, System.currentTimeMillis(),
+                gson, manager, resolvers, tableName, namespace
             );
 
             @Override

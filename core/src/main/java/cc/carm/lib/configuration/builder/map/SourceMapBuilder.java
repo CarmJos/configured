@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class SourceMapBuilder<MAP extends Map<K, V>, SOURCE, K, V>
-        extends AbstractSourceBuilder<Map<K, V>, SOURCE, V, ConfiguredMap<K, V>, SourceMapBuilder<MAP, SOURCE, K, V>> {
+    extends AbstractSourceBuilder<Map<K, V>, SOURCE, V, ConfiguredMap<K, V>, SourceMapBuilder<MAP, SOURCE, K, V>> {
 
     protected final @NotNull ValueType<K> keyType;
 
@@ -74,14 +74,14 @@ public class SourceMapBuilder<MAP extends Map<K, V>, SOURCE, K, V>
 
     public @NotNull ValueAdapter<K> buildKeyAdapter() {
         return new ValueAdapter<>(this.keyType)
-                .parser((holder, type, data) -> {
-                    String source = holder.deserialize(String.class, data);
-                    return this.keyParser.handle(holder, source);
-                })
-                .serializer((holder, type, data) -> {
-                    String source = this.keySerializer.handle(holder, data);
-                    return holder.serialize(source);
-                });
+            .parser((holder, type, data) -> {
+                String source = holder.deserialize(String.class, data);
+                return this.keyParser.handle(holder, source);
+            })
+            .serializer((holder, type, data) -> {
+                String source = this.keySerializer.handle(holder, data);
+                return holder.serialize(source);
+            });
     }
 
     @Override

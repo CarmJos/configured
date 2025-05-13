@@ -10,9 +10,9 @@ public class SampleTest {
     public void test() {
         // 1. Make a configuration provider from a file.
         ConfigurationHolder<?> holder = YAMLConfigFactory.from("target/config.yml")
-                .resourcePath("configs/sample.yml")
-                .indent(2) // Optional: Set the indentation of the configuration file.
-                .build();
+            .resourcePath("configs/sample.yml")
+            .indent(2) // Optional: Set the indentation of the configuration file.
+            .build();
 
         // 2. Initialize the configuration classes or instances.
         holder.initialize(SampleConfig.class);

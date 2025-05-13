@@ -28,22 +28,22 @@ public class MongoTest {
         gsonHolder.initialize(MongoConfig.class);
 
         MongoClientSettings settings = MongoClientSettings.builder()
-                .applyConnectionString(new ConnectionString(
-                        "mongodb://" + MongoConfig.HOST.resolve() + ":" + MongoConfig.PORT.resolve()
-                ))
-                .credential(MongoCredential.createCredential(
-                        MongoConfig.USERNAME.resolve(), MongoConfig.DATABASE.resolve(),
-                        MongoConfig.PASSWORD.resolve().toCharArray()
-                ))
-                .uuidRepresentation(UuidRepresentation.STANDARD)
-                .build();
+            .applyConnectionString(new ConnectionString(
+                "mongodb://" + MongoConfig.HOST.resolve() + ":" + MongoConfig.PORT.resolve()
+            ))
+            .credential(MongoCredential.createCredential(
+                MongoConfig.USERNAME.resolve(), MongoConfig.DATABASE.resolve(),
+                MongoConfig.PASSWORD.resolve().toCharArray()
+            ))
+            .uuidRepresentation(UuidRepresentation.STANDARD)
+            .build();
         MongoClient mongoClient = MongoClients.create(settings);
         MongoDatabase mongoDatabase = mongoClient.getDatabase(MongoConfig.DATABASE.resolve());
 
         ConfigurationHolder<?> mongoHolder = MongoConfigFactory
-                .from(mongoDatabase, "configs")
-                .namespace("my_plugin")
-                .build();
+            .from(mongoDatabase, "configs")
+            .namespace("my_plugin")
+            .build();
 
         // Test the configuration
         ConfigurationTest.testDemo(mongoHolder);

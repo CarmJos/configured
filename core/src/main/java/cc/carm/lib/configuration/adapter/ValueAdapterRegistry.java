@@ -25,8 +25,8 @@ public class ValueAdapterRegistry {
         ValueAdapter<FROM> fromAdapter = adapterOf(from);
         if (fromAdapter == null) throw new IllegalArgumentException("No adapter for type " + from);
         register(to,
-                serializer == null ? null : (provider, type, value) -> fromAdapter.serialize(provider, from, serializer.handle(value)),
-                parser == null ? null : (provider, type, data) -> parser.handle(fromAdapter.parse(provider, from, data))
+            serializer == null ? null : (provider, type, value) -> fromAdapter.serialize(provider, from, serializer.handle(value)),
+            parser == null ? null : (provider, type, data) -> parser.handle(fromAdapter.parse(provider, from, data))
         );
     }
 
@@ -84,14 +84,14 @@ public class ValueAdapterRegistry {
     @SuppressWarnings("unchecked")
     public <T> @Nullable ValueAdapter<T> adapterOf(@NotNull ValueType<T> type) {
         ValueAdapter<?> matched = adapters.stream()
-                .filter(adapter -> adapter.type().equals(type))
-                .findFirst().orElse(null);
+            .filter(adapter -> adapter.type().equals(type))
+            .findFirst().orElse(null);
         if (matched != null) return (ValueAdapter<T>) matched;
 
         // If no adapter found, try to find the adapter for the super type
         return (ValueAdapter<T>) adapters.stream()
-                .filter(adapter -> adapter.type().isSubtypeOf(type))
-                .findFirst().orElse(null);
+            .filter(adapter -> adapter.type().isSubtypeOf(type))
+            .findFirst().orElse(null);
     }
 
     public <T> ValueAdapter<T> adapterOf(@NotNull T value) {

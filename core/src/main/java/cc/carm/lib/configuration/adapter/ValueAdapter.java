@@ -12,7 +12,7 @@ import java.util.Objects;
  * @param <TYPE> The type of the target value
  */
 public class ValueAdapter<TYPE>
-        implements ValueSerializer<TYPE>, ValueParser<TYPE> {
+    implements ValueSerializer<TYPE>, ValueParser<TYPE> {
 
     protected final @NotNull ValueType<TYPE> type;
 
@@ -55,9 +55,9 @@ public class ValueAdapter<TYPE>
 
     @Override
     public @Nullable Object serialize(
-            @NotNull ConfigurationHolder<?> holder,
-            @NotNull ValueType<? super TYPE> type,
-            @NotNull TYPE value
+        @NotNull ConfigurationHolder<?> holder,
+        @NotNull ValueType<? super TYPE> type,
+        @NotNull TYPE value
     ) throws Exception {
         if (serializer == null) throw new UnsupportedOperationException("Serializer is not supported");
         return serializer.serialize(holder, type, value);
@@ -65,9 +65,9 @@ public class ValueAdapter<TYPE>
 
     @Override
     public @Nullable TYPE parse(
-            @NotNull ConfigurationHolder<?> holder,
-            @NotNull ValueType<? super TYPE> type,
-            @NotNull Object value
+        @NotNull ConfigurationHolder<?> holder,
+        @NotNull ValueType<? super TYPE> type,
+        @NotNull Object value
     ) throws Exception {
         if (deserializer == null) throw new UnsupportedOperationException("Deserializer is not supported");
         return deserializer.parse(holder, type, value);
