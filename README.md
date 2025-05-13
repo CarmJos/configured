@@ -6,7 +6,6 @@
 [![workflow](https://github.com/CarmJos/configured/actions/workflows/maven.yml/badge.svg?branch=master)](https://github.com/CarmJos/configured/actions/workflows/maven.yml)
 [![CodeFactor](https://www.codefactor.io/repository/github/carmjos/configured/badge)](https://www.codefactor.io/repository/github/carmjos/configured)
 ![CodeSize](https://img.shields.io/github/languages/code-size/CarmJos/configured)
-![](https://visitor-badge.glitch.me/badge?page_id=configured.readme)
 
 README LANGUAGES [ [**English**](README.md) | [中文](README_CN.md)  ]
 </div>
