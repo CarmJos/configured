@@ -279,11 +279,10 @@
                         <version>0.7.0</version>
                         <extensions>true</extensions>
                         <configuration>
-                            <deploymentName>${project.name}-${project.version}</deploymentName>
                             <publishingServerId>central</publishingServerId>
                             <autoPublish>true</autoPublish>
                             <excludeArtifacts>
-                                <excludeArtifact>cc.carm.lib:configured-demo</excludeArtifact>
+                                <excludeArtifact>configured-demo</excludeArtifact>
                             </excludeArtifacts>
                         </configuration>
                     </plugin>
