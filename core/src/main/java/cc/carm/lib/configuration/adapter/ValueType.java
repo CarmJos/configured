@@ -1,14 +1,22 @@
 package cc.carm.lib.configuration.adapter;
 
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
- * Used to get the generic type.
+ * {@link ValueType} used to get the generic type of the value,
+ * It can be used to check if an object is an instance of a specific type,
+ * and to cast objects to the correct type.
+ * <p>
+ * Java's type system is not capable of retaining generic type information at runtime.
+ * This class is used to represent a type with its generic parameters.
+ * </p>
  */
 public abstract class ValueType<T> {
 
@@ -43,7 +51,7 @@ public abstract class ValueType<T> {
     @SuppressWarnings("unchecked")
     public static <T> ValueType<T> of(final Type type) {
         if (type == null) throw new NullPointerException("Type cannot be null");
-        if (type instanceof Class<?>) { // Try handle primitive types
+        if (type instanceof Class<?>) { // Try to fast handle primitive types
             Class<?> clazz = (Class<?>) type;
             for (ValueType<?> valueType : PRIMITIVE_TYPES) {
                 if (valueType.getRawType() == clazz) {
@@ -61,6 +69,18 @@ public abstract class ValueType<T> {
 
     public static <T> ValueType<List<T>> ofList(final @NotNull Class<T> paramType) {
         return of(List.class, paramType);
+    }
+
+    public static <T> ValueType<List<T>> ofList(final @NotNull ValueType<T> paramType) {
+        return of(List.class, paramType.getType());
+    }
+
+    public static <K, V> ValueType<Map<K, V>> ofMap(final @NotNull Class<K> keyType, final @NotNull Class<V> valueType) {
+        return of(Map.class, keyType, valueType);
+    }
+
+    public static <K, V> ValueType<Map<K, V>> ofMap(final @NotNull ValueType<K> keyType, final @NotNull ValueType<V> valueType) {
+        return of(Map.class, keyType.getType(), valueType.getType());
     }
 
     /**
@@ -91,6 +111,7 @@ public abstract class ValueType<T> {
         return of(parameterizedType);
     }
 
+    @ApiStatus.Internal
     private static <T> ValueType<T> ofPrimitiveType(Class<T> clazz) {
         return new ValueType<T>(clazz) {
         };
@@ -110,25 +131,43 @@ public abstract class ValueType<T> {
         return type;
     }
 
+    /**
+     * Checks if this ValueType is a subtype of the given Class.
+     *
+     * @param target The target Class to check against
+     * @return true if this ValueType is a subtype of the target Class, false otherwise
+     */
     public boolean isSubtypeOf(Class<?> target) {
         Class<?> rawType = getRawType();
         return target.isAssignableFrom(rawType);
     }
 
+    /**
+     * Checks if this ValueType is a subtype of the given ValueType.
+     *
+     * @param target The target ValueType to check against
+     * @return true if this ValueType is a subtype of the target, false otherwise
+     */
     public boolean isSubtypeOf(ValueType<?> target) {
         return target.isSubtypeOf(getRawType());
     }
 
+    /**
+     * Checks if the given object is an instance of the type represented by this ValueType.
+     *
+     * @param obj The object to check
+     * @return true if the object is an instance of the type, false otherwise
+     */
     public boolean isInstance(Object obj) {
         return obj != null && getRawType().isInstance(obj);
     }
 
 
     /**
-     * 提取当前 ValueType 的原始类型（Class 对象）。
+     * Extracts the raw type from the generic type.
      *
-     * @return 对应的 Class 对象
-     * @throws IllegalStateException 如果无法提取出原始类型
+     * @return The raw type of the generic type
+     * @throws IllegalStateException if the type is not a Class or ParameterizedType
      */
     public Class<?> getRawType() {
         if (type instanceof Class<?>) {
@@ -144,6 +183,12 @@ public abstract class ValueType<T> {
         throw new IllegalStateException("Unsupported type: " + type);
     }
 
+    /**
+     * Casts the object to the type represented by this ValueType.
+     *
+     * @param obj The object to cast
+     * @return The object cast to the type represented by this ValueType
+     */
     @SuppressWarnings("unchecked")
     public T cast(Object obj) {
         if (!isInstance(obj)) {
@@ -152,6 +197,12 @@ public abstract class ValueType<T> {
         return (T) obj;
     }
 
+    /**
+     * Returns a string representation of the type.
+     * Like "{@code java.util.List<java.lang.String>}" or "java.lang.Integer".
+     *
+     * @return String representation of the type
+     */
     @Override
     public String toString() {
         if (type instanceof Class<?>) {
