@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <project.jdk.version>1.8</project.jdk.version>
+        <project.jdk.version>8</project.jdk.version>
         <maven.compiler.source>${project.jdk.version}</maven.compiler.source>
         <maven.compiler.target>${project.jdk.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -26,7 +26,9 @@
         <module>features/validators</module>
         <module>features/text</module>
         <module>features/kotlin</module>
+        <module>features/record</module>
 
+        <module>providers/temp</module>
         <module>providers/yaml</module>
         <module>providers/gson</module>
         <module>providers/hocon</module>

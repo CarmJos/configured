@@ -169,15 +169,16 @@ public abstract class ValueType<T> {
      * @return The raw type of the generic type
      * @throws IllegalStateException if the type is not a Class or ParameterizedType
      */
-    public Class<?> getRawType() {
+    @SuppressWarnings("unchecked")
+    public Class<T> getRawType() {
         if (type instanceof Class<?>) {
-            return (Class<?>) type;
+            return (Class<T>) type;
         }
         if (type instanceof ParameterizedType) {
             ParameterizedType pt = (ParameterizedType) type;
             Type raw = pt.getRawType();
             if (raw instanceof Class<?>) {
-                return (Class<?>) raw;
+                return (Class<T>) raw;
             }
         }
         throw new IllegalStateException("Unsupported type: " + type);

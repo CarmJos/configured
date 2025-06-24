@@ -9,7 +9,6 @@ import cc.carm.lib.configuration.source.meta.ConfigurationMetadata;
 import cc.carm.lib.configuration.value.ConfigValue;
 import cc.carm.lib.configuration.value.ValueManifest;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.NotNullByDefault;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.BiConsumer;
@@ -17,7 +16,6 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-@NotNullByDefault
 public abstract class AbstractConfigBuilder<
     TYPE, UNIT, RESULT extends ConfigValue<TYPE, UNIT>, HOLDER extends ConfigurationHolder<?>,
     SELF extends AbstractConfigBuilder<TYPE, UNIT, RESULT, HOLDER, SELF>
