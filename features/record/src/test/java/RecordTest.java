@@ -24,6 +24,10 @@ public class RecordTest {
             Arrays.asList(
                 new User("Alice", 30),
                 new User("Bob", 25)
+            ),
+            Map.of(
+                "Cloud", new Connection("cloud.example.com", 443),
+                "Local", new Connection("127.0.0.1", 8080)
             )
         ));
 
@@ -51,7 +55,7 @@ public class RecordTest {
             System.out.println("Another Users: " + user.name() + ", Age: " + user.age());
         }
 
-//        printMap(holder.config().asMap(), 0);
+        printMap(holder.config().asMap(), 0);
 
 //        try {
 //            List<User> parsed = holder.deserialize(ValueType.ofList(User.class), holder.config().getList("val.users"));
@@ -75,6 +79,9 @@ public class RecordTest {
         for (User user : ConfigB.VAL.resolve().users()) {
             System.out.println("Another Users: " + user.name() + ", Age: " + user.age());
         }
+        ConfigB.VAL.resolve().connections.forEach((k, v) -> {
+            System.out.println("Connection " + k + ": " + v.address() + ":" + v.port());
+        });
 
 
     }
@@ -82,7 +89,12 @@ public class RecordTest {
     record User(String name, int age) {
     }
 
-    record Device(String id, String name, UUID serial, Chip chip, List<User> users) {
+    record Connection(String address, int port) {
+    }
+
+    record Device(String id, String name, UUID serial, Chip chip,
+                  List<User> users,
+                  Map<String, Connection> connections) {
     }
 
     record Chip(String id, String serialNumber) {
