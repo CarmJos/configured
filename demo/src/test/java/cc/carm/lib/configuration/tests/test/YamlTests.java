@@ -14,7 +14,7 @@ import java.util.Map;
 public class YamlTests {
 
     @Test
-    public void test() {
+    public void test() throws Exception {
 
         ConfigurationHolder<YAMLSource> holder = YAMLConfigFactory.from("target/tests.yml")
             .resourcePath("configs/sample.yml").build();

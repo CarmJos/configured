@@ -1,25 +1,38 @@
 import cc.carm.lib.configuration.Configuration;
+import cc.carm.lib.configuration.annotation.ConfigPath;
 import cc.carm.lib.configuration.source.ConfigurationHolder;
 import cc.carm.lib.configuration.source.temp.TempConfigFactory;
 import cc.carm.lib.configuration.value.standard.ConfiguredValue;
 import cc.carm.lib.configured.adapter.record.RecordAdapter;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 public class RecordTest {
 
-    interface Config extends Configuration {
+    @ConfigPath(root = true)
+    interface ConfigA extends Configuration {
 
         ConfiguredValue<Device> VAL = ConfiguredValue.of(new Device(
             "device1",
             "My Device",
             UUID.fromString("123e4567-e89b-12d3-a456-426614174000"),
-            new Chip("chip1", "SN123456")
+            new Chip("chip1", "SN123456"),
+            Arrays.asList(
+                new User("Alice", 30),
+                new User("Bob", 25)
+            )
         ));
 
+    }
+
+    @ConfigPath(root = true)
+    interface ConfigB extends Configuration {
+
+        ConfiguredValue<Device> VAL = ConfiguredValue.of(Device.class);
     }
 
     @Test
@@ -27,30 +40,54 @@ public class RecordTest {
 
         ConfigurationHolder<?> holder = TempConfigFactory.create().build();
         RecordAdapter.register(holder);
-        holder.initialize(Config.class);
+        holder.initialize(ConfigA.class);
 
-        System.out.println("Device ID: " + Config.VAL.resolve().id());
-        System.out.println("Device Name: " + Config.VAL.resolve().name());
-        System.out.println("Device Serial: " + Config.VAL.resolve().serial());
-        System.out.println("Chip ID: " + Config.VAL.resolve().chip().id());
-        System.out.println("Chip Serial: " + Config.VAL.resolve().chip().serialNumber());
-
-        try {
-            holder.save();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        System.out.println("Device ID: " + ConfigA.VAL.resolve().id());
+        System.out.println("Device Name: " + ConfigA.VAL.resolve().name());
+        System.out.println("Device Serial: " + ConfigA.VAL.resolve().serial());
+        System.out.println("Chip ID: " + ConfigA.VAL.resolve().chip().id());
+        System.out.println("Chip Serial: " + ConfigA.VAL.resolve().chip().serialNumber());
+        for (User user : ConfigA.VAL.resolve().users()) {
+            System.out.println("Another Users: " + user.name() + ", Age: " + user.age());
         }
 
-        printMap(holder.config().asMap(), 0);
+//        printMap(holder.config().asMap(), 0);
+
+//        try {
+//            List<User> parsed = holder.deserialize(ValueType.ofList(User.class), holder.config().getList("val.users"));
+//            System.out.println("Parsed Users: " + parsed);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+
+        ConfigurationHolder<?> anotherHolder = TempConfigFactory.create().defaults(() -> holder.config().asMap()).build();
+        RecordAdapter.register(anotherHolder);
+
+        anotherHolder.initialize(ConfigB.class);
+
+        System.out.println("Another Device ID: " + ConfigB.VAL.resolve().id());
+        System.out.println("Another Device Name: " + ConfigB.VAL.resolve().name());
+        System.out.println("Another Device Serial: " + ConfigB.VAL.resolve().serial());
+        System.out.println("Another Chip ID: " + ConfigB.VAL.resolve().chip().id());
+        System.out.println("Another Chip Serial: " + ConfigB.VAL.resolve().chip().serialNumber());
+        System.out.println("users: " + ConfigB.VAL.resolve().users().size());
+        for (User user : ConfigB.VAL.resolve().users()) {
+            System.out.println("Another Users: " + user.name() + ", Age: " + user.age());
+        }
+
 
     }
 
-
-    public record Device(String id, String name, UUID serial, Chip chip) {
+    record User(String name, int age) {
     }
 
-    public record Chip(String id, String serialNumber) {
+    record Device(String id, String name, UUID serial, Chip chip, List<User> users) {
     }
+
+    record Chip(String id, String serialNumber) {
+    }
+
 
     static void printMap(Map<String, Object> map, int indent) {
         String indentStr = " ".repeat(indent);
@@ -62,6 +99,7 @@ public class RecordTest {
                 System.out.println(indentStr + entry.getKey() + ":");
                 for (Object item : subList) {
                     if (item instanceof Map<?, ?> itemMap) {
+                        System.out.println(indentStr + "  - ");
                         printMap((Map<String, Object>) itemMap, indent + 2);
                     } else {
                         System.out.println(indentStr + "  - " + item);

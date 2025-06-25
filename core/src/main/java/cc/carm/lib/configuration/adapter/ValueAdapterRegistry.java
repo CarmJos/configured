@@ -2,12 +2,13 @@ package cc.carm.lib.configuration.adapter;
 
 import cc.carm.lib.configuration.function.DataFunction;
 import cc.carm.lib.configuration.source.ConfigurationHolder;
+import cc.carm.lib.configuration.source.section.ConfigureSection;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.*;
 
 public class ValueAdapterRegistry {
 
@@ -108,20 +109,106 @@ public class ValueAdapterRegistry {
 
     public <T> T deserialize(@NotNull ConfigurationHolder<?> holder, @NotNull ValueType<T> type, @Nullable Object source) throws Exception {
         if (source == null) return null; // Null check
-        if (type.isInstance(source)) return type.cast(source); // Not required to deserialize
-        ValueAdapter<T> adapter = adapterOf(type);
-        if (adapter == null) throw new RuntimeException("No adapter for type " + type);
-        return adapter.parse(holder, type, source);
+        if (!(type.getType() instanceof ParameterizedType) && type.isInstance(source)) {
+            return type.cast(source); // Not required to deserialize
+        }
+
+        ValueAdapter<T> adapter = adapterOf(type); // Try to find an existed adapter for the type
+        if (adapter != null) {
+            return adapter.parse(holder, type, source);
+        } // If no adapter found, we will try to handle the type manually
+
+        if (type.getRawType().isArray()) { // For arrays.
+            List<?> list = deserializeList(holder, type, source);
+            Object[] array = (Object[]) java.lang.reflect.Array.newInstance(type.getRawType().getComponentType(), list.size());
+            for (int i = 0; i < list.size(); i++) {
+                array[i] = deserialize(holder, type.getRawType().getComponentType(), list.get(i));
+            }
+            return type.cast(array);
+        } else if (type.getType() instanceof ParameterizedType) {
+            ParameterizedType pt = (ParameterizedType) type.getType();
+            Type rawType = pt.getRawType();
+            Type[] typeArgs = pt.getActualTypeArguments();
+            if (rawType == List.class || rawType == Collection.class || rawType == ArrayList.class) {
+                return type.cast(new ArrayList<>(deserializeList(holder, ValueType.of(typeArgs[0]), source)));
+            } else if (rawType == Set.class || rawType == HashSet.class) {
+                return type.cast(new HashSet<>(deserializeList(holder, ValueType.of(typeArgs[0]), source)));
+            } else if (rawType == Map.class || rawType == LinkedHashMap.class) {
+                Map<?, ?> map;
+                if (source instanceof Map<?, ?>) {
+                    map = (Map<?, ?>) source;
+                } else if (source instanceof ConfigureSection) {
+                    map = ((ConfigureSection) source).asMap();
+                } else {
+                    throw new IllegalArgumentException("Cannot deserialize to Map from " + source.getClass());
+                }
+                Map<Object, Object> resultMap = new LinkedHashMap<>(map.size());
+                for (Map.Entry<?, ?> entry : map.entrySet()) {
+                    Object key = deserialize(holder, ValueType.of(typeArgs[0]), entry.getKey());
+                    Object value = deserialize(holder, ValueType.of(typeArgs[1]), entry.getValue());
+                    resultMap.put(key, value);
+                }
+                return type.cast(resultMap);
+            }
+        }
+        throw new RuntimeException("No adapter for type " + type);
     }
 
     @Nullable
     public <T> Object serialize(@NotNull ConfigurationHolder<?> holder, @Nullable T value) throws Exception {
         if (value == null) return null; // Null check
+
         ValueType<T> type = ValueType.of(value);
         ValueAdapter<T> adapter = adapterOf(type);
-        if (adapter == null) return value; // No adapters, try to return the original value
-        return adapter.serialize(holder, type, value);
+        if (adapter != null) return adapter.serialize(holder, type, value);
+
+        if (value.getClass().isArray()) {
+            Object[] array = (Object[]) value;
+            List<Object> serializedList = new ArrayList<>(array.length);
+            for (Object item : array) {
+                serializedList.add(serialize(holder, item));
+            }
+            return serializedList;
+        } else if (value instanceof Collection<?>) {
+            Collection<?> collection = (Collection<?>) value;
+            List<Object> serializedList = new ArrayList<>(collection.size());
+            for (Object item : collection) {
+                serializedList.add(serialize(holder, item));
+            }
+            return serializedList;
+        } else if (value instanceof Map<?, ?>) {
+            Map<?, ?> map = (Map<?, ?>) value;
+            Map<Object, Object> serializedMap = new LinkedHashMap<>(map.size());
+            for (Map.Entry<?, ?> entry : map.entrySet()) {
+                Object key = serialize(holder, entry.getKey());
+                Object val = serialize(holder, entry.getValue());
+                serializedMap.put(key, val);
+            }
+            return serializedMap;
+        }
+
+        return value; // No adapters, and cannot handle, try to return the original value
     }
 
+    protected <T> List<T> deserializeList(@NotNull ConfigurationHolder<?> holder,
+                                          @NotNull ValueType<T> type, @Nullable Object source) throws Exception {
+        if (source == null) return Collections.emptyList(); // Null check
+        if (source instanceof List<?>) {
+            List<?> list = (List<?>) source;
+            List<T> result = new ArrayList<>(list.size());
+            for (Object item : list) {
+                T deserializedItem = deserialize(holder, type, item);
+                if (deserializedItem != null) {
+                    result.add(deserializedItem);
+                }
+            }
+            return result;
+        } else { // Maybe singleton? Let's try to deserialize it as a single element list
+            T deserializedItem = deserialize(holder, type, source);
+            if (deserializedItem != null) {
+                return Collections.singletonList(deserializedItem);
+            } else return Collections.emptyList();
+        }
+    }
 
 }

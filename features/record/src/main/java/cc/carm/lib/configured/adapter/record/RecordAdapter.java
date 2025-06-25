@@ -38,10 +38,14 @@ public class RecordAdapter<T extends Record> extends ValueAdapter<T> {
         return (holder, type1, r) -> toMap(holder, r);
     }
 
+    @SuppressWarnings("unchecked")
     public static <R extends Record> ValueParser<R> parser(@NotNull ValueType<R> type) {
         return (holder, valueType, value) -> {
-            if (!(value instanceof ConfigureSection section)) return null;
-            return fromMap(holder, type.getRawType(), section.asMap());
+            if (value instanceof ConfigureSection section) {
+                return fromMap(holder, (Class<R>) valueType.getRawType(), section.asMap());
+            } else if (value instanceof Map<?, ?> map) {
+                return fromMap(holder, (Class<R>) valueType.getRawType(), (Map<String, Object>) map);
+            } else return null;
         };
     }
 
@@ -57,6 +61,7 @@ public class RecordAdapter<T extends Record> extends ValueAdapter<T> {
             for (RecordComponent component : recordClass.getRecordComponents()) {
                 String name = component.getName();
                 Method accessor = component.getAccessor();
+                accessor.setAccessible(true);
                 Object value = accessor.invoke(record);
                 map.put(name, serializeValue(holder, value));
             }
@@ -74,18 +79,19 @@ public class RecordAdapter<T extends Record> extends ValueAdapter<T> {
         Object[] args = new Object[components.length];
         for (int i = 0; i < components.length; i++) {
             RecordComponent component = components[i];
-            args[i] = parseValue(holder, component.getType(), data.get(component.getName()));
+            args[i] = parseValue(holder, component, data.get(component.getName()));
         }
         return createInstance(type, args);
     }
 
     @SuppressWarnings("unchecked")
-    private static Object parseValue(ConfigurationHolder<?> holder, Class<?> targetType, Object value) throws Exception {
+    private static Object parseValue(ConfigurationHolder<?> holder, RecordComponent component, Object value) throws Exception {
         if (value == null) return null;
-        if (targetType.isRecord()) {
-            return fromMap(holder, targetType.asSubclass(Record.class), (Map<String, Object>) value);
+        if (component.getType().isRecord()) {
+            return fromMap(holder, component.getType().asSubclass(Record.class), (Map<String, Object>) value);
         }
-        return holder.deserialize(targetType, value);
+        ValueType<?> valueType = ValueType.of(component.getGenericType());
+        return holder.deserialize(valueType, value);
     }
 
     private static Object serializeValue(ConfigurationHolder<?> holder, Object value) throws Exception {
