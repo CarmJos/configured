@@ -4,6 +4,7 @@ import cc.carm.lib.configuration.source.ConfigurationHolder;
 import cc.carm.lib.configuration.source.temp.TempConfigFactory;
 import cc.carm.lib.configuration.value.standard.ConfiguredValue;
 import cc.carm.lib.configured.adapter.record.RecordAdapter;
+import org.jetbrains.annotations.Nullable;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -20,7 +21,7 @@ public class RecordTest {
             "device1",
             "My Device",
             UUID.fromString("123e4567-e89b-12d3-a456-426614174000"),
-            new Chip("chip1", "SN123456"),
+            new Chip("chip1", null),
             Arrays.asList(
                 new User("Alice", 30),
                 new User("Bob", 25)
@@ -97,7 +98,7 @@ public class RecordTest {
                   Map<String, Connection> connections) {
     }
 
-    record Chip(String id, String serialNumber) {
+    record Chip(String id, @Nullable String serialNumber) {
     }
 
 
