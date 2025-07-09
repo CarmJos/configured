@@ -851,6 +851,8 @@ public interface ConfigureSection {
         return getList(path, obj -> {
             if (obj instanceof ConfigureSection) {
                 return (ConfigureSection) obj;
+            } else if (obj instanceof Map) {
+                return createSection(childPath(path), (Map<?, ?>) obj);
             }
             return null;
         });
