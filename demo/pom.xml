@@ -17,7 +17,7 @@
         <maven.deploy.skip>true</maven.deploy.skip>
 
         <deps.mysql-driver.version>8.0.33</deps.mysql-driver.version>
-        <log4j.version>2.25.0</log4j.version>
+        <log4j.version>2.25.1</log4j.version>
     </properties>
     <artifactId>configured-demo</artifactId>
     <packaging>jar</packaging>
