@@ -19,6 +19,10 @@
     <artifactId>configured-feature-validators</artifactId>
     <packaging>jar</packaging>
 
+    <name>Configured - Validators Feature</name>
+    <url>https://github.com/CarmJos/configured</url>
+    <description>Provides validation utilities for configuration values in the Configured framework.</description>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>

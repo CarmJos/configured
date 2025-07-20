@@ -39,7 +39,11 @@
     </modules>
 
     <name>configured</name>
-    <description>A simple, easy-to-use and universal solution for managing configuration files.</description>
+    <description>
+        "Once set, Simple get."
+        A simple, easy-to-use and universal solution
+        for managing configuration files.
+    </description>
     <url>https://github.com/CarmJos/configured</url>
 
     <developers>

@@ -18,6 +18,10 @@
     <artifactId>configured-hocon</artifactId>
     <packaging>jar</packaging>
 
+    <name>Configured - HOCON Provider</name>
+    <url>https://github.com/CarmJos/configured</url>
+    <description>Provides HOCON file support for the Configured framework.</description>
+
     <dependencies>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>

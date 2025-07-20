@@ -19,6 +19,10 @@
     <artifactId>configured-feature-text</artifactId>
     <packaging>jar</packaging>
 
+    <name>Configured - Text Feature</name>
+    <url>https://github.com/CarmJos/configured</url>
+    <description>Provides text processing and formatting support for the Configured framework.</description>
+
     <dependencies>
 
         <dependency>

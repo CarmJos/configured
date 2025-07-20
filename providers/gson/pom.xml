@@ -18,6 +18,10 @@
     <artifactId>configured-gson</artifactId>
     <packaging>jar</packaging>
 
+    <name>Configured - Gson Provider</name>
+    <url>https://github.com/CarmJos/configured</url>
+    <description>Provides Gson (JSON) file support for the Configured framework.</description>
+
     <dependencies>
 
         <dependency>

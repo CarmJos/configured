@@ -20,6 +20,10 @@
     <artifactId>configured-feature-kotlin</artifactId>
     <packaging>jar</packaging>
 
+    <name>Configured - Kotlin Feature</name>
+    <url>https://github.com/CarmJos/configured</url>
+    <description>Provides Kotlin language support and extensions for the Configured framework.</description>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>

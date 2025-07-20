@@ -18,6 +18,13 @@
     <artifactId>configured-core</artifactId>
     <packaging>jar</packaging>
 
+    <name>Configured - Core</name>
+    <url>https://github.com/CarmJos/configured</url>
+    <description>
+        The core module of Configured framework,
+        providing essential configuration management functionality.
+    </description>
+
     <build>
         <plugins>
             <plugin>

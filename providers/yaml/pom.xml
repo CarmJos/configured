@@ -19,6 +19,9 @@
 
     <artifactId>configured-yaml</artifactId>
     <packaging>jar</packaging>
+    <name>Configured - YAML Provider</name>
+    <url>https://github.com/CarmJos/configured</url>
+    <description>Provides YAML file support for the Configured framework.</description>
 
     <dependencies>
 

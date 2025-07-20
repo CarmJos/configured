@@ -17,6 +17,11 @@
         <deps.mongodb.version>5.5.1</deps.mongodb.version>
     </properties>
     <artifactId>configured-mongodb</artifactId>
+    <packaging>jar</packaging>
+
+    <name>Configured - MongoDB Provider</name>
+    <url>https://github.com/CarmJos/configured</url>
+    <description>Provides MongoDB database support for the Configured framework.</description>
 
     <dependencies>
 

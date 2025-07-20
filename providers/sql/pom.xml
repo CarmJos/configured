@@ -16,6 +16,11 @@
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
     </properties>
     <artifactId>configured-sql</artifactId>
+    <packaging>jar</packaging>
+
+    <name>Configured - SQL Provider</name>
+    <url>https://github.com/CarmJos/configured</url>
+    <description>Provides SQL database support for the Configured framework.</description>
 
     <dependencies>
 

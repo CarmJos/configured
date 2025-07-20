@@ -19,6 +19,10 @@
     <artifactId>configured-temp</artifactId>
     <packaging>jar</packaging>
 
+    <name>Configured - Temp Provider</name>
+    <url>https://github.com/CarmJos/configured</url>
+    <description>Provides a temporary in-memory configuration provider for the Configured framework.</description>
+
     <dependencies>
 
         <dependency>

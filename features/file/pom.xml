@@ -19,6 +19,10 @@
     <artifactId>configured-feature-file</artifactId>
     <packaging>jar</packaging>
 
+    <name>Configured - File Feature</name>
+    <url>https://github.com/CarmJos/configured</url>
+    <description>Provides file-based configuration support for the Configured framework.</description>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>

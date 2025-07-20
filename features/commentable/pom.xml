@@ -19,6 +19,10 @@
     <artifactId>configured-feature-commentable</artifactId>
     <packaging>jar</packaging>
 
+    <name>Configured - Commentable Feature</name>
+    <url>https://github.com/CarmJos/configured</url>
+    <description>Enables comment support for configuration files in the Configured framework.</description>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>

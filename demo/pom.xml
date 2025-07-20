@@ -22,6 +22,11 @@
     <artifactId>configured-demo</artifactId>
     <packaging>jar</packaging>
 
+    <name>Configured - Demo</name>
+    <url>https://github.com/CarmJos/configured</url>
+    <description>Demonstrate &amp; tests module.</description>
+
+
     <dependencies>
 
         <dependency>

@@ -13,6 +13,10 @@
     <artifactId>configured-feature-record</artifactId>
     <packaging>jar</packaging>
 
+    <name>Configured - Record Feature</name>
+    <url>https://github.com/CarmJos/configured</url>
+    <description>Provides Java record type support for the Configured framework.</description>
+
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>

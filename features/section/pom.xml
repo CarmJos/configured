@@ -19,6 +19,10 @@
     <artifactId>configured-feature-section</artifactId>
     <packaging>jar</packaging>
 
+    <name>Configured - Section Feature</name>
+    <url>https://github.com/CarmJos/configured</url>
+    <description>Provides section support for organizing configuration files in the Configured framework.</description>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
