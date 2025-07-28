@@ -57,7 +57,7 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git@github.com:CarmJos/Easy.configured</connection>
+        <connection>scm:git:git@github.com:CarmJos/configured</connection>
         <developerConnection>scm:git:git@github.com:CarmJos/configured.git</developerConnection>
         <url>https://github.com/CarmJos/configured</url>
         <tag>HEAD</tag>
