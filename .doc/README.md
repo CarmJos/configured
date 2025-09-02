@@ -1,3 +1,3 @@
 # Documentation
 
-See [wiki]().
+See [wiki](https://github.com/CarmJos/configured/wiki).

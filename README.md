@@ -36,7 +36,7 @@ based configuration files format.
 
 For the latest JavaDoc release, [CLICK HERE](https://CarmJos.github.io/configured).
 
-For a detailed development guide, [CLICK HERE](.doc/README.md).
+For a detailed development guide, see [wiki](https://github.com/CarmJos/configured/wiki).
 
 ### Preview
 

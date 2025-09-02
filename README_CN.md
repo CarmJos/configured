@@ -41,7 +41,7 @@ README LANGUAGES [ [English](README.md) | [**中文**](README_CN.md)  ]
 - [全种类配置实例类演示](demo/src/main/java/cc/carm/lib/configuration/demo/tests/conf/DemoConfiguration.java)
 
 您可以 [点击这里](demo/src/main/java/cc/carm/lib/configuration/demo)
-直接查看现有的代码演示，更多复杂情况演示详见 [开发介绍](.doc/README.md) 。
+直接查看现有的代码演示，更多复杂情况演示详见 [开发介绍](https://github.com/CarmJos/configured/wiki) 。
 
 ```java
 
