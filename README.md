@@ -266,3 +266,11 @@ strong support and active contribution to this project!
 
 This project's source code is licensed under
 the [GNU LESSER GENERAL PUBLIC LICENSE](https://www.gnu.org/licenses/lgpl-3.0.html).
+
+## Project Governance & Contribution
+
+- Code of Conduct: [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)
+- Contributing Guide: [CONTRIBUTING.md](./CONTRIBUTING.md)
+- Security Policy: [SECURITY.md](./SECURITY.md)
+
+For questions, improvements, or security concerns, please refer to the respective document above before opening an issue.
