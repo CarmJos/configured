@@ -249,7 +249,7 @@ with more platforms to be supported soon.
 
 ## Support and Donation
 
-If you appreciate this plugin, consider supporting me with a donation!
+If you appreciate this plugin, consider supporting me with a [donation](https://github.com/sponsors/CarmJos)!
 
 Thank you for supporting open-source projects!
 
