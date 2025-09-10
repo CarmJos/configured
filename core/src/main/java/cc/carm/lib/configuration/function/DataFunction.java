@@ -4,10 +4,11 @@ package cc.carm.lib.configuration.function;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @FunctionalInterface
-public interface DataFunction<T, R> {
+public interface DataFunction<T, R> extends Serializable {
 
     @NotNull R handle(@NotNull T data) throws Exception;
 

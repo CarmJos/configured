@@ -4,8 +4,10 @@ package cc.carm.lib.configuration.function;
 import cc.carm.lib.configuration.source.ConfigurationHolder;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
+
 @FunctionalInterface
-public interface ValueComposer<T, U> {
+public interface ValueComposer<T, U> extends Serializable {
 
     /**
      * Accept the value and the data, and then compose the value.

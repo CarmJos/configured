@@ -7,10 +7,11 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @FunctionalInterface
-public interface ValueHandler<T, R> {
+public interface ValueHandler<T, R> extends Serializable {
 
     @Nullable R handle(@NotNull ConfigurationHolder<?> holder, @NotNull T data) throws Exception;
 

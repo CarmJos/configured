@@ -4,8 +4,10 @@ import cc.carm.lib.configuration.source.ConfigurationHolder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.Serializable;
+
 @FunctionalInterface
-public interface ValueValidator<T> {
+public interface ValueValidator<T> extends Serializable {
 
     void validate(@NotNull ConfigurationHolder<?> holder, @Nullable T value) throws Exception;
 
