@@ -6,6 +6,7 @@ import cc.carm.lib.configuration.source.section.ConfigureSection;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.*;
@@ -13,6 +14,7 @@ import java.util.*;
 public class ValueAdapterRegistry {
 
     protected final Set<ValueAdapter<?>> adapters = new HashSet<>();
+    protected final Map<ValueType<?>, ValueAdapter<?>> adapterCache = new HashMap<>();
 
     public <FROM, TO> void register(@NotNull Class<FROM> from, @NotNull Class<TO> to,
                                     @Nullable DataFunction<FROM, TO> parser,
@@ -33,6 +35,7 @@ public class ValueAdapterRegistry {
 
     public void register(@NotNull ValueAdapter<?>... adapter) {
         adapters.addAll(Arrays.asList(adapter));
+        adapterCache.clear();
     }
 
     public <T> void register(@NotNull Class<T> type, @NotNull ValueSerializer<T> serializer) {
@@ -80,19 +83,30 @@ public class ValueAdapterRegistry {
 
     public void unregister(@NotNull ValueType<?> type) {
         adapters.removeIf(adapter -> adapter.type().equals(type));
+        adapterCache.clear();
     }
 
     @SuppressWarnings("unchecked")
     public <T> @Nullable ValueAdapter<T> adapterOf(@NotNull ValueType<T> type) {
-        ValueAdapter<?> matched = adapters.stream()
-            .filter(adapter -> adapter.type().equals(type))
-            .findFirst().orElse(null);
-        if (matched != null) return (ValueAdapter<T>) matched;
+        ValueAdapter<?> cached = adapterCache.get(type);
+        if (cached != null) return (ValueAdapter<T>) cached;
 
-        // If no adapter found, try to find the adapter for the super type
-        return (ValueAdapter<T>) adapters.stream()
-            .filter(adapter -> adapter.type().isSubtypeOf(type))
-            .findFirst().orElse(null);
+        for (ValueAdapter<?> adapter : adapters) {
+            if (adapter.type().equals(type)) {
+                adapterCache.put(type, adapter);
+                return (ValueAdapter<T>) adapter;
+            }
+        }
+
+        for (ValueAdapter<?> adapter : adapters) {
+            if (adapter.type().isSubtypeOf(type)) {
+                adapterCache.put(type, adapter);
+                return (ValueAdapter<T>) adapter;
+            }
+        }
+
+        adapterCache.put(type, null);
+        return null;
     }
 
     public <T> ValueAdapter<T> adapterOf(@NotNull T value) {
@@ -108,50 +122,126 @@ public class ValueAdapterRegistry {
     }
 
     public <T> T deserialize(@NotNull ConfigurationHolder<?> holder, @NotNull ValueType<T> type, @Nullable Object source) throws Exception {
-        if (source == null) return null; // Null check
-        if (!(type.getType() instanceof ParameterizedType) && type.isInstance(source)) {
-            return type.cast(source); // Not required to deserialize
+        if (source == null) return null;
+
+        Type typeInstance = type.getType();
+        if (!(typeInstance instanceof ParameterizedType) && type.isInstance(source)) {
+            return type.cast(source);
         }
 
-        ValueAdapter<T> adapter = adapterOf(type); // Try to find an existed adapter for the type
+        ValueAdapter<T> adapter = adapterOf(type);
         if (adapter != null) {
             return adapter.parse(holder, type, source);
-        } // If no adapter found, we will try to handle the type manually
+        }
 
-        if (type.getRawType().isArray()) { // For arrays.
-            List<?> list = deserializeList(holder, type, source);
-            Object[] array = (Object[]) java.lang.reflect.Array.newInstance(type.getRawType().getComponentType(), list.size());
-            for (int i = 0; i < list.size(); i++) {
-                array[i] = deserialize(holder, type.getRawType().getComponentType(), list.get(i));
-            }
-            return type.cast(array);
-        } else if (type.getType() instanceof ParameterizedType) {
-            ParameterizedType pt = (ParameterizedType) type.getType();
-            Type rawType = pt.getRawType();
-            Type[] typeArgs = pt.getActualTypeArguments();
-            if (rawType == List.class || rawType == Collection.class || rawType == ArrayList.class) {
-                return type.cast(new ArrayList<>(deserializeList(holder, ValueType.of(typeArgs[0]), source)));
-            } else if (rawType == Set.class || rawType == HashSet.class) {
-                return type.cast(new HashSet<>(deserializeList(holder, ValueType.of(typeArgs[0]), source)));
-            } else if (rawType == Map.class || rawType == LinkedHashMap.class) {
-                Map<?, ?> map;
-                if (source instanceof Map<?, ?>) {
-                    map = (Map<?, ?>) source;
-                } else if (source instanceof ConfigureSection) {
-                    map = ((ConfigureSection) source).asMap();
-                } else {
-                    throw new IllegalArgumentException("Cannot deserialize to Map from " + source.getClass());
-                }
-                Map<Object, Object> resultMap = new LinkedHashMap<>(map.size());
-                for (Map.Entry<?, ?> entry : map.entrySet()) {
-                    Object key = deserialize(holder, ValueType.of(typeArgs[0]), entry.getKey());
-                    Object value = deserialize(holder, ValueType.of(typeArgs[1]), entry.getValue());
-                    resultMap.put(key, value);
-                }
-                return type.cast(resultMap);
+        return deserializeWithoutAdapter(holder, type, source, typeInstance);
+    }
+
+    private <T> T deserializeWithoutAdapter(@NotNull ConfigurationHolder<?> holder, @NotNull ValueType<T> type,
+                                            @NotNull Object source, @NotNull Type typeInstance) throws Exception {
+        Class<?> rawType = type.getRawType();
+
+        if (rawType.isArray()) {
+            return deserializeArray(holder, type, source, rawType);
+        }
+
+        if (typeInstance instanceof ParameterizedType) {
+            return deserializeParameterized(holder, type, source, (ParameterizedType) typeInstance);
+        }
+
+        throw new RuntimeException("No adapter for type " + type);
+    }
+
+    private <T> T deserializeArray(@NotNull ConfigurationHolder<?> holder, @NotNull ValueType<T> type,
+                                   @NotNull Object source, @NotNull Class<?> rawType) throws Exception {
+        if (!(source instanceof List<?>)) {
+            source = deserializeList(holder, type, source);
+        }
+
+        List<?> list = (List<?>) source;
+        int size = list.size();
+        if (size == 0) {
+            return type.cast(Array.newInstance(rawType.getComponentType(), 0));
+        }
+
+        Class<?> componentType = rawType.getComponentType();
+        Object[] array = (Object[]) Array.newInstance(componentType, size);
+        for (int i = 0; i < size; i++) {
+            array[i] = deserialize(holder, componentType, list.get(i));
+        }
+        return type.cast(array);
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T> T deserializeParameterized(@NotNull ConfigurationHolder<?> holder, @NotNull ValueType<T> type,
+                                           @NotNull Object source, @NotNull ParameterizedType pt) throws Exception {
+        Type rawType = pt.getRawType();
+        Type[] typeArgs = pt.getActualTypeArguments();
+
+        if (rawType == List.class || rawType == Collection.class || rawType == ArrayList.class) {
+            return (T) deserializeCollection(holder, source, typeArgs[0], ArrayList::new);
+        }
+
+        if (rawType == Set.class || rawType == HashSet.class) {
+            return (T) deserializeCollection(holder, source, typeArgs[0], HashSet::new);
+        }
+
+        if (rawType == Map.class || rawType == LinkedHashMap.class) {
+            return (T) deserializeMap(holder, source, typeArgs[0], typeArgs[1]);
+        }
+
+        throw new RuntimeException("No adapter for parameterized type " + type);
+    }
+
+    private Collection<?> deserializeCollection(@NotNull ConfigurationHolder<?> holder, @NotNull Object source,
+                                                @NotNull Type elementType, @NotNull java.util.function.Supplier<Collection<Object>> collectionFactory) throws Exception {
+        ValueType<?> elementValueType = ValueType.of(elementType);
+        List<?> sourceList = deserializeList(holder, elementValueType, source);
+
+        if (sourceList.isEmpty()) {
+            return collectionFactory.get();
+        }
+
+        Collection<Object> result = collectionFactory.get();
+        if (result instanceof ArrayList) {
+            ((ArrayList<Object>) result).ensureCapacity(sourceList.size());
+        }
+
+        for (Object item : sourceList) {
+            Object deserializedItem = deserialize(holder, elementValueType, item);
+            if (deserializedItem != null) {
+                result.add(deserializedItem);
             }
         }
-        throw new RuntimeException("No adapter for type " + type);
+        return result;
+    }
+
+    private Map<Object, Object> deserializeMap(@NotNull ConfigurationHolder<?> holder, @NotNull Object source,
+                                               @NotNull Type keyType, @NotNull Type valueType) throws Exception {
+        Map<?, ?> sourceMap;
+        if (source instanceof Map<?, ?>) {
+            sourceMap = (Map<?, ?>) source;
+        } else if (source instanceof ConfigureSection) {
+            sourceMap = ((ConfigureSection) source).asMap();
+        } else {
+            throw new IllegalArgumentException("Cannot deserialize to Map from " + source.getClass());
+        }
+
+        int mapSize = sourceMap.size();
+        if (mapSize == 0) {
+            return new LinkedHashMap<>();
+        }
+
+        ValueType<?> keyValueType = ValueType.of(keyType);
+        ValueType<?> valueValueType = ValueType.of(valueType);
+        Map<Object, Object> resultMap = new LinkedHashMap<>(mapSize);
+
+        for (Map.Entry<?, ?> entry : sourceMap.entrySet()) {
+            Object key = deserialize(holder, keyValueType, entry.getKey());
+            Object value = deserialize(holder, valueValueType, entry.getValue());
+            resultMap.put(key, value);
+        }
+        return resultMap;
     }
 
     @Nullable
