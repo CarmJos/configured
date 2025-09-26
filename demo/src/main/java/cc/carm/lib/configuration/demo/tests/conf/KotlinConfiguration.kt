@@ -16,6 +16,10 @@ object KotlinConfiguration : Configuration {
         defaults("Carm Jos")
     }
 
+    val BLACK_LIST = setFrom(String::class) {
+        defaults("404", "404", "123")
+    }
+
     val NICKNAME = mapFrom(String::class, ::mutableMapOf) {
         defaultMap(mapOf("Carm Jos" to "Carm"))
         parse { v -> v }

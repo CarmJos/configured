@@ -96,6 +96,7 @@ public class ConfigurationTest {
         System.out.println("> Test Kotlin value after:");
         System.out.println(KotlinConfiguration.INSTANCE.getLINKED_MAP().get());
 
+        System.out.println("> Test Set value -> " + KotlinConfiguration.INSTANCE.getBLACK_LIST().get());
     }
 
     public static void save(ConfigurationHolder<?> provider) {
