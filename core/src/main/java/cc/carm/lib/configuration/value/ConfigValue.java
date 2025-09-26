@@ -1,6 +1,7 @@
 package cc.carm.lib.configuration.value;
 
 import cc.carm.lib.configuration.source.ConfigurationHolder;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -54,7 +55,18 @@ public abstract class ConfigValue<T, U> extends ValueManifest<T, U> {
      * @return Configured value or default value
      */
     public T getOrDefault() {
-        return optional().orElse(defaults());
+        return getOr(defaults());
+    }
+
+    /**
+     * Gets the configured value, or returns the specified default value if not present.
+     *
+     * @param defaults The default value to return if the configured value is not present
+     * @return Configured value or specified default value
+     */
+    @Contract("!null -> !null")
+    public T getOr(T defaults) {
+        return optional().orElse(defaults);
     }
 
     /**
