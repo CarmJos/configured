@@ -88,8 +88,9 @@ public class ValueAdapterRegistry {
 
     @SuppressWarnings("unchecked")
     public <T> @Nullable ValueAdapter<T> adapterOf(@NotNull ValueType<T> type) {
-        ValueAdapter<?> cached = adapterCache.get(type);
-        if (cached != null) return (ValueAdapter<T>) cached;
+        if (adapterCache.containsKey(type)) {
+            return (ValueAdapter<T>) adapterCache.get(type);
+        }
 
         for (ValueAdapter<?> adapter : adapters) {
             if (adapter.type().equals(type)) {
@@ -154,11 +155,14 @@ public class ValueAdapterRegistry {
 
     private <T> T deserializeArray(@NotNull ConfigurationHolder<?> holder, @NotNull ValueType<T> type,
                                    @NotNull Object source, @NotNull Class<?> rawType) throws Exception {
-        if (!(source instanceof List<?>)) {
-            source = deserializeList(holder, type, source);
+        List<?> list;
+        if (source instanceof List<?>) {
+            list = (List<?>) source;
+        } else {
+            // For non-list sources, treat as single element array
+            list = Collections.singletonList(source);
         }
 
-        List<?> list = (List<?>) source;
         int size = list.size();
         if (size == 0) {
             return type.cast(Array.newInstance(rawType.getComponentType(), 0));
