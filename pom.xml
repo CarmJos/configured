@@ -16,11 +16,12 @@
     <groupId>cc.carm.lib</groupId>
     <artifactId>configured-parent</artifactId>
     <packaging>pom</packaging>
-    <version>4.1.8</version>
+    <version>4.2.0</version>
     <modules>
         <module>core</module>
         <module>features/section</module>
         <module>features/file</module>
+        <module>features/collections</module>
         <module>features/commentable</module>
         <module>features/versioned</module>
         <module>features/validators</module>
