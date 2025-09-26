@@ -20,6 +20,7 @@ import java.util.Objects;
  */
 public abstract class ValueType<T> {
 
+    public static final ValueType<Object> OBJECT = ofPrimitiveType(Object.class);
     public static final ValueType<String> STRING = ofPrimitiveType(String.class);
     public static final ValueType<Integer> INTEGER = ofPrimitiveType(Integer.class);
     public static final ValueType<Integer> INTEGER_TYPE = ofPrimitiveType(int.class);

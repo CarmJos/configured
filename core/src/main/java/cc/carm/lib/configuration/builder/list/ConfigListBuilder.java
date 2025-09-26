@@ -26,6 +26,13 @@ public class ConfigListBuilder<V> {
         );
     }
 
+    public @NotNull SourceListBuilder<Object, V> fromObject() {
+        return new SourceListBuilder<>(
+            ArrayList::new, ValueType.OBJECT, type,
+            ValueHandler.deserialize(type), ValueHandler.toObject()
+        );
+    }
+
     public @NotNull SourceListBuilder<String, V> fromString() {
         return new SourceListBuilder<>(
             ArrayList::new, ValueType.STRING, type,

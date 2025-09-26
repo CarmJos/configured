@@ -5,6 +5,7 @@ import cc.carm.lib.configuration.adapter.ValueParser;
 import cc.carm.lib.configuration.adapter.ValueSerializer;
 import cc.carm.lib.configuration.adapter.ValueType;
 import cc.carm.lib.configuration.builder.map.ConfigMapCreator;
+import cc.carm.lib.configuration.builder.map.SourceMapBuilder;
 import cc.carm.lib.configuration.source.section.ConfigureSection;
 import cc.carm.lib.configuration.value.ValueManifest;
 import cc.carm.lib.configuration.value.impl.CachedConfigValue;
@@ -29,6 +30,16 @@ public class ConfiguredMap<K, V> extends CachedConfigValue<Map<K, V>, V> impleme
 
     public static <K, V> ConfigMapCreator<K, V> builderOf(@NotNull Class<K> keyType, @NotNull Class<V> valueType) {
         return new ConfigMapCreator<>(ValueType.of(keyType), ValueType.of(valueType));
+    }
+
+    public static @NotNull <K, V>
+    SourceMapBuilder<LinkedHashMap<K, V>, Object, K, V> with(@NotNull Class<K> keyType, @NotNull Class<V> valueType) {
+        return with(ValueType.of(keyType), ValueType.of(valueType));
+    }
+
+    public static @NotNull <K, V>
+    SourceMapBuilder<LinkedHashMap<K, V>, Object, K, V> with(@NotNull ValueType<K> keyType, @NotNull ValueType<V> valueType) {
+        return new ConfigMapCreator<>(keyType, valueType).asLinkedMap().fromObject();
     }
 
     public static <K, V> ConfiguredMap<K, V> of(@NotNull Supplier<? extends Map<K, V>> constructor,

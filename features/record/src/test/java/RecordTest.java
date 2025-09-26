@@ -2,6 +2,8 @@ import cc.carm.lib.configuration.Configuration;
 import cc.carm.lib.configuration.annotation.ConfigPath;
 import cc.carm.lib.configuration.source.ConfigurationHolder;
 import cc.carm.lib.configuration.source.temp.TempConfigFactory;
+import cc.carm.lib.configuration.value.standard.ConfiguredList;
+import cc.carm.lib.configuration.value.standard.ConfiguredMap;
 import cc.carm.lib.configuration.value.standard.ConfiguredValue;
 import cc.carm.lib.configured.adapter.record.RecordAdapter;
 import org.jetbrains.annotations.Nullable;
@@ -32,6 +34,18 @@ public class RecordTest {
             )
         ));
 
+        ConfiguredMap<String, Device> DEVICES = ConfiguredMap.builderOf(Device.class)
+            .asHashMap().fromObject()
+            .defaults(m -> {
+                Device d = randomDevice();
+                m.put(d.id, d);
+            })
+            .build();
+
+        ConfiguredList<Device> DEVICE_LIST = ConfiguredList.with(Device.class)
+            .defaults(Arrays.asList(randomDevice(), randomDevice()))
+            .build();
+
     }
 
     @ConfigPath(root = true)
@@ -57,6 +71,15 @@ public class RecordTest {
         }
 
         printMap(holder.config().asMap(), 0);
+
+        ConfigA.DEVICES.forEach((k, v) -> {
+            System.out.println("Device Key: " + k + ", ID: " + v.id + ", Name: " + v.name);
+        });
+
+        ConfigA.DEVICE_LIST.forEach((v) -> {
+            System.out.println("Device ID: " + v.id + ", Name: " + v.name);
+        });
+
 
 //        try {
 //            List<User> parsed = holder.deserialize(ValueType.ofList(User.class), holder.config().getList("val.users"));
@@ -99,6 +122,23 @@ public class RecordTest {
     }
 
     record Chip(String id, @Nullable String serialNumber) {
+    }
+
+    public static Device randomDevice() {
+        return new Device(
+            "device-" + UUID.randomUUID(),
+            "Device " + (int) (Math.random() * 100),
+            UUID.randomUUID(),
+            new Chip("chip-" + UUID.randomUUID(), "SN" + (int) (Math.random() * 10000)),
+            Arrays.asList(
+                new User("User" + (int) (Math.random() * 100), (int) (Math.random() * 50 + 10)),
+                new User("User" + (int) (Math.random() * 100), (int) (Math.random() * 50 + 10))
+            ),
+            Map.of(
+                "Cloud", new Connection("cloud.example.com", 443),
+                "Local", new Connection("192.168.1." + (int) (Math.random() * 255), 8080)
+            )
+        );
     }
 
 

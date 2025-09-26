@@ -49,6 +49,15 @@ public class ConfigMapBuilder<M extends Map<K, V>, K, V> {
         );
     }
 
+
+    public @NotNull <S> SourceMapBuilder<M, Object, K, V> fromObject() {
+        return from(
+            ValueType.OBJECT,
+            ValueHandler.deserialize(keyType), ValueHandler.stringValue(),
+            ValueHandler.deserialize(valueType), ValueHandler.toObject()
+        );
+    }
+
     public @NotNull SourceMapBuilder<M, String, K, V> fromString() {
         return from(
             ValueType.STRING,

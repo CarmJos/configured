@@ -26,12 +26,12 @@ public class ConfiguredList<V> extends CachedConfigValue<List<V>, V> implements 
         return new ConfigListBuilder<>(type);
     }
 
-    public static <T> @NotNull SourceListBuilder<T, T> with(@NotNull Class<T> registeredType) {
+    public static <T> @NotNull SourceListBuilder<Object, T> with(@NotNull Class<T> registeredType) {
         return with(ValueType.of(registeredType));
     }
 
-    public static <T> @NotNull SourceListBuilder<T, T> with(@NotNull ValueType<T> registeredType) {
-        return new ConfigListBuilder<>(registeredType).from(registeredType);
+    public static <T> @NotNull SourceListBuilder<Object, T> with(@NotNull ValueType<T> registeredType) {
+        return new ConfigListBuilder<>(registeredType).fromObject();
     }
 
     @SafeVarargs
