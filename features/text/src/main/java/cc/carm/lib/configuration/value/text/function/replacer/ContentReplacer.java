@@ -47,8 +47,13 @@ public abstract class ContentReplacer<RECEIVER> implements Comparable<ContentRep
         Matcher matcher = matcher(text);
         StringBuffer sb = new StringBuffer();
         while (matcher.find()) {
-            String replaced = get(receiver, matcher);
-            matcher.appendReplacement(sb, replaced == null ? "" : replaced);
+            try {
+                String replaced = get(receiver, matcher);
+                matcher.appendReplacement(sb, replaced == null ? "" : replaced);
+            } catch (Exception ex) {
+                // Do nothing if exception occurred.
+                ex.printStackTrace(); // for debug
+            }
         }
         matcher.appendTail(sb);
         return sb.toString();

@@ -39,7 +39,8 @@ public abstract class ContentInserter<RECEIVER> implements Comparable<ContentIns
                                          @NotNull Insertable<RECEIVER, ?> insertions) {
         Matcher matcher = matcher(line);
         if (!matcher.matches()) return null;
-        if (!insertions.inserting(extractID(matcher))) return Collections.emptyList();
+        String id = extractID(matcher);
+        if (id == null || !insertions.inserting(id)) return Collections.emptyList();
         return get(receiver, matcher, insertions);
     }
 
