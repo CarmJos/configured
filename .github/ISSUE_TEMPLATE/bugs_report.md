@@ -1,70 +1,34 @@
 ---
-name:
-问题提交
-about:
-描述问题并提交，帮助我们对其进行检查与修复。
-title: ''
-labels:
-bug
+name: Submit bugs&issues
+about: Describe the problem and submit it to help us review and fix it.
+title: 'fix: '
+labels: bug
 assignees: ''
-
 ---
 
-###
-*
-*问题简述
-**
+### **Description**
 
-用简短的话语描述一下大概问题。
+<!-- Describe the general problem in short words.-->
 
-###
-*
-*问题来源
-**
+### **Operations**
 
-描述一下通过哪些操作才发现的问题，如：
+<!-- 
+Describe the problem discovered through what operations, such as:
 
-1.
-使用了 '...'
-2.
-输入了 '....'
-3.
-出现了报错 '....'
+1. Clicked '...'
+2. Typed '....'
+3. Error says '....'
+-->
 
-###
-*
-*预期结果
-** (可选)
+### **Expected result** _(Optional)_
 
-如果问题不发生，应该是什么情况
+### **Screenshots & Error Logs**
 
-###
-*
-*问题截图/问题报错
-**
+### **Environment**
 
-如果有报错或输出，请提供截图。
+- System: `Windows 10` / `Ubuntu` / `...`
+- Java version: `JDK11` / `OPENJDK8` / `JRE8` / `...`
 
-###
-*
-*操作环境
-**
+### **Anything else...**
 
--
-系统环境:
-`Windows 10` /
-`Ubuntu` /
-`...`
--
-Java版本:
-`JDK11` /
-`OPENJDK8` /
-`JRE8` /
-`...`
-
-###
-*
-*其他补充
-**
-
-如有其他补充，可以在这里描述。
+<!-- If there are other supplements, they can be described here. -->

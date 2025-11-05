@@ -1,38 +1,23 @@
 ---
-name:
-功能需求
-about:
-希望我们提供更多的功能。
-title: ''
-labels:
-enhancement
+name: Features 
+about: Ask for new features.
+title: 'feat: '
+labels: enhancement 
 assignees: ''
 ---
 
-###
-*
-*功能简述
-**
+### **Description**
 
-简单的描述一下你想要的功能
+<!-- Describe the features in short words.-->
 
-###
-*
-*需求来源
-**
+### **Source**
 
-简单的描述一下为什么需要这个功能。
+<!-- Describe the reason that you need this feature in short words.-->
 
-###
-*
-*功能参考
-**(可选)
+### **Examples** _(Optional)_
 
-如果有相关功能的参考，如文本、截图，请提供给我们。
+<!--Any screenshots or example codes please.-->
 
-###
-*
-*附加内容
-**
+### **Additional details**
 
-如果有什么小细节需要重点注意，请在这里告诉我们。
+<!--If there are any small details that need to be highlighted, please let us know here.-->
