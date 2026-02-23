@@ -14,7 +14,7 @@
         <maven.compiler.target>${project.jdk.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-        <deps.mongodb.version>5.6.3</deps.mongodb.version>
+        <deps.mongodb.version>5.6.4</deps.mongodb.version>
     </properties>
     <artifactId>configured-mongodb</artifactId>
     <packaging>jar</packaging>
