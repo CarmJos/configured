@@ -17,9 +17,12 @@ public class MultiFileTests {
     public void test() {
 
         ProfileStorage storage = new ProfileStorage(new File(new File("target"), "test-profiles"));
+
+        // Add (or create) a new entry to file.
         UserProfile profile = new UserProfile(UUID.randomUUID(), "John Doe", "john@google.com", "123123123");
         storage.update(profile.getUniqueId(), profile);
 
+        // Read files.
         System.out.println("Current users: ");
         storage.values().forEach((k, v) -> {
             System.out.println("# " + k);
