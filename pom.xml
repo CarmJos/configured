@@ -16,7 +16,7 @@
     <groupId>cc.carm.lib</groupId>
     <artifactId>configured-parent</artifactId>
     <packaging>pom</packaging>
-    <version>4.2.0</version>
+    <version>4.2.1</version>
     <modules>
         <module>core</module>
         <module>features/section</module>
@@ -37,6 +37,7 @@
         <module>providers/mongodb</module>
 
         <module>demo</module>
+        <module>features/multi</module>
     </modules>
 
     <name>configured</name>

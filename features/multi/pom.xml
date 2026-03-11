@@ -14,21 +14,32 @@
         <maven.compiler.target>${project.jdk.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <kotlin.version>2.3.10</kotlin.version>
     </properties>
-
-    <artifactId>configured-feature-validators</artifactId>
+    <artifactId>configured-feature-multi</artifactId>
     <packaging>jar</packaging>
 
-    <name>Configured - Validators Feature</name>
+    <name>Configured - Record Feature</name>
     <url>https://github.com/CarmJos/configured</url>
-    <description>Provides validation utilities for configuration values in the Configured framework.</description>
+    <description>Provides Java record type support for the Configured framework.</description>
+
 
     <dependencies>
+
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>cc.carm.lib</groupId>
             <artifactId>configured-core</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+
+        <dependency>
+            <groupId>cc.carm.lib</groupId>
+            <artifactId>configured-yaml</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -51,5 +62,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
