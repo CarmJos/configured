@@ -1,4 +1,4 @@
-package cc.carm.lib.configuration;
+package cc.carm.lib.configuration.multi;
 
 import cc.carm.lib.configuration.source.ConfigurationHolder;
 import org.jetbrains.annotations.NotNull;

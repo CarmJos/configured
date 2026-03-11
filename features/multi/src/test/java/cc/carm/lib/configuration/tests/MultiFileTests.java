@@ -1,7 +1,9 @@
 package cc.carm.lib.configuration.tests;
 
+import cc.carm.lib.configuration.multi.MultiFileConfiguration;
 import cc.carm.lib.configuration.source.ConfigurationHolder;
 import cc.carm.lib.configuration.source.section.ConfigureSection;
+import cc.carm.lib.configuration.source.yaml.YAMLConfigFactory;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
@@ -26,10 +28,11 @@ public class MultiFileTests {
 
     }
 
-    public static class ProfileStorage extends ExampleUserStorage<UserProfile> {
+    public static class ProfileStorage extends MultiFileConfiguration<UUID, UserProfile> {
+
 
         public ProfileStorage(@NotNull File dataFolder) {
-            super(dataFolder);
+            super(dataFolder, ".yml");
         }
 
         @Override
@@ -54,6 +57,16 @@ public class MultiFileTests {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+
+        @Override
+        public UUID extractKeyFromFilename(@NotNull String fileName) {
+            return UUID.fromString(fileName);
+        }
+
+        @Override
+        public ConfigurationHolder<?> loadHolder(@NotNull File file) {
+            return YAMLConfigFactory.from(file).build();
         }
     }
 
